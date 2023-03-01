@@ -56,7 +56,7 @@ const Register = () => {
 
 	return (
 		<>
-			<Text style={s`text-3xl font-bold text-gray-700 text-center mb-6`}>Зарегестрироваться</Text>
+			{/* <Text style={s`text-3xl font-bold text-gray-700 text-center mb-6`}>Зарегестрироваться</Text> */}
 			<Formik
 				initialValues={formValues}
 				validationSchema={SignupSchema}

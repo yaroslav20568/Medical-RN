@@ -31,7 +31,7 @@ const Login = () => {
 
 	return (
 		<>
-			<Text style={s`text-3xl font-bold text-gray-700 text-center mb-6`}>Залогиниться</Text>
+			{/* <Text style={s`text-3xl font-bold text-gray-700 text-center mb-6`}>Залогиниться</Text> */}
 			<Formik
 				initialValues={formValues}
 				validationSchema={SignupSchema}

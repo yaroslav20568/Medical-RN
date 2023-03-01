@@ -12,9 +12,7 @@ const App = () => {
 
   return (
     <ScrollView contentContainerStyle={s`flex-grow justify-center px-4 py-6`}>
-			{/* <View style={s`flex-1 justify-center`}> */}
-				<StartPage />
-			{/* </View> */}
+			<StartPage />
 		</ScrollView>
   );
 };
