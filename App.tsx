@@ -1,11 +1,21 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import Reactotron from 'reactotron-react-native'
+import { StartPage } from './src/pages';
+import { s } from "react-native-wind";
 
 const App = () => {
+	Reactotron
+		.configure()
+		.useReactNative()
+		.connect()
+
   return (
-    <View>
-			<Text>Medical</Text>
-		</View>
+    <ScrollView contentContainerStyle={s`flex-grow justify-center px-4 py-6`}>
+			{/* <View style={s`flex-1 justify-center`}> */}
+				<StartPage />
+			{/* </View> */}
+		</ScrollView>
   );
 };
 
