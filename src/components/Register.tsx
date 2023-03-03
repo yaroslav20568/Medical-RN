@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -6,6 +6,18 @@ import { s } from "react-native-wind";
 import axios from 'axios';
 import RNPickerSelect from 'react-native-picker-select';
 import CheckBox from '@react-native-community/checkbox';
+
+interface IProps {
+	errorText: string;
+	setErrorText: (value: string) => void;
+	isDisabledBtn: boolean;
+	setIsDisabledBtn: (value: boolean) => void;
+}
+
+interface ITypesUsers {
+	name: string;
+	isChecked: boolean;
+}
 
 interface IRespData {
 	status: string;
@@ -21,27 +33,27 @@ interface IFormValues {
 	types_users?: string;
 }
 
-const Register = () => {
-	const SignupSchema = Yup.object().shape({
-		email: Yup.string().email('Не корректный email')
-			.min(2, 'От 2 символов')
-			.max(30, 'до 30 символов')
-			.required('Заполните обязательно'),
-		password: Yup.string()
-			.min(6, 'От 6 символов')
-			.max(16, 'до 16 символов')
-			.required('Заполните обязательно'),
-		gender: Yup.string()
-			.required('Выберите пункт'),
-		typesUsers: Yup.array().of(Yup.number())
-			.min(1, 'Заполните хотя бы 1 чекбокс')
-			.required('Заполните обязательно'),
-		city: Yup.string()
-			.min(2, 'От 2 символов')
-			.max(16, 'до 16 символов')
-			.required('Заполните обязательно')
-	});
+const SignupSchema = Yup.object().shape({
+	email: Yup.string().email('Не корректный email')
+		.min(2, 'От 2 символов')
+		.max(30, 'до 30 символов')
+		.required('Заполните обязательно'),
+	password: Yup.string()
+		.min(6, 'От 6 символов')
+		.max(16, 'до 16 символов')
+		.required('Заполните обязательно'),
+	gender: Yup.string()
+		.required('Выберите пункт'),
+	typesUsers: Yup.array().of(Yup.number())
+		.min(1, 'Заполните хотя бы 1 чекбокс')
+		.required('Заполните обязательно'),
+	city: Yup.string()
+		.min(2, 'От 2 символов')
+		.max(16, 'до 16 символов')
+		.required('Заполните обязательно')
+});
 
+const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: IProps) => {
 	const initialState = [
 		{name: 'Люди, живущие с ВИЧ (ЛЖВ)', isChecked: false},
 		{name: 'Люди, употребляющие инъекционные наркотики (ЛУИН) ', isChecked: false},
@@ -51,8 +63,12 @@ const Register = () => {
 		{name: 'Другое', isChecked: false}
 	];
 
-	const [state, setState] = React.useState(initialState);
+	const [typesUsersArray, setTypesUsersArray] = useState<ITypesUsers[]>(initialState);
 	const formValues:IFormValues = {email: '', password: '', gender: '', typesUsers: [], city: ''};
+
+	useEffect(() => {
+		setErrorText('');
+	}, []);
 
 	return (
 		<>
@@ -65,6 +81,9 @@ const Register = () => {
 					values = {...values, typesUsers: sortValues};
 					const sendObject = {...values, types_users: values.typesUsers.join(',')} as Partial<IFormValues>;
 					delete sendObject.typesUsers;
+
+					setIsDisabledBtn(true);
+
 					axios<IRespData>({
 						url: 'http://dev6.dewpoint.of.by/api/register',
 						method: 'POST',
@@ -75,9 +94,13 @@ const Register = () => {
 						data: JSON.stringify(sendObject)
 					})
 					.then(({ data }) => {
-						if(data.status == 'success') {
+						setIsDisabledBtn(false);
+
+						if(data.status === 'success') {
 							resetForm();
-							setState(initialState);
+							setTypesUsersArray(initialState);
+						} else {
+							setErrorText(data.data);
 						}
 					})
 				}}
@@ -128,12 +151,12 @@ const Register = () => {
 							) : ''}
 						</View>
 						<View style={s`mb-5`}>
-							{state.map((item, currIndex) => 
+							{typesUsersArray.map((item, currIndex) => 
 								<View style={s`flex-row items-center mb-1`} key={`checkbox_${currIndex}`}>
 									<CheckBox
 										value={item.isChecked}
 										onValueChange={value =>
-											setState(state.map((item, index) => {
+											setTypesUsersArray(typesUsersArray.map((item, index) => {
 												if(currIndex === index) {
 													item.isChecked = value;
 													
@@ -168,10 +191,14 @@ const Register = () => {
 								<Text style={s`text-red-900 text-base`}>{errors.city}</Text>
 							) : ''}
 						</View>
+						{errorText && <View style={s`mb-5`}>
+							<Text>{errorText}</Text>
+						</View>}
 						<TouchableOpacity 
 							style={s`bg-violet-700 border-rose-700 py-3`}
 							onPress={handleSubmit}
 							activeOpacity={.7}
+							disabled={isDisabledBtn}
 						>
 							<Text style={s`text-white text-center text-lg`}>Залогиниться</Text>
 						</TouchableOpacity>

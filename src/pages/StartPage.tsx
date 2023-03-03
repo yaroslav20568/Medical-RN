@@ -13,6 +13,8 @@ const tabsElems:Array<ITab> = [
 
 const StartPage = () => {
 	const [currTab, setCurrTab] = useState<string>('login');
+	const [errorText, setErrorText] = useState<string>('');
+	const [isDisabledBtn, setIsDisabledBtn] = useState<boolean>(false);
 
 	return (
 		<>
@@ -22,7 +24,19 @@ const StartPage = () => {
 				setCurrTab={setCurrTab} 
 			/>
 
-			{currTab === 'login' ? <Login /> : <Register />}
+			{currTab === 'login' ? 
+				<Login 
+					errorText={errorText}
+					setErrorText={setErrorText}
+					isDisabledBtn={isDisabledBtn} 
+					setIsDisabledBtn={setIsDisabledBtn} 
+				/> : 
+				<Register 
+					errorText={errorText}
+					setErrorText={setErrorText}
+					isDisabledBtn={isDisabledBtn} 
+					setIsDisabledBtn={setIsDisabledBtn} 
+				/>}
 		</>
 	)
 }

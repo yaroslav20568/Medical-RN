@@ -10,7 +10,7 @@ interface ITab {
 interface IProps {
 	tabsElems: Array<ITab>;
 	currTab: string;
-	setCurrTab: (e: string) => {}
+	setCurrTab: (value: string) => void;
 }
 
 const Tabs = ({ tabsElems, currTab, setCurrTab }: IProps) => {

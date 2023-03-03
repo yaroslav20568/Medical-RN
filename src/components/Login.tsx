@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { s } from "react-native-wind";
 import axios from 'axios';
+
+interface IProps {
+	errorText: string;
+	setErrorText: (value: string) => void;
+	isDisabledBtn: boolean;
+	setIsDisabledBtn: (value: boolean) => void;
+}
 
 interface IRespData {
 	status: string;
@@ -15,27 +22,32 @@ interface IFormValues {
 	password: string;
 }
 
-const formValues:IFormValues = {email: '', password: ''};
+const SignupSchema = Yup.object().shape({
+	email: Yup.string().email('Не корректный email')
+		.min(2, 'От 2 символов')
+		.max(30, 'до 30 символов')
+		.required('Заполните обязательно'),
+	password: Yup.string()
+		.min(6, 'От 6 символов')
+		.max(16, 'до 16 символов')
+		.required('Заполните обязательно')
+});
 
-const Login = () => {
-	const SignupSchema = Yup.object().shape({
-		email: Yup.string().email('Не корректный email')
-			.min(2, 'От 2 символов')
-			.max(30, 'до 30 символов')
-			.required('Заполните обязательно'),
-		password: Yup.string()
-			.min(6, 'От 6 символов')
-			.max(16, 'до 16 символов')
-			.required('Заполните обязательно')
-	});
+const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: IProps) => {
+	const formValues:IFormValues = {email: '', password: ''};
+
+	useEffect(() => {
+		setErrorText('');
+	}, []);
 
 	return (
 		<>
-			{/* <Text style={s`text-3xl font-bold text-gray-700 text-center mb-6`}>Залогиниться</Text> */}
 			<Formik
 				initialValues={formValues}
 				validationSchema={SignupSchema}
 				onSubmit={(values, { resetForm }) => {
+					setIsDisabledBtn(true);
+					
 					axios<IRespData>({
 						url: 'http://dev6.dewpoint.of.by/api/auth',
 						method: 'POST',
@@ -46,7 +58,13 @@ const Login = () => {
 						data: JSON.stringify(values)
 					})
 					.then(({ data }) => {
-						data.status == 'success' && resetForm();
+						setIsDisabledBtn(false);
+
+						if(data.status === 'success') {
+							resetForm();
+						} else {
+							setErrorText(data.data);
+						}
 					})
 				}}
 			>
@@ -77,10 +95,14 @@ const Login = () => {
 								<Text style={s`text-red-900 text-base`}>{errors.password}</Text>
 							) : ''}
 						</View>
+						{errorText && <View style={s`mb-5`}>
+							<Text>{errorText}</Text>
+						</View>}
 						<TouchableOpacity 
 							style={s`bg-violet-700 border-rose-700 py-3`}
 							onPress={handleSubmit}
 							activeOpacity={.7}
+							disabled={isDisabledBtn}
 						>
 							<Text style={s`text-white text-center text-lg`}>Залогиниться</Text>
 						</TouchableOpacity>
