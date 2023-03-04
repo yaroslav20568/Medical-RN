@@ -192,7 +192,7 @@ const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: 
 							) : ''}
 						</View>
 						{errorText && <View style={s`mb-5`}>
-							<Text>{errorText}</Text>
+							<Text style={s`text-red-900 text-base`}>{errorText}</Text>
 						</View>}
 						<TouchableOpacity 
 							style={s`bg-violet-700 border-rose-700 py-3`}

@@ -3,6 +3,7 @@ import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { s } from "react-native-wind";
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import axios from 'axios';
 
 interface IProps {
@@ -10,6 +11,7 @@ interface IProps {
 	setErrorText: (value: string) => void;
 	isDisabledBtn: boolean;
 	setIsDisabledBtn: (value: boolean) => void;
+	navigation: NavigationProp<ParamListBase>;
 }
 
 interface IRespData {
@@ -33,7 +35,7 @@ const SignupSchema = Yup.object().shape({
 		.required('Заполните обязательно')
 });
 
-const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: IProps) => {
+const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn, navigation }: IProps) => {
 	const formValues:IFormValues = {email: '', password: ''};
 
 	useEffect(() => {
@@ -62,6 +64,7 @@ const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: IPr
 
 						if(data.status === 'success') {
 							resetForm();
+							navigation.navigate('Home');
 						} else {
 							setErrorText(data.data);
 						}
@@ -96,7 +99,7 @@ const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: IPr
 							) : ''}
 						</View>
 						{errorText && <View style={s`mb-5`}>
-							<Text>{errorText}</Text>
+							<Text style={s`text-red-900 text-base`}>{errorText}</Text>
 						</View>}
 						<TouchableOpacity 
 							style={s`bg-violet-700 border-rose-700 py-3`}

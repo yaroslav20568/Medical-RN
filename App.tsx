@@ -1,8 +1,7 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
 import Reactotron from 'reactotron-react-native'
-import { StartPage } from './src/pages';
-import { s } from "react-native-wind";
+import { NavigationContainer } from '@react-navigation/native';
+import MyStack from './src/navigation/Stacks';
 
 const App = () => {
 	Reactotron
@@ -11,9 +10,9 @@ const App = () => {
 		.connect()
 
   return (
-    <ScrollView contentContainerStyle={s`flex-grow justify-center px-4 py-6`}>
-			<StartPage />
-		</ScrollView>
+		<NavigationContainer>
+			<MyStack />
+		</NavigationContainer>
   );
 };
 
