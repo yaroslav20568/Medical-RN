@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { s } from "react-native-wind";
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface IProps {
 	errorText: string;
@@ -12,6 +13,10 @@ interface IProps {
 	isDisabledBtn: boolean;
 	setIsDisabledBtn: (value: boolean) => void;
 	navigation: NavigationProp<ParamListBase>;
+}
+
+interface IUser {
+	user: object;
 }
 
 interface IRespData {
@@ -63,6 +68,7 @@ const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn, navig
 						setIsDisabledBtn(false);
 
 						if(data.status === 'success') {
+							AsyncStorage.setItem('@userData', JSON.stringify(values));
 							resetForm();
 							navigation.navigate('Home');
 						} else {

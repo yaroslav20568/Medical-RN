@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
 import { s } from 'react-native-wind';
 import CheckBox from '@react-native-community/checkbox';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Privacy = () => {
 	const navigation:NavigationProp<ParamListBase> = useNavigation();
 
 	const [isChecked, setIsChecked] = useState<boolean>(false);
+
+	const getUserData = async () => {
+		const res = await AsyncStorage.getItem('@userData');
+		console.log(res);
+	}
+
+	useEffect(() => { 
+		getUserData();
+	}, []);
 
 	return (
 		<ScrollView contentContainerStyle={s`flex-grow justify-center px-4 py-6`}>
