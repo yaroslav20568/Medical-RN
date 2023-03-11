@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
 import { StartPage, Home, Privacy } from '../pages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { observer } from 'mobx-react-lite';
+import { userStore } from '../mobx';
+import { IUser } from '../types';
 
 interface IUserData {
 	email: string;
@@ -12,16 +14,16 @@ interface IUserData {
 
 interface IRespData {
 	status: string;
-	data: string;
+	data: {
+		user: IUser;
+	};
 }
 
 const Stack = createNativeStackNavigator();
 
-const MyStack = () => {
-	const navigation:NavigationProp<ParamListBase> = useNavigation();
-
+const MyStack = observer(() => {
 	const getUserData = async () => {
-		await AsyncStorage.clear();
+		// await AsyncStorage.clear();
 		const userData: IUserData | null = JSON.parse(await AsyncStorage.getItem('@userData') as string);
 
 		if(userData) {
@@ -36,7 +38,8 @@ const MyStack = () => {
 			})
 			.then(({ data }) => {
 				if(data.status === 'success') {
-					navigation.navigate('Home');
+					userStore.setIsAuth(true);
+					userStore.setUserData(data.data.user);
 				}
 			})
 		}
@@ -52,11 +55,15 @@ const MyStack = () => {
 				headerShown: false
 			}}
 		>
-			<Stack.Screen name="Privacy" component={Privacy} />
-			<Stack.Screen name="StartPage" component={StartPage} />
-			<Stack.Screen name="Home" component={Home} />
+			{!userStore.isAuth ? 
+				<>
+					<Stack.Screen name="Privacy" component={Privacy} />
+					<Stack.Screen name="StartPage" component={StartPage} />
+				</> : 
+				<Stack.Screen name="Home" component={Home} />
+			}
     </Stack.Navigator>
   );
-}
+})
 
 export default MyStack;

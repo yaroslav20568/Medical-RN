@@ -12,6 +12,7 @@ interface IProps {
 	setErrorText: (value: string) => void;
 	isDisabledBtn: boolean;
 	setIsDisabledBtn: (value: boolean) => void;
+	setCurrTab: (value: string) => void;
 }
 
 interface ITypesUsers {
@@ -51,9 +52,10 @@ const SignupSchema = Yup.object().shape({
 		.min(2, 'От 2 символов')
 		.max(16, 'до 16 символов')
 		.required('Заполните обязательно')
+		.matches(/^([a-zа-яё]+)$/i, 'Цифры не должны присутствовать')
 });
 
-const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: IProps) => {
+const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn, setCurrTab }: IProps) => {
 	const initialState = [
 		{name: 'Люди, живущие с ВИЧ (ЛЖВ)', isChecked: false},
 		{name: 'Люди, употребляющие инъекционные наркотики (ЛУИН) ', isChecked: false},
@@ -99,6 +101,7 @@ const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: 
 						if(data.status === 'success') {
 							resetForm();
 							setTypesUsersArray(initialState);
+							setTimeout(() => {setCurrTab('login');}, 500);
 						} else {
 							setErrorText(data.data);
 						}
@@ -119,7 +122,7 @@ const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: 
 								<Text style={s`text-red-900 text-base`}>{errors.email}</Text>
 							) : ''}
 						</View>
-						<View style={s`mb-5`}>
+						<View style={s`mb-2`}>
 							<TextInput
 								placeholder='пароль'
 								onChangeText={handleChange('password')}
@@ -132,7 +135,7 @@ const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: 
 								<Text style={s`text-red-900 text-base`}>{errors.password}</Text>
 							) : ''}
 						</View>
-						<View style={s`mb-5`}>
+						<View style={s`mb-2`}>
 							<RNPickerSelect
 								placeholder = {{
 									label: 'пол',
@@ -151,6 +154,7 @@ const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: 
 							) : ''}
 						</View>
 						<View style={s`mb-5`}>
+							<Text style={s`text-base mb-2`}>Тип пользователя:</Text>
 							{typesUsersArray.map((item, currIndex) => 
 								<View style={s`flex-row items-center mb-1`} key={`checkbox_${currIndex}`}>
 									<CheckBox

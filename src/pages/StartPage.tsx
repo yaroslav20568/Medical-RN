@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
-import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { s } from 'react-native-wind';
 import { Login, Register, Tabs } from '../components';
-
-interface IProps {
-	navigation: NavigationProp<ParamListBase>;
-}
 
 interface ITab {
 	label: string;
@@ -18,7 +13,7 @@ const tabsElems:Array<ITab> = [
 	{label: 'Залогиниться', name: 'Регистрация'}
 ];
 
-const StartPage = ({ navigation }: IProps) => {
+const StartPage = () => {
 	const [currTab, setCurrTab] = useState<string>('login');
 	const [errorText, setErrorText] = useState<string>('');
 	const [isDisabledBtn, setIsDisabledBtn] = useState<boolean>(false);
@@ -37,13 +32,13 @@ const StartPage = ({ navigation }: IProps) => {
 					setErrorText={setErrorText}
 					isDisabledBtn={isDisabledBtn} 
 					setIsDisabledBtn={setIsDisabledBtn} 
-					navigation={navigation}
 				/> : 
 				<Register 
 					errorText={errorText}
 					setErrorText={setErrorText}
 					isDisabledBtn={isDisabledBtn} 
 					setIsDisabledBtn={setIsDisabledBtn} 
+					setCurrTab={setCurrTab}
 				/>}
 		</ScrollView>
 	)

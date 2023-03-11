@@ -1,23 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
 import { s } from 'react-native-wind';
 import CheckBox from '@react-native-community/checkbox';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Privacy = () => {
 	const navigation:NavigationProp<ParamListBase> = useNavigation();
 
 	const [isChecked, setIsChecked] = useState<boolean>(false);
-
-	const getUserData = async () => {
-		const res = await AsyncStorage.getItem('@userData');
-		console.log(res);
-	}
-
-	useEffect(() => { 
-		getUserData();
-	}, []);
 
 	return (
 		<ScrollView contentContainerStyle={s`flex-grow justify-center px-4 py-6`}>
@@ -33,7 +23,7 @@ const Privacy = () => {
 			</View>
 			<View style={s`items-center`}>
 				<TouchableOpacity
-					style={s`w-3/5 ${isChecked ? 'bg-orange-400' : 'bg-gray-400'} justify-center rounded-lg py-2`}
+					style={s`w-4/5 ${isChecked ? 'bg-orange-400' : 'bg-gray-400'} justify-center rounded-lg py-2`}
 					onPress={() => navigation.navigate('StartPage')}
 					activeOpacity={.7}
 					disabled={!isChecked}

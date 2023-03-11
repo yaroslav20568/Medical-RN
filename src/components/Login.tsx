@@ -3,20 +3,15 @@ import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { s } from "react-native-wind";
-import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { userStore } from '../mobx';
 
 interface IProps {
 	errorText: string;
 	setErrorText: (value: string) => void;
 	isDisabledBtn: boolean;
 	setIsDisabledBtn: (value: boolean) => void;
-	navigation: NavigationProp<ParamListBase>;
-}
-
-interface IUser {
-	user: object;
 }
 
 interface IRespData {
@@ -40,7 +35,7 @@ const SignupSchema = Yup.object().shape({
 		.required('Заполните обязательно')
 });
 
-const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn, navigation }: IProps) => {
+const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: IProps) => {
 	const formValues:IFormValues = {email: '', password: ''};
 
 	useEffect(() => {
@@ -70,7 +65,7 @@ const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn, navig
 						if(data.status === 'success') {
 							AsyncStorage.setItem('@userData', JSON.stringify(values));
 							resetForm();
-							navigation.navigate('Home');
+							userStore.setIsAuth(true);
 						} else {
 							setErrorText(data.data);
 						}
