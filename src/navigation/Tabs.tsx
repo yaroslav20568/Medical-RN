@@ -17,7 +17,7 @@ interface ITab {
 	name: string;
 	label: string;
 	component: any;
-	icon: ({ color, size, focused }: IIcon) => ReactNode | undefined;
+	icon: ({ focused }: IIcon) => ReactNode | undefined;
 }
 
 const tabItems:Array<ITab> = [
@@ -25,7 +25,7 @@ const tabItems:Array<ITab> = [
 		name: 'Home', 
 		label: 'Главная', 
 		component: Home, 
-		icon: ({ color, size, focused }) => <Ionicons name={focused ? 'home-sharp' : 'home-outline'} size={30} color={focused ? '#294CB4' : '#999'} />
+		icon: ({ focused }) => <Ionicons name={focused ? 'home-sharp' : 'home-outline'} size={30} color={focused ? '#294CB4' : '#999'} />
 	},
 	{
 		name: 'Chat',
@@ -57,7 +57,6 @@ const Tabs = () => {
 				},
 				tabBarItemStyle: {
 					paddingVertical: 5
-					
 				}
 			}}
 		>

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
-import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { s } from 'react-native-wind';
 import CheckBox from '@react-native-community/checkbox';
 
-const Privacy = () => {
-	const navigation:NavigationProp<ParamListBase> = useNavigation();
+interface IProps {
+	navigation: NavigationProp<ParamListBase>;
+}
 
+const Privacy = ({ navigation }: IProps) => {
 	const [isChecked, setIsChecked] = useState<boolean>(false);
 
 	return (

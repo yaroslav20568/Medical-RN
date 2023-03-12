@@ -6,4 +6,10 @@ interface IUser {
 	types_users: string;
 }
 
-export type { IUser };
+interface IMenuItem {
+	name: string;
+	label: string;
+	icon: string;
+}
+
+export type { IUser, IMenuItem };
