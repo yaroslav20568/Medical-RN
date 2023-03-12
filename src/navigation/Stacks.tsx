@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StartPage, Home, Privacy } from '../pages';
+import { StartPage, Privacy } from '../pages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { observer } from 'mobx-react-lite';
 import { userStore } from '../mobx';
 import { IUser } from '../types';
+import Tabs from './Tabs';
 
 interface IUserData {
 	email: string;
@@ -60,7 +61,7 @@ const MyStack = observer(() => {
 					<Stack.Screen name="Privacy" component={Privacy} />
 					<Stack.Screen name="StartPage" component={StartPage} />
 				</> : 
-				<Stack.Screen name="Home" component={Home} />
+				<Stack.Screen name="Tabs" component={Tabs} />
 			}
     </Stack.Navigator>
   );
