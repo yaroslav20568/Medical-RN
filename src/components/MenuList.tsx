@@ -12,11 +12,11 @@ interface IProps {
 
 const MenuItems = [
 	{name: 'Institutions', label: 'База учреждений', icon: 'institution'},
-	{name: 'Institutions', label: 'Быстрая помощь', icon: 'handshake-o'},
-	{name: 'Institutions', label: 'Личный кабинет', icon: 'user-o'},
-	{name: 'Institutions', label: 'Библиотека', icon: 'book'},
-	{name: 'Institutions', label: 'Помощь за границей', icon: 'flag-o'},
-	{name: 'Institutions', label: 'Опрос', icon: 'list-alt'}
+	{name: 'QuickHelp', label: 'Быстрая помощь', icon: 'handshake-o'},
+	{name: 'Account', label: 'Личный кабинет', icon: 'user-o'},
+	{name: 'Library', label: 'Библиотека', icon: 'book'},
+	{name: 'HelpAbroad', label: 'Помощь за границей', icon: 'flag-o'},
+	{name: 'Quiz', label: 'Опрос', icon: 'list-alt'}
 ];
 
 const MenuList = ({ navigation }: IProps) => {

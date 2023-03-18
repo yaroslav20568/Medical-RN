@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home, Chat, Calendar, Account } from '../pages';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import HomeStacks from './HomeStacks';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,7 +25,7 @@ const tabItems:Array<ITab> = [
 	{
 		name: 'Home', 
 		label: 'Главная', 
-		component: Home, 
+		component: HomeStacks, 
 		icon: ({ focused }) => <Ionicons name={focused ? 'home-sharp' : 'home-outline'} size={30} color={focused ? '#294CB4' : '#999'} />
 	},
 	{

@@ -4,3 +4,4 @@ export { default as Tabs } from './Tabs';
 
 export { default as HeaderLogo } from './HeaderLogo';
 export { default as MenuList } from './MenuList';
+export { default as Map } from './Home/Map';

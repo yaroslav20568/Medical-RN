@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { s } from "react-native-wind";
 import { HeaderLogo, MenuList } from '../../components';
@@ -10,7 +10,7 @@ interface IProps {
 
 const Home = ({ navigation }: IProps) => {
 	return (
-		<View>
+		<View style={s`mb-3`}>
 			<ScrollView
 				showsVerticalScrollIndicator={false}
 			>

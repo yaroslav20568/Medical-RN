@@ -22,7 +22,7 @@ interface IRespData {
 
 const Stack = createNativeStackNavigator();
 
-const MyStack = observer(() => {
+const Stacks = observer(() => {
 	const getUserData = async () => {
 		// await AsyncStorage.clear();
 		const userData: IUserData | null = JSON.parse(await AsyncStorage.getItem('@userData') as string);
@@ -67,4 +67,4 @@ const MyStack = observer(() => {
   );
 })
 
-export default MyStack;
+export default Stacks;
