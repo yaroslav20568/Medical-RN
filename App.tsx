@@ -3,10 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { initAsyncStorageInspector } from "asyncstorage-inspector-flipper";
 import { debugMobxActions } from 'mobx-action-flipper';
 import Stacks from './src/navigation/Stacks';
-import { userStore } from './src/mobx';
+import { userStore, institutionsStore } from './src/mobx';
 
 initAsyncStorageInspector();
-debugMobxActions({ userStore });
+debugMobxActions({ userStore, institutionsStore });
 
 const App = () => {
   return (

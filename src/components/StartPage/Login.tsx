@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { s } from "react-native-wind";
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { userStore } from '../mobx';
+import { userStore } from '../../mobx';
 
 interface IProps {
 	errorText: string;

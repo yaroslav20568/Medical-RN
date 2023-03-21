@@ -9,7 +9,7 @@ const HomeStacks = () => {
 		<HomeStack.Navigator
 			screenOptions={{headerShown: false}}
 		>
-			<HomeStack.Screen name="Home" component={Home} />
+			<HomeStack.Screen name="HomeInner" component={Home} />
 			<HomeStack.Screen name="Institutions" component={Institutions} />
 		</HomeStack.Navigator>
 	);

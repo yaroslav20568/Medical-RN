@@ -4,7 +4,7 @@ import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { s } from "react-native-wind";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import { IMenuItem } from '../types';
+import { IMenuItem } from '../../types';
 
 interface IProps {
 	navigation: NavigationProp<ParamListBase>;
