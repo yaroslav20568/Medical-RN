@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
 import { s } from 'react-native-wind';
 import { observer } from 'mobx-react-lite';
-import { HeaderLogo, Map, InstitutionList } from '../../components';
+import { HeaderLogo, Map, InstitutionList, Loader } from '../../components';
 import { institutionsStore } from '../../mobx';
 
 const Institutions = observer(() => {
@@ -21,9 +21,12 @@ const Institutions = observer(() => {
 				<Map
 					institutions={institutionsStore.institutions}
 				/>
-				<InstitutionList
-					institutions={institutionsStore.institutions}
-				/>
+				{institutionsStore.isLoading ? 
+					<Loader /> : 
+					<InstitutionList
+						institutions={institutionsStore.institutions}
+					/>
+				}
 			</ScrollView>
 		</View>
 	)

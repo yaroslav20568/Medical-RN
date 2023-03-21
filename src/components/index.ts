@@ -6,3 +6,4 @@ export { default as HeaderLogo } from './General/HeaderLogo';
 export { default as MenuList } from './General/MenuList';
 export { default as Map } from './Home/Map';
 export { default as InstitutionList } from './General/InstitutionList';
+export { default as Loader } from './General/Loader';
