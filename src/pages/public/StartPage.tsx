@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { s } from 'react-native-wind';
-import { Login, Register, Tabs } from '../components';
+import { Login, Register, Tabs } from '../../components';
 
 interface ITab {
 	label: string;
@@ -19,7 +19,10 @@ const StartPage = () => {
 	const [isDisabledBtn, setIsDisabledBtn] = useState<boolean>(false);
 
 	return (
-		<ScrollView contentContainerStyle={s`flex-grow justify-center px-4 py-6`}>
+		<ScrollView 
+			showsVerticalScrollIndicator={false}
+			contentContainerStyle={s`flex-grow justify-center px-4 py-6`}
+		>
 			<Tabs 
 				tabsElems={tabsElems} 
 				currTab={currTab} 

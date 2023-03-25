@@ -11,24 +11,23 @@ const Institutions = observer(() => {
 	}, []);
 
 	return (
-		<View style={s`mb-3`}>
-			<ScrollView
-				showsVerticalScrollIndicator={false}
-			>
-				<HeaderLogo 
-					logo={require('../../assets/images/vstrecha-logo.png')} 
-				/>
-				<Map
+		<ScrollView
+			showsVerticalScrollIndicator={false}
+			contentContainerStyle={s`pb-3`}
+		>
+			<HeaderLogo 
+				logo={require('../../assets/images/vstrecha-logo.png')} 
+			/>
+			<Map
+				institutions={institutionsStore.institutions}
+			/>
+			{institutionsStore.isLoading ? 
+				<Loader /> : 
+				<InstitutionList
 					institutions={institutionsStore.institutions}
 				/>
-				{institutionsStore.isLoading ? 
-					<Loader /> : 
-					<InstitutionList
-						institutions={institutionsStore.institutions}
-					/>
-				}
-			</ScrollView>
-		</View>
+			}
+		</ScrollView>
 	)
 })
 

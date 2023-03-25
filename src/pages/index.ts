@@ -1,5 +1,5 @@
-export { default as Privacy } from './Privacy';
-export { default as StartPage } from './StartPage';
+export { default as Privacy } from './public/Privacy';
+export { default as StartPage } from './public/StartPage';
 
 export { default as Home } from './private/Home';
 export { default as Chat } from './private/Chat';

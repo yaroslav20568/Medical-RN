@@ -10,21 +10,20 @@ interface IProps {
 
 const Home = ({ navigation }: IProps) => {
 	return (
-		<View style={s`mb-3`}>
-			<ScrollView
-				showsVerticalScrollIndicator={false}
-			>
-				<HeaderLogo 
-					logo={require('../../assets/images/vstrecha-logo.png')} 
-				/>
+		<ScrollView
+			showsVerticalScrollIndicator={false}
+			contentContainerStyle={s`pb-3`}
+		>
+			<HeaderLogo 
+				logo={require('../../assets/images/vstrecha-logo.png')} 
+			/>
 
-				<View style={s`px-3`}>
-					<MenuList
-						navigation={navigation}
-					/>
-				</View>
-			</ScrollView>
-		</View>
+			<View style={s`px-3`}>
+				<MenuList
+					navigation={navigation}
+				/>
+			</View>
+		</ScrollView>
 	)
 }
 

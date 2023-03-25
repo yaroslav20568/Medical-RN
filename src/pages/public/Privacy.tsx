@@ -12,7 +12,10 @@ const Privacy = ({ navigation }: IProps) => {
 	const [isChecked, setIsChecked] = useState<boolean>(false);
 
 	return (
-		<ScrollView contentContainerStyle={s`flex-grow justify-center px-4 py-6`}>
+		<ScrollView 
+			showsVerticalScrollIndicator={false}
+			contentContainerStyle={s`flex-grow justify-center px-4 py-6`}
+		>
 			<View style={s`border-2 border-orange-300 rounded-xl px-3 py-4 mb-8`}>
 				<Text style={s`text-base text-center`}>В соответствии с закондательством Республики Беларусь оказывать консультационные услуги можно гражданам с 18 лет</Text>
 			</View>
