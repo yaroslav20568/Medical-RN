@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Dimensions, PermissionsAndroid } from 'react-native';
+import { View, Dimensions, PermissionsAndroid, Alert } from 'react-native';
 import { s } from 'react-native-wind';
 import Mapbox from '@rnmapbox/maps';
 import Geolocation from '@react-native-community/geolocation';
@@ -17,10 +17,6 @@ const Map = ({ institutions }: IProps) => {
 	const { width } = Dimensions.get('window');
 
 	useEffect(() => {
-		Geolocation.getCurrentPosition(info => {
-			setMyCoords([info.coords.longitude, info.coords.latitude]);
-		});
-
 		PermissionsAndroid.requestMultiple([
 			PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
 			PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION
@@ -30,6 +26,18 @@ const Map = ({ institutions }: IProps) => {
 		}).catch(err => {
 			console.warn(err);
 		});
+
+		const watchId = Geolocation.watchPosition(
+			(lastPosition) => {
+				setMyCoords([lastPosition.coords.longitude, lastPosition.coords.latitude]);
+			},
+			(error) => Alert.alert(JSON.stringify(error)),
+			{enableHighAccuracy: false, timeout: 20000, maximumAge: 0, distanceFilter: 1}
+		);
+
+		return () => {
+			Geolocation.clearWatch(watchId);
+		}
 	}, []);
 
 	return (
@@ -39,7 +47,7 @@ const Map = ({ institutions }: IProps) => {
 			style={[s`w-full mt-6`, {height: width / 1.5}]}
 		>
 			<Mapbox.Camera 
-				zoomLevel={1}
+				zoomLevel={5}
 				centerCoordinate={myCoords}
 			/>
 			<Mapbox.PointAnnotation 
@@ -50,10 +58,11 @@ const Map = ({ institutions }: IProps) => {
 					<View style={s`w-2 h-2 absolute rounded-full bg-white`}></View>
 				</View>
 			</Mapbox.PointAnnotation>
-			{institutions.map(item => 
+			{institutions.map((item, index) => 
 				<Mapbox.PointAnnotation 
 					id='MyLocation'
 					coordinate={[+item.coordinates.split(',')[1], +item.coordinates.split(',')[0]]}
+					key={`marker_${index}`}
 				>
 					<View></View>
 				</Mapbox.PointAnnotation>

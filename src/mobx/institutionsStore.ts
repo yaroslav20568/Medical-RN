@@ -1,4 +1,4 @@
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable, action, runInAction } from "mobx";
 import axios from "axios";
 import { IInstitutionRB } from '../types';
 
@@ -35,10 +35,12 @@ class InstitutionsStore {
 		this.isLoading = true;
 		axios<IRespData>('http://dev6.dewpoint.of.by/api/laboratories')
     .then(({ data }) => {
-			this.currentPage = data.data.current_page;
-			this.totalPages = data.data.total_pages;
-			this.institutions = data.data.items;
-			this.isLoading = false;
+			runInAction(() => {
+				this.currentPage = data.data.current_page;
+				this.totalPages = data.data.total_pages;
+				this.institutions = data.data.items;
+				this.isLoading = false;
+			});
 		})
 	}
 }
