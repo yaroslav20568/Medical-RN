@@ -7,3 +7,7 @@ export { default as MenuList } from './General/MenuList';
 export { default as Map } from './Home/Map';
 export { default as InstitutionList } from './General/InstitutionList';
 export { default as Loader } from './General/Loader';
+export { default as WidgetsPanel } from './General/WidgetsPanel';
+export { default as InstitutionSearch } from './General/InstitutionSearch';
+export { default as Modal } from './General/Modal';
+export { default as HeaderModal } from './General/HeaderModal';
