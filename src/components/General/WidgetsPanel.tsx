@@ -10,7 +10,7 @@ interface IProps {
 
 const WidgetsPanel = ({ title, showModal }: IProps) => {
 	return (
-		<View style={s`p-4 flex-row items-center justify-between`}>
+		<View style={s`py-4 px-3 flex-row items-center justify-between`}>
 			<Text style={s`text-2xl font-semibold text-black`}>{title}</Text>
 			<View style={s`flex-row`}>
 				<TouchableOpacity 

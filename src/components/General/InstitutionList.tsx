@@ -10,12 +10,15 @@ interface IProps {
 const InstitutionList = ({ institutions }: IProps) => {
 	return (
 		<View style={s`px-3`}>
-			{institutions.map((institution) => 
-				<InstitutionItem 
-					key={`institution_${institution.id}`} 
-					{...institution} 
-				/>
-			)}
+			{institutions.length ? 
+				institutions.map((institution) => 
+					<InstitutionItem 
+						key={`institution_${institution.id}`} 
+						{...institution} 
+					/>
+				) : 
+				<Text style={[s`text-lg font-semibold`]}>Institutions not found</Text>
+			}
 		</View>
 	)
 }

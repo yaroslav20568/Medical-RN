@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { View, TextInput } from 'react-native';
 import { s } from 'react-native-wind';
 
-const InstitutionSearch = () => {
-	const [inputValue, setInputValue] = useState<string>('');
+interface IProps {
+	inputValue: string;
+	setInputValue: (value: string) => void;
+}
 
+const InstitutionSearch = ({ inputValue, setInputValue }: IProps) => {
 	return (
 		<View>
 			<TextInput

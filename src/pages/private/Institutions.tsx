@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, ScrollView, Animated, Dimensions } from 'react-native';
 import { s } from 'react-native-wind';
 import { observer } from 'mobx-react-lite';
@@ -6,9 +6,11 @@ import { HeaderLogo, Map, InstitutionList, Loader, WidgetsPanel, InstitutionSear
 import { institutionsStore } from '../../mobx';
 
 const Institutions = observer(() => {
+	const [inputValue, setInputValue] = useState<string>('');
+
 	useEffect(() => {
-		institutionsStore.loadInstitutions();
-	}, []);
+		institutionsStore.loadInstitutions(inputValue);
+	}, [inputValue]);
 
 	const { width } = Dimensions.get('window');
 
@@ -66,7 +68,10 @@ const Institutions = observer(() => {
 					title='Поиск' 
 					hideModal={hideModal} 
 				/>
-				<InstitutionSearch />
+				<InstitutionSearch 
+					inputValue={inputValue}
+					setInputValue={setInputValue}
+				/>
 			</Modal>
 		</>
 	)

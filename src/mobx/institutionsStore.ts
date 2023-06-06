@@ -16,24 +16,33 @@ class InstitutionsStore {
 	currentPage: number;
 	totalPages: number;
 	institutions: Array<IInstitutionRB>;
+	// searchValue: string;
 
 	constructor() {
 		this.isLoading = false;
 		this.currentPage = 1;
 		this.totalPages = 1;
 		this.institutions = [];
+		// this.searchValue = '';
 		makeObservable(this, {
 			isLoading: observable,
 			currentPage: observable,
 			totalPages: observable,
 			institutions: observable,
-			loadInstitutions: action
+			loadInstitutions: action,
+			// setSearchValue: action
 		})
 	}
 
-	loadInstitutions() {
+	// setSearchValue(value: string) {
+	// 	console.log(value);
+	// 	this.searchValue = value;
+	// }
+
+	loadInstitutions(searchValue: string) {
 		this.isLoading = true;
-		axios<IRespData>('http://dev6.dewpoint.of.by/api/laboratories')
+		// axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${this.searchValue}`)
+		axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${searchValue}`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.currentPage = data.data.current_page;
