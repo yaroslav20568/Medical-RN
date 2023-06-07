@@ -39,10 +39,10 @@ class InstitutionsStore {
 	// 	this.searchValue = value;
 	// }
 
-	loadInstitutions(searchValue: string) {
+	loadInstitutions(searchValue: string, region: string) {
 		this.isLoading = true;
 		// axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${this.searchValue}`)
-		axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${searchValue}`)
+		axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${searchValue}&region=${region}`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.currentPage = data.data.current_page;

@@ -2,15 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, ScrollView, Animated, Dimensions } from 'react-native';
 import { s } from 'react-native-wind';
 import { observer } from 'mobx-react-lite';
+import RNPickerSelect from 'react-native-picker-select';
 import { HeaderLogo, Map, InstitutionList, Loader, WidgetsPanel, InstitutionSearch, HeaderModal, Modal } from '../../components';
 import { institutionsStore } from '../../mobx';
 
 const Institutions = observer(() => {
 	const [inputValue, setInputValue] = useState<string>('');
+	const [region, setRegion] = useState<string>('');
+	const [modalActive, setModalActive] = useState<string>('search');
 
 	useEffect(() => {
-		institutionsStore.loadInstitutions(inputValue);
-	}, [inputValue]);
+		institutionsStore.loadInstitutions(inputValue, region);
+	}, [inputValue, region]);
 
 	const { width } = Dimensions.get('window');
 
@@ -52,6 +55,7 @@ const Institutions = observer(() => {
 				<WidgetsPanel
 					title='Учреждения'
 					showModal={showModal}
+					setModalActive={setModalActive}
 				/>
 				{institutionsStore.isLoading ? 
 					<Loader /> : 
@@ -60,19 +64,46 @@ const Institutions = observer(() => {
 					/>
 				}
 			</ScrollView>
-			<Modal 
-				translateX={translateX} 
-				animatedValue={animatedValue}
-			>
-				<HeaderModal 
-					title='Поиск' 
-					hideModal={hideModal} 
-				/>
-				<InstitutionSearch 
-					inputValue={inputValue}
-					setInputValue={setInputValue}
-				/>
-			</Modal>
+			{modalActive === 'search' ? 
+				<Modal 
+					translateX={translateX} 
+					animatedValue={animatedValue}
+				>
+					<HeaderModal 
+						title='Поиск' 
+						hideModal={hideModal} 
+					/>
+					<InstitutionSearch 
+						inputValue={inputValue}
+						setInputValue={setInputValue}
+					/>
+				</Modal> :
+				<Modal 
+					translateX={translateX} 
+					animatedValue={animatedValue}
+				>
+					<HeaderModal 
+						title='Фильтр' 
+						hideModal={hideModal} 
+					/>
+					<RNPickerSelect
+						placeholder = {{
+							label: 'Область',
+							value: '',
+							color: '#9EA0A4',
+						}}
+						value={region}
+						onValueChange={setRegion}
+						items={[
+							{label: 'Минская', value: 'Минская'},
+							{label: 'Витебская', value: 'Витебская'},
+							{label: 'Гродненская', value: 'Гродненская'},
+							{label: 'Брестская', value: 'Брестская'},
+							{label: 'Гомельская', value: 'Гомельская'},
+							{label: 'Могилёвская', value: 'Могилёвская'}
+						]}
+					/>
+				</Modal>}
 		</>
 	)
 })
