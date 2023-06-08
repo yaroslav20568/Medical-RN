@@ -39,10 +39,10 @@ class InstitutionsStore {
 	// 	this.searchValue = value;
 	// }
 
-	loadInstitutions(searchValue: string, region: string) {
+	loadInstitutions(searchValue: string, region: string, cityId: number | '') {
 		this.isLoading = true;
 		// axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${this.searchValue}`)
-		axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${searchValue}&region=${region}`)
+		axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${searchValue}&region=${region}&city_id=${cityId}`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.currentPage = data.data.current_page;
@@ -51,6 +51,14 @@ class InstitutionsStore {
 				this.isLoading = false;
 			});
 		})
+	}
+
+	get getCities() {
+		return this.institutions.map(institution => { return {label: institution.city_id.name, value: institution.city_id.id} });
+	}
+
+	get getTypesInstitution() {
+		return this.institutions.map(institution => institution.type_id);
 	}
 }
 

@@ -3,17 +3,19 @@ import { View, ScrollView, Animated, Dimensions } from 'react-native';
 import { s } from 'react-native-wind';
 import { observer } from 'mobx-react-lite';
 import RNPickerSelect from 'react-native-picker-select';
-import { HeaderLogo, Map, InstitutionList, Loader, WidgetsPanel, InstitutionSearch, HeaderModal, Modal } from '../../components';
+import { HeaderLogo, Map, InstitutionList, Loader, WidgetsPanel, InstitutionSearch, HeaderModal, Modal, FilterInstitutions } from '../../components';
 import { institutionsStore } from '../../mobx';
 
 const Institutions = observer(() => {
 	const [inputValue, setInputValue] = useState<string>('');
 	const [region, setRegion] = useState<string>('');
+	const [cityId, setCityId] = useState<number | ''>('');
 	const [modalActive, setModalActive] = useState<string>('search');
 
 	useEffect(() => {
-		institutionsStore.loadInstitutions(inputValue, region);
-	}, [inputValue, region]);
+		institutionsStore.loadInstitutions(inputValue, region, cityId);
+		hideModal();
+	}, [inputValue, region, cityId]);
 
 	const { width } = Dimensions.get('window');
 
@@ -102,6 +104,11 @@ const Institutions = observer(() => {
 							{label: 'Гомельская', value: 'Гомельская'},
 							{label: 'Могилёвская', value: 'Могилёвская'}
 						]}
+					/>
+					<FilterInstitutions 
+						cities={institutionsStore.getCities} 
+						cityId={cityId}
+						setCityId={setCityId}
 					/>
 				</Modal>}
 		</>
