@@ -1,6 +1,6 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import axios from "axios";
-import { IInstitutionRB } from '../types';
+import { ISelectItem, IInstitutionRB } from '../types';
 
 interface IRespData {
 	status: string;
@@ -39,10 +39,10 @@ class InstitutionsStore {
 	// 	this.searchValue = value;
 	// }
 
-	loadInstitutions(searchValue: string, region: string, cityId: number | '') {
+	loadInstitutions(searchValue: string, region: string, cityId: number | '', typeInstitutionId: number | '') {
 		this.isLoading = true;
 		// axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${this.searchValue}`)
-		axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${searchValue}&region=${region}&city_id=${cityId}`)
+		axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${searchValue}&region=${region}&city_id=${cityId}&type_id=${typeInstitutionId}`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.currentPage = data.data.current_page;
@@ -58,7 +58,16 @@ class InstitutionsStore {
 	}
 
 	get getTypesInstitution() {
-		return this.institutions.map(institution => institution.type_id);
+		const typesInstitution: Array<ISelectItem> = [];
+		this.institutions.forEach(institution => {
+			const bool = typesInstitution.some(typeInstitution => typeInstitution?.value == institution.type_id?.id);
+
+			if(!bool) {
+				typesInstitution.push({label: institution.type_id?.name, value: institution.type_id?.id});
+			}
+		});
+
+		return typesInstitution;
 	}
 }
 

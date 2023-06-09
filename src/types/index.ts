@@ -17,6 +17,11 @@ interface IItem {
 	name: string;
 }
 
+interface ISelectItem {
+	label: string;
+	value: number;
+}
+
 interface IInstitution extends IItem {
 	city_id: IItem;
 	address: string;
@@ -41,4 +46,4 @@ interface IHelpAbroad extends IInstitution {
 	country_id: IItem;
 }
 
-export type { IUser, IMenuItem, IInstitutionRB, IHelpAbroad };
+export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad };

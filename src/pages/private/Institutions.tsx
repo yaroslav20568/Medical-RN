@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, ScrollView, Animated, Dimensions } from 'react-native';
+import { ScrollView, Animated, Dimensions } from 'react-native';
 import { s } from 'react-native-wind';
 import { observer } from 'mobx-react-lite';
 import RNPickerSelect from 'react-native-picker-select';
@@ -10,12 +10,14 @@ const Institutions = observer(() => {
 	const [inputValue, setInputValue] = useState<string>('');
 	const [region, setRegion] = useState<string>('');
 	const [cityId, setCityId] = useState<number | ''>('');
+	const [typeInstitutionId, setTypeInstitutionId] = useState<number | ''>('');
 	const [modalActive, setModalActive] = useState<string>('search');
 
 	useEffect(() => {
-		institutionsStore.loadInstitutions(inputValue, region, cityId);
-		hideModal();
-	}, [inputValue, region, cityId]);
+		institutionsStore.loadInstitutions(inputValue, region, cityId, typeInstitutionId);
+		// hideModal();
+		// console.log(institutionsStore.getTypesInstitution);
+	}, [inputValue, region, cityId, typeInstitutionId]);
 
 	const { width } = Dimensions.get('window');
 
@@ -109,6 +111,9 @@ const Institutions = observer(() => {
 						cities={institutionsStore.getCities} 
 						cityId={cityId}
 						setCityId={setCityId}
+						typesInstitution={institutionsStore.getTypesInstitution}
+						typeInstitutionId={typeInstitutionId}
+						setTypeInstitutionId={setTypeInstitutionId}
 					/>
 				</Modal>}
 		</>

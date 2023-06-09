@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-
-interface ISelectItem {
-	label: string;
-	value: number;
-}
+import { ISelectItem } from '../../types/index';
 
 interface IProps {
 	cities: Array<ISelectItem>;
 	cityId: number | '';
 	setCityId: (value: number) => void;
+	typesInstitution: Array<ISelectItem>;
+	typeInstitutionId: number | '';
+	setTypeInstitutionId: (value: number) => void;
 }
 
-const FilterInstitutions = ({ cities, cityId, setCityId }: IProps) => {
+const FilterInstitutions = ({ cities, cityId, setCityId, typesInstitution, typeInstitutionId, setTypeInstitutionId }: IProps) => {
 	return (
 		<View>
 			<RNPickerSelect
@@ -25,6 +24,16 @@ const FilterInstitutions = ({ cities, cityId, setCityId }: IProps) => {
 				value={cityId}
 				onValueChange={setCityId}
 				items={cities}
+			/>
+			<RNPickerSelect
+				placeholder = {{
+					label: 'Тип учреждения',
+					value: '',
+					color: '#9EA0A4',
+				}}
+				value={typeInstitutionId}
+				onValueChange={setTypeInstitutionId}
+				items={typesInstitution}
 			/>
 		</View>
 	)
