@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ScrollView, Animated, Dimensions } from 'react-native';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Animated, Dimensions } from 'react-native';
+import { ScrollView } from 'react-native-virtualized-view';
 import { s } from 'react-native-wind';
 import { observer } from 'mobx-react-lite';
 import RNPickerSelect from 'react-native-picker-select';
@@ -11,13 +12,16 @@ const Institutions = observer(() => {
 	const [region, setRegion] = useState<string>('');
 	const [cityId, setCityId] = useState<number | ''>('');
 	const [typeInstitutionId, setTypeInstitutionId] = useState<number | ''>('');
+	const [typesUser, setTypesUser] = useState<Array<number>>([]);
 	const [modalActive, setModalActive] = useState<string>('search');
 
 	useEffect(() => {
-		institutionsStore.loadInstitutions(inputValue, region, cityId, typeInstitutionId);
-		// hideModal();
-		// console.log(institutionsStore.getTypesInstitution);
-	}, [inputValue, region, cityId, typeInstitutionId]);
+		institutionsStore.loadInstitutions(inputValue, region, cityId, typeInstitutionId, typesUser);
+	}, [inputValue, region, cityId, typeInstitutionId, typesUser]);
+
+	const loadMoreInstitutions = useCallback(() => {
+		institutionsStore.loadMoreInstitutions();
+	}, []);
 
 	const { width } = Dimensions.get('window');
 
@@ -65,12 +69,13 @@ const Institutions = observer(() => {
 					<Loader /> : 
 					<InstitutionList
 						institutions={institutionsStore.institutions}
+						loadMoreInstitutions={loadMoreInstitutions}
 					/>
 				}
 			</ScrollView>
 			{modalActive === 'search' ? 
 				<Modal 
-					translateX={translateX} 
+					translateX={translateX}
 					animatedValue={animatedValue}
 				>
 					<HeaderModal 
@@ -83,7 +88,7 @@ const Institutions = observer(() => {
 					/>
 				</Modal> :
 				<Modal 
-					translateX={translateX} 
+					translateX={translateX}
 					animatedValue={animatedValue}
 				>
 					<HeaderModal 
@@ -114,6 +119,9 @@ const Institutions = observer(() => {
 						typesInstitution={institutionsStore.getTypesInstitution}
 						typeInstitutionId={typeInstitutionId}
 						setTypeInstitutionId={setTypeInstitutionId}
+						typesUserItems={institutionsStore.getTypesUser}
+						typesUser={typesUser}
+						setTypesUser={setTypesUser}
 					/>
 				</Modal>}
 		</>

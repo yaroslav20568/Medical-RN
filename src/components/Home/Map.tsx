@@ -22,9 +22,9 @@ const Map = ({ institutions }: IProps) => {
 			PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION
 		])
 		.then(granted => {
-			console.log(granted);
+			// console.log(granted);
 		}).catch(err => {
-			console.warn(err);
+			// console.warn(err);
 		});
 
 		const watchId = Geolocation.watchPosition(

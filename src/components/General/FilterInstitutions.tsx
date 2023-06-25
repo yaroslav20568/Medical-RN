@@ -1,6 +1,8 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import { s } from 'react-native-wind';
+import CheckBox from '@react-native-community/checkbox';
 import { ISelectItem } from '../../types/index';
 
 interface IProps {
@@ -10,9 +12,12 @@ interface IProps {
 	typesInstitution: Array<ISelectItem>;
 	typeInstitutionId: number | '';
 	setTypeInstitutionId: (value: number) => void;
+	typesUserItems: Array<ISelectItem>;
+	typesUser: Array<number>;
+	setTypesUser: (value: Array<number>) => void;
 }
 
-const FilterInstitutions = ({ cities, cityId, setCityId, typesInstitution, typeInstitutionId, setTypeInstitutionId }: IProps) => {
+const FilterInstitutions = ({ cities, cityId, setCityId, typesInstitution, typeInstitutionId, setTypeInstitutionId, typesUserItems, typesUser, setTypesUser }: IProps) => {
 	return (
 		<View>
 			<RNPickerSelect
@@ -35,6 +40,26 @@ const FilterInstitutions = ({ cities, cityId, setCityId, typesInstitution, typeI
 				onValueChange={setTypeInstitutionId}
 				items={typesInstitution}
 			/>
+			<View style={s`px-3 mt-1`}>
+				<Text style={s`text-base px-1 mb-2`}>Типы пользователей:</Text>
+				{typesUserItems.map((itemElem) => 
+					<View style={s`flex-row items-center`}>
+						<CheckBox
+							value={typesUser.includes(itemElem.value)}
+							onValueChange={(value) => {
+								if(!typesUser.includes(itemElem.value)) {
+									setTypesUser([...typesUser, itemElem.value]);
+									console.log(typesUser);
+								} else {
+									setTypesUser(typesUser.filter((item) => item !== itemElem.value));
+									console.log(typesUser);
+								}
+							}}
+						/>
+						<Text style={s`text-sm`}>{itemElem.label}</Text>
+					</View>
+				)}
+			</View>
 		</View>
 	)
 }

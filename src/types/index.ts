@@ -20,6 +20,7 @@ interface IItem {
 interface ISelectItem {
 	label: string;
 	value: number;
+	isChecked?: boolean;
 }
 
 interface IInstitution extends IItem {

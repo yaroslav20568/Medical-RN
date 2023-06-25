@@ -1,22 +1,28 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { s } from 'react-native-wind';
 import { IInstitutionRB } from '../../types';
 
 interface IProps {
 	institutions: Array<IInstitutionRB>;
+	loadMoreInstitutions: () => void;
 }
 
-const InstitutionList = ({ institutions }: IProps) => {
+const InstitutionList = ({ institutions, loadMoreInstitutions }: IProps) => {
 	return (
 		<View style={s`px-3`}>
 			{institutions.length ? 
-				institutions.map((institution) => 
-					<InstitutionItem 
-						key={`institution_${institution.id}`} 
-						{...institution} 
-					/>
-				) : 
+				<FlatList
+					data={institutions}
+					renderItem={({ item }) => 
+						<InstitutionItem 
+							key={`institution_${item.id}`} 
+							{...item} 
+						/>
+					}
+					onEndReachedThreshold={0.05}
+					onEndReached={loadMoreInstitutions}
+				/> : 
 				<Text style={[s`text-lg font-semibold`]}>Institutions not found</Text>
 			}
 		</View>

@@ -204,7 +204,7 @@ const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn, se
 							activeOpacity={.7}
 							disabled={isDisabledBtn}
 						>
-							<Text style={s`text-white text-center text-lg`}>Залогиниться</Text>
+							<Text style={s`text-white text-center text-lg`}>Зарегестрироваться</Text>
 						</TouchableOpacity>
 					</View>
 				)}

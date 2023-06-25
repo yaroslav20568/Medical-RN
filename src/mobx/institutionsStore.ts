@@ -30,6 +30,7 @@ class InstitutionsStore {
 			totalPages: observable,
 			institutions: observable,
 			loadInstitutions: action,
+			loadMoreInstitutions: action
 			// setSearchValue: action
 		})
 	}
@@ -39,10 +40,10 @@ class InstitutionsStore {
 	// 	this.searchValue = value;
 	// }
 
-	loadInstitutions(searchValue: string, region: string, cityId: number | '', typeInstitutionId: number | '') {
+	loadInstitutions(searchValue: string, region: string, cityId: number | '', typeInstitutionId: number | '', typesUser: Array<number>) {
 		this.isLoading = true;
 		// axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${this.searchValue}`)
-		axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${searchValue}&region=${region}&city_id=${cityId}&type_id=${typeInstitutionId}`)
+		axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${searchValue}&region=${region}&city_id=${cityId}&type_id=${typeInstitutionId}&types_users=${typesUser.join(',')}`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.currentPage = data.data.current_page;
@@ -51,6 +52,22 @@ class InstitutionsStore {
 				this.isLoading = false;
 			});
 		})
+	}
+
+	loadMoreInstitutions() {
+		if(this.currentPage < this.totalPages) {
+			// this.isLoading = true;
+			// axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${this.searchValue}`)
+			axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?page=${this.currentPage + 1}`)
+			.then(({ data }) => {
+				runInAction(() => {
+					this.currentPage = data.data.current_page;
+					this.totalPages = data.data.total_pages;
+					this.institutions = [...this.institutions, ...data.data.items];
+					// this.isLoading = false;
+				});
+			})
+		}
 	}
 
 	get getCities() {
@@ -68,6 +85,21 @@ class InstitutionsStore {
 		});
 
 		return typesInstitution;
+	}
+
+	get getTypesUser() {
+		const typesUser: Array<ISelectItem> = [];
+		this.institutions.forEach(institution => {
+			institution.types_users.forEach(type => {
+				const bool = typesUser.some(typeUser => typeUser?.value == type?.id - 1);
+
+				if(!bool) {
+					typesUser.push({label: type.name, value: type.id - 1, isChecked: false});
+				}
+			});
+		});
+
+		return typesUser;
 	}
 }
 
