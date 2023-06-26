@@ -2,13 +2,15 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { s } from 'react-native-wind';
 import { IInstitutionRB } from '../../types';
+import Loader from './Loader';
 
 interface IProps {
 	institutions: Array<IInstitutionRB>;
 	loadMoreInstitutions: () => void;
+	isLoadingMore: boolean;
 }
 
-const InstitutionList = ({ institutions, loadMoreInstitutions }: IProps) => {
+const InstitutionList = ({ institutions, loadMoreInstitutions, isLoadingMore }: IProps) => {
 	return (
 		<View style={s`px-3`}>
 			{institutions.length ? 
@@ -20,11 +22,12 @@ const InstitutionList = ({ institutions, loadMoreInstitutions }: IProps) => {
 							{...item} 
 						/>
 					}
-					onEndReachedThreshold={0.05}
+					onEndReachedThreshold={0}
 					onEndReached={loadMoreInstitutions}
 				/> : 
 				<Text style={[s`text-lg font-semibold`]}>Institutions not found</Text>
 			}
+			{isLoadingMore && <View style={s`absolute w-full bottom-2`}><Loader /></View>}
 		</View>
 	)
 }

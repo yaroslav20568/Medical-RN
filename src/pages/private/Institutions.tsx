@@ -23,6 +23,17 @@ const Institutions = observer(() => {
 		institutionsStore.loadMoreInstitutions();
 	}, []);
 
+	const clearFilterParams = useCallback(() => {
+		if(modalActive === 'search') {
+			setInputValue('');
+		} else {
+			setRegion('');
+			setCityId('');
+			setTypeInstitutionId('');
+			setTypesUser([]);
+		}
+	}, []);
+
 	const { width } = Dimensions.get('window');
 
 	const animatedValue = useRef(new Animated.Value(0)).current;
@@ -70,6 +81,7 @@ const Institutions = observer(() => {
 					<InstitutionList
 						institutions={institutionsStore.institutions}
 						loadMoreInstitutions={loadMoreInstitutions}
+						isLoadingMore={institutionsStore.isLoadingMore}
 					/>
 				}
 			</ScrollView>
@@ -81,6 +93,7 @@ const Institutions = observer(() => {
 					<HeaderModal 
 						title='Поиск' 
 						hideModal={hideModal} 
+						clearFilterParams={clearFilterParams}
 					/>
 					<InstitutionSearch 
 						inputValue={inputValue}
@@ -94,6 +107,7 @@ const Institutions = observer(() => {
 					<HeaderModal 
 						title='Фильтр' 
 						hideModal={hideModal} 
+						clearFilterParams={clearFilterParams}
 					/>
 					<RNPickerSelect
 						placeholder = {{
