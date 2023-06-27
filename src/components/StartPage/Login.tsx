@@ -6,6 +6,7 @@ import { s } from "react-native-wind";
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userStore } from '../../mobx';
+import { siteUrl } from '../../constants';
 
 interface IProps {
 	errorText: string;
@@ -51,7 +52,7 @@ const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: IPr
 					setIsDisabledBtn(true);
 					
 					axios<IRespData>({
-						url: 'http://dev6.dewpoint.of.by/api/auth',
+						url: `${siteUrl}/api/auth`,
 						method: 'POST',
 						headers: {
 							'Accept': 'application/json',

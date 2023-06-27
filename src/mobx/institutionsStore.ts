@@ -1,6 +1,7 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import axios from "axios";
 import { ISelectItem, IInstitutionRB } from '../types';
+import { siteUrl } from "../constants";
 
 interface IRespData {
 	status: string;
@@ -17,7 +18,6 @@ class InstitutionsStore {
 	totalPages: number;
 	institutions: Array<IInstitutionRB>;
 	isLoadingMore: boolean;
-	// searchValue: string;
 
 	constructor() {
 		this.isLoading = false;
@@ -25,7 +25,6 @@ class InstitutionsStore {
 		this.totalPages = 1;
 		this.institutions = [];
 		this.isLoadingMore = false;
-		// this.searchValue = '';
 		makeObservable(this, {
 			isLoading: observable,
 			currentPage: observable,
@@ -34,19 +33,12 @@ class InstitutionsStore {
 			loadInstitutions: action,
 			loadMoreInstitutions: action,
 			isLoadingMore: observable
-			// setSearchValue: action
 		})
 	}
 
-	// setSearchValue(value: string) {
-	// 	console.log(value);
-	// 	this.searchValue = value;
-	// }
-
 	loadInstitutions(searchValue: string, region: string, cityId: number | '', typeInstitutionId: number | '', typesUser: Array<number>) {
 		this.isLoading = true;
-		// axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${this.searchValue}`)
-		axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${searchValue}&region=${region}&city_id=${cityId}&type_id=${typeInstitutionId}&types_users=${typesUser.join(',')}`)
+		axios<IRespData>(`${siteUrl}/api/laboratories?name=${searchValue}&region=${region}&city_id=${cityId}&type_id=${typeInstitutionId}&types_users=${typesUser.join(',')}`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.currentPage = data.data.current_page;
@@ -60,8 +52,7 @@ class InstitutionsStore {
 	loadMoreInstitutions() {
 		if(this.currentPage < this.totalPages) {
 			this.isLoadingMore = true;
-			// axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?name=${this.searchValue}`)
-			axios<IRespData>(`http://dev6.dewpoint.of.by/api/laboratories?page=${this.currentPage + 1}`)
+			axios<IRespData>(`${siteUrl}/api/laboratories?page=${this.currentPage + 1}`)
 			.then(({ data }) => {
 				runInAction(() => {
 					this.currentPage = data.data.current_page;

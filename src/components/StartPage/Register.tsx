@@ -6,6 +6,7 @@ import { s } from "react-native-wind";
 import axios from 'axios';
 import RNPickerSelect from 'react-native-picker-select';
 import CheckBox from '@react-native-community/checkbox';
+import { siteUrl } from '../../constants';
 
 interface IProps {
 	errorText: string;
@@ -87,7 +88,7 @@ const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn, se
 					setIsDisabledBtn(true);
 
 					axios<IRespData>({
-						url: 'http://dev6.dewpoint.of.by/api/register',
+						url: `${siteUrl}/api/register`,
 						method: 'POST',
 						headers: {
 							'Accept': 'application/json',

@@ -7,6 +7,7 @@ import { observer } from 'mobx-react-lite';
 import { userStore } from '../mobx';
 import { IUser } from '../types';
 import Tabs from './Tabs';
+import { siteUrl } from '../constants';
 
 interface IUserData {
 	email: string;
@@ -29,7 +30,7 @@ const Stacks = observer(() => {
 
 		if(userData) {
 			axios<IRespData>({
-				url: 'http://dev6.dewpoint.of.by/api/auth',
+				url: `${siteUrl}/api/auth`,
 				method: 'POST',
 				headers: {
 					'Accept': 'application/json',
