@@ -1,3 +1,5 @@
+import {NavigationProp, ParamListBase} from '@react-navigation/native';
+
 interface IUser {
 	id: number;
 	email: string;
@@ -47,4 +49,6 @@ interface IHelpAbroad extends IInstitution {
 	country_id: IItem;
 }
 
-export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad };
+type navigationType = NavigationProp<ParamListBase>;
+
+export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType };

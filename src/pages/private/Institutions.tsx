@@ -6,8 +6,13 @@ import { observer } from 'mobx-react-lite';
 import RNPickerSelect from 'react-native-picker-select';
 import { HeaderLogo, Map, InstitutionList, Loader, WidgetsPanel, InstitutionSearch, HeaderModal, Modal, FilterInstitutions } from '../../components';
 import { institutionsStore } from '../../mobx';
+import { navigationType } from '../../types';
 
-const Institutions = observer(() => {
+interface IProps {
+	navigation: navigationType;
+}
+
+const Institutions = observer(({ navigation }: IProps) => {
 	const [inputValue, setInputValue] = useState<string>('');
 	const [region, setRegion] = useState<string>('');
 	const [cityId, setCityId] = useState<number | ''>('');
@@ -82,6 +87,7 @@ const Institutions = observer(() => {
 						institutions={institutionsStore.institutions}
 						loadMoreInstitutions={loadMoreInstitutions}
 						isLoadingMore={institutionsStore.isLoadingMore}
+						navigation={navigation}
 					/>
 				}
 			</ScrollView>
