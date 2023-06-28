@@ -5,14 +5,15 @@ import { s } from 'react-native-wind';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { HeaderLogo } from '../../components';
-import { IInstitutionRB } from '../../types';
+import { GoBack, HeaderLogo } from '../../components';
+import { IInstitutionRB, navigationType } from '../../types';
 
 interface IProps {
 	route: RouteProp<{ params: { institution: IInstitutionRB } }, 'params'>;
+	navigation: navigationType;
 }
 
-const Institution = ({ route }: IProps) => {
+const Institution = ({ route, navigation }: IProps) => {
 	const { name, photo, address, phone, email, link_website, add_info } = route.params.institution;
 
 	return (
@@ -23,7 +24,10 @@ const Institution = ({ route }: IProps) => {
 			<HeaderLogo 
 				logo={require('../../assets/images/vstrecha-logo.png')} 
 			/>
-			<View style={s`mt-6 mb-3 px-3`}>
+			<GoBack 
+				navigation={navigation} 
+			/>
+			<View style={s`mt-3 mb-3 px-3`}>
 				<Text style={[s`text-xl font-bold text-black mb-3`, {lineHeight: 24}]}>{name}</Text>
 				<Image 
 					source={{uri: photo}}

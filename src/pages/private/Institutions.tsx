@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-virtualized-view';
 import { s } from 'react-native-wind';
 import { observer } from 'mobx-react-lite';
 import RNPickerSelect from 'react-native-picker-select';
-import { HeaderLogo, Map, InstitutionList, Loader, WidgetsPanel, InstitutionSearch, HeaderModal, Modal, FilterInstitutions } from '../../components';
+import { HeaderLogo, Map, InstitutionList, Loader, WidgetsPanel, InstitutionSearch, HeaderModal, Modal, FilterInstitutions, GoBack } from '../../components';
 import { institutionsStore } from '../../mobx';
 import { navigationType } from '../../types';
 
@@ -72,6 +72,9 @@ const Institutions = observer(({ navigation }: IProps) => {
 			>
 				<HeaderLogo 
 					logo={require('../../assets/images/vstrecha-logo.png')} 
+				/>
+				<GoBack 
+					navigation={navigation} 
 				/>
 				<Map
 					institutions={institutionsStore.institutions}

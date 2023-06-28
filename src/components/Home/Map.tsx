@@ -44,7 +44,7 @@ const Map = ({ institutions }: IProps) => {
 		<Mapbox.MapView 
 			logoEnabled={false}
 			attributionEnabled={false}
-			style={[s`w-full mt-6`, {height: width / 1.5}]}
+			style={[s`w-full mt-3`, {height: width / 1.5}]}
 		>
 			<Mapbox.Camera 
 				zoomLevel={5}

@@ -13,3 +13,4 @@ export { default as Modal } from './General/Modal';
 export { default as HeaderModal } from './General/HeaderModal';
 
 export { default as FilterInstitutions } from './General/FilterInstitutions';
+export { default as GoBack } from './General/GoBack';
