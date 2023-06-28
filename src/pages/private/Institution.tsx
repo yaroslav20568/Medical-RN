@@ -1,17 +1,14 @@
 import React from 'react';
 import { ScrollView, View, Text, Image, Linking } from 'react-native';
-import { RouteProp } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParams } from '../../navigation/HomeStacks';
 import { s } from 'react-native-wind';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { GoBack, HeaderLogo } from '../../components';
-import { IInstitutionRB, navigationType } from '../../types';
 
-interface IProps {
-	route: RouteProp<{ params: { institution: IInstitutionRB } }, 'params'>;
-	navigation: navigationType;
-}
+interface IProps extends NativeStackScreenProps<RootStackParams, 'Institution'> {}
 
 const Institution = ({ route, navigation }: IProps) => {
 	const { name, photo, address, phone, email, link_website, add_info } = route.params.institution;

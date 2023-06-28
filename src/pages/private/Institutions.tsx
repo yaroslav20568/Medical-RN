@@ -4,13 +4,12 @@ import { ScrollView } from 'react-native-virtualized-view';
 import { s } from 'react-native-wind';
 import { observer } from 'mobx-react-lite';
 import RNPickerSelect from 'react-native-picker-select';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParams } from '../../navigation/HomeStacks';
 import { HeaderLogo, Map, InstitutionList, Loader, WidgetsPanel, InstitutionSearch, HeaderModal, Modal, FilterInstitutions, GoBack } from '../../components';
 import { institutionsStore } from '../../mobx';
-import { navigationType } from '../../types';
 
-interface IProps {
-	navigation: navigationType;
-}
+interface IProps extends NativeStackScreenProps<RootStackParams, 'Institutions'> {}
 
 const Institutions = observer(({ navigation }: IProps) => {
 	const [inputValue, setInputValue] = useState<string>('');
