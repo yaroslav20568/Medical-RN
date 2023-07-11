@@ -17,12 +17,9 @@ const Home = ({ navigation }: IProps) => {
 			<HeaderLogo 
 				logo={require('../../assets/images/vstrecha-logo.png')} 
 			/>
-
-			<View style={s`px-3`}>
-				<MenuList
-					navigation={navigation}
-				/>
-			</View>
+			<MenuList
+				navigation={navigation}
+			/>
 		</ScrollView>
 	)
 }

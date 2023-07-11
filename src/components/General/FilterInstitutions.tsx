@@ -42,17 +42,18 @@ const FilterInstitutions = ({ cities, cityId, setCityId, typesInstitution, typeI
 			/>
 			<View style={s`px-3 mt-1`}>
 				<Text style={s`text-base px-1 mb-2`}>Типы пользователей:</Text>
-				{typesUserItems.map((itemElem) => 
-					<View style={s`flex-row items-center`}>
+				{typesUserItems.map((itemElem, index) => 
+					<View 
+						style={s`flex-row items-center`}
+						key={`typeUser_${index}`}
+					>
 						<CheckBox
 							value={typesUser.includes(itemElem.value)}
 							onValueChange={(value) => {
 								if(!typesUser.includes(itemElem.value)) {
 									setTypesUser([...typesUser, itemElem.value]);
-									console.log(typesUser);
 								} else {
 									setTypesUser(typesUser.filter((item) => item !== itemElem.value));
-									console.log(typesUser);
 								}
 							}}
 						/>

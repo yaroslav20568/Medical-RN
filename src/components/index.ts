@@ -14,3 +14,6 @@ export { default as HeaderModal } from './General/HeaderModal';
 
 export { default as FilterInstitutions } from './General/FilterInstitutions';
 export { default as GoBack } from './General/GoBack';
+
+export { default as LibraryMenuList } from './Library/LibraryMenuList';
+export { default as ArticlesItems } from './Library/ArticlesItems';

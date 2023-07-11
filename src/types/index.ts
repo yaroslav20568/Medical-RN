@@ -51,4 +51,15 @@ interface IHelpAbroad extends IInstitution {
 
 type navigationType = NavigationProp<ParamListBase>;
 
-export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType };
+interface IArticleSections extends IItem {
+	childrens: Array<IItem>;
+}
+
+interface IArticles {
+	id: number;
+	title: string;
+	text: string;
+	article_section_id: IItem;
+}
+
+export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, IArticleSections, IArticles };

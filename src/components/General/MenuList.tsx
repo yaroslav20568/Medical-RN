@@ -21,7 +21,7 @@ const MenuItems = [
 
 const MenuList = ({ navigation }: IProps) => {
 	return (
-		<View style={s`mt-6`}>
+		<View style={s`mt-6 px-3`}>
 			{MenuItems.map((menuItem, index) => 
 				<MenuListItem 
 					menuItem={menuItem} 
