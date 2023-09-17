@@ -6,3 +6,44 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Laboratory {
+  id            Int    @id @default(autoincrement())
+  name          String @unique
+  cityId        Int    @map("city_id")
+  city          City   @relation(fields: [cityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  region        String
+  address       String
+  coordinates   String
+  phone         String
+  email         String
+  socialNetwork String @map("social_network")
+  linkWebsite   String @map("link_website")
+  description   String
+  addInfo       String @map("add_info")
+  workingHours  String @map("working_hours")
+  typeId        Int    @map("type_id")
+	type          Type   @relation(fields: [typeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  photo         String
+  typesUsers    String @map("types_users")
+}
+
+model City {
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
+  countryId  Int          @map("city_id")
+  country    Country      @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Laboratory Laboratory[]
+}
+
+model Country {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  city City[]
+}
+
+model Type {
+  id         Int         @id @default(autoincrement())
+  name       String      @unique
+  laboratory Laboratory[]
+}
