@@ -6,3 +6,8 @@ export enum Regions {
   mogilev = 'Могилёвская',
   gomel = 'Гомельская',
 }
+
+export enum Genders {
+  Man = 'Мужской',
+  Woman = 'Женский',
+}
