@@ -7,6 +7,7 @@ import { GoBack, HeaderLogo, Loader } from '../../components';
 import { LibraryStore } from '../../mobx';
 import { LibraryMenuList } from '../../components';
 import { RootStackParams } from '../../navigation/HomeStacks';
+import { traversingTreeArray } from '../../helpers';
 
 interface IProps extends NativeStackScreenProps<RootStackParams, 'Library'> {}
 
@@ -18,7 +19,7 @@ const Library = observer(({ navigation }: IProps) => {
 	const onHandleNavigation = useCallback((id: number, name: string) => {
 		navigation.navigate('Articles', {id, name});
 	}, []);
-
+	// console.log(traversingTreeArray(LibraryStore.articleSections));
 	return (
 		<ScrollView
 			showsVerticalScrollIndicator={false}

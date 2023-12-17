@@ -2,6 +2,7 @@ import { makeObservable, observable, action, runInAction } from "mobx";
 import axios from "axios";
 import { IArticleSections, IArticles } from '../types';
 import { siteUrl } from "../constants";
+import { traversingTreeArray } from "../helpers";
 
 interface IRespArticleSections {
 	status: string;
@@ -39,7 +40,7 @@ class LibraryStore {
 		axios<IRespArticleSections>(`${siteUrl}/api/article-sections`)
     .then(({ data }) => {
 			runInAction(() => {
-				this.articleSections = data.data;
+				this.articleSections = traversingTreeArray(data.data);
 				this.isLoadingSections = false;
 			});
 		})

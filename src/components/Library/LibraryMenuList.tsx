@@ -12,11 +12,12 @@ interface IProps {
 const LibraryMenuList = ({ menuItems, onHandleNavigation }: IProps) => {
 	return (
 		<>
-			{menuItems.map((item) => 
+			{menuItems.map((item, index) => 
 				<TouchableOpacity 
 					style={s`flex-row items-center justify-between bg-white rounded-xl px-3 py-4 mb-4`}
 					onPress={() => onHandleNavigation(item.id, item.name)}
 					activeOpacity={.7}
+					key={`libraryMenuItem_${index}`}
 				>
 					<View style={s`flex-row items-center`}>
 						<Text style={s`text-base text-black`}>{item.name}</Text>

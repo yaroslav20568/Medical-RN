@@ -6,33 +6,30 @@ import { s } from "react-native-wind";
 import axios from 'axios';
 import RNPickerSelect from 'react-native-picker-select';
 import CheckBox from '@react-native-community/checkbox';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { siteUrl } from '../../constants';
+import { IRespAuthData, IRespAuthError } from '../../types';
 
 interface IProps {
-	errorText: string;
-	setErrorText: (value: string) => void;
+	infoText: string;
+	setInfoText: (value: string) => void;
 	isDisabledBtn: boolean;
 	setIsDisabledBtn: (value: boolean) => void;
 	setCurrTab: (value: string) => void;
 }
 
-interface ITypesUsers {
+interface ItypesUsersArr {
 	name: string;
 	isChecked: boolean;
-}
-
-interface IRespData {
-	status: string;
-	data: string;
 }
 
 interface IFormValues {
 	email: string;
 	password: string;
 	gender: string;
-	typesUsers: Array<number>;
+	typesUsersArr: Array<number>;
 	city: string;
-	types_users?: string;
+	typesUsers?: string;
 }
 
 const SignupSchema = Yup.object().shape({
@@ -46,7 +43,7 @@ const SignupSchema = Yup.object().shape({
 		.required('Заполните обязательно'),
 	gender: Yup.string()
 		.required('Выберите пункт'),
-	typesUsers: Yup.array().of(Yup.number())
+	typesUsersArr: Yup.array().of(Yup.number())
 		.min(1, 'Заполните хотя бы 1 чекбокс')
 		.required('Заполните обязательно'),
 	city: Yup.string()
@@ -56,7 +53,7 @@ const SignupSchema = Yup.object().shape({
 		.matches(/^([a-zа-яё]+)$/i, 'Цифры не должны присутствовать')
 });
 
-const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn, setCurrTab }: IProps) => {
+const Register = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn, setCurrTab }: IProps) => {
 	const initialState = [
 		{name: 'Люди, живущие с ВИЧ (ЛЖВ)', isChecked: false},
 		{name: 'Люди, употребляющие инъекционные наркотики (ЛУИН) ', isChecked: false},
@@ -66,28 +63,27 @@ const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn, se
 		{name: 'Другое', isChecked: false}
 	];
 
-	const [typesUsersArray, setTypesUsersArray] = useState<ITypesUsers[]>(initialState);
-	const formValues:IFormValues = {email: '', password: '', gender: '', typesUsers: [], city: ''};
+	const [typesUsersArrArray, setTypesUsersArrArray] = useState<ItypesUsersArr[]>(initialState);
+	const formValues:IFormValues = {email: '', password: '', gender: '', typesUsersArr: [], city: ''};
 
 	useEffect(() => {
-		setErrorText('');
+		setInfoText('');
 	}, []);
 
 	return (
 		<>
-			{/* <Text style={s`text-3xl font-bold text-gray-700 text-center mb-6`}>Зарегестрироваться</Text> */}
 			<Formik
 				initialValues={formValues}
 				validationSchema={SignupSchema}
 				onSubmit={(values, { resetForm }) => {
-					const sortValues = values.typesUsers.slice().sort(function (a, b) {return a - b;})
-					values = {...values, typesUsers: sortValues};
-					const sendObject = {...values, types_users: values.typesUsers.join(',')} as Partial<IFormValues>;
-					delete sendObject.typesUsers;
+					const sortValues = values.typesUsersArr.slice().sort(function (a, b) {return a - b;})
+					values = {...values, typesUsersArr: sortValues};
+					const sendObject = {...values, typesUsers: values.typesUsersArr.join(',')} as Partial<IFormValues>;
+					delete sendObject.typesUsersArr;
 
 					setIsDisabledBtn(true);
 
-					axios<IRespData>({
+					axios<IRespAuthData>({
 						url: `${siteUrl}/api/register`,
 						method: 'POST',
 						headers: {
@@ -96,16 +92,20 @@ const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn, se
 						},
 						data: JSON.stringify(sendObject)
 					})
-					.then(({ data }) => {
+					.then((response) => {
 						setIsDisabledBtn(false);
 
-						if(data.status === 'success') {
+						if(response.status === 200) {
+							setInfoText('Вы зарегистрированы');
+							AsyncStorage.setItem('@userData', JSON.stringify(response.data));
 							resetForm();
-							setTypesUsersArray(initialState);
-							setTimeout(() => {setCurrTab('login');}, 500);
-						} else {
-							setErrorText(data.data);
+							setTypesUsersArrArray(initialState);
+							setTimeout(() => {setCurrTab('login');}, 1000);
 						}
+					})
+					.catch(({ response }: IRespAuthError) => {
+						setIsDisabledBtn(false);
+						setInfoText(response.data.message);
 					})
 				}}
 			>
@@ -156,20 +156,20 @@ const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn, se
 						</View>
 						<View style={s`mb-5`}>
 							<Text style={s`text-base mb-2`}>Тип пользователя:</Text>
-							{typesUsersArray.map((item, currIndex) => 
+							{typesUsersArrArray.map((item, currIndex) => 
 								<View style={s`flex-row items-center mb-1`} key={`checkbox_${currIndex}`}>
 									<CheckBox
 										value={item.isChecked}
 										onValueChange={value =>
-											setTypesUsersArray(typesUsersArray.map((item, index) => {
+											setTypesUsersArrArray(typesUsersArrArray.map((item, index) => {
 												if(currIndex === index) {
 													item.isChecked = value;
 													
-													if(item.isChecked && !values.typesUsers.includes(currIndex)) {
-														values.typesUsers = [...values.typesUsers, currIndex];
+													if(item.isChecked && !values.typesUsersArr.includes(currIndex)) {
+														values.typesUsersArr = [...values.typesUsersArr, currIndex];
 													} else {
-														const findIndex = values.typesUsers.findIndex((item) => currIndex === item);
-														values.typesUsers = values.typesUsers.filter((item, i) => findIndex !== i);
+														const findIndex = values.typesUsersArr.findIndex((item) => currIndex === item);
+														values.typesUsersArr = values.typesUsersArr.filter((item, i) => findIndex !== i);
 													}
 												}
 
@@ -180,8 +180,8 @@ const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn, se
 									<Text style={s`text-base mr-3`}>{item.name}</Text>
 								</View>
 							)}
-							{errors.typesUsers && touched.gender ? (
-								<Text style={s`text-red-900 text-base`}>{errors.typesUsers}</Text>
+							{errors.typesUsersArr && touched.gender ? (
+								<Text style={s`text-red-900 text-base`}>{errors.typesUsersArr}</Text>
 							) : ''}
 						</View>
 						<View style={s`mb-5`}>
@@ -196,8 +196,8 @@ const Register = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn, se
 								<Text style={s`text-red-900 text-base`}>{errors.city}</Text>
 							) : ''}
 						</View>
-						{errorText && <View style={s`mb-5`}>
-							<Text style={s`text-red-900 text-base`}>{errorText}</Text>
+						{infoText && <View style={s`mb-5`}>
+							<Text style={s`text-red-900 text-base`}>{infoText}</Text>
 						</View>}
 						<TouchableOpacity 
 							style={s`bg-violet-700 border-rose-700 py-3`}

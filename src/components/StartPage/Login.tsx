@@ -7,17 +7,13 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userStore } from '../../mobx';
 import { siteUrl } from '../../constants';
+import { IRespAuthData, IRespAuthError } from '../../types';
 
 interface IProps {
-	errorText: string;
-	setErrorText: (value: string) => void;
+	infoText: string;
+	setInfoText: (value: string) => void;
 	isDisabledBtn: boolean;
 	setIsDisabledBtn: (value: boolean) => void;
-}
-
-interface IRespData {
-	status: string;
-	data: string;
 }
 
 interface IFormValues {
@@ -36,11 +32,11 @@ const SignupSchema = Yup.object().shape({
 		.required('Заполните обязательно')
 });
 
-const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: IProps) => {
+const Login = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn }: IProps) => {
 	const formValues:IFormValues = {email: '', password: ''};
 
 	useEffect(() => {
-		setErrorText('');
+		setInfoText('');
 	}, []);
 
 	return (
@@ -51,8 +47,8 @@ const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: IPr
 				onSubmit={(values, { resetForm }) => {
 					setIsDisabledBtn(true);
 					
-					axios<IRespData>({
-						url: `${siteUrl}/api/auth`,
+					axios<IRespAuthData>({
+						url: `${siteUrl}/api/login`,
 						method: 'POST',
 						headers: {
 							'Accept': 'application/json',
@@ -60,16 +56,19 @@ const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: IPr
 						},
 						data: JSON.stringify(values)
 					})
-					.then(({ data }) => {
+					.then((response) => {
 						setIsDisabledBtn(false);
 
-						if(data.status === 'success') {
-							AsyncStorage.setItem('@userData', JSON.stringify(values));
+						if(response.status === 200) {
+							setInfoText('Вы залогинены');
+							AsyncStorage.setItem('@userData', JSON.stringify(response.data));
 							resetForm();
-							userStore.setIsAuth(true);
-						} else {
-							setErrorText(data.data);
+							setTimeout(() => {userStore.setIsAuth(true);}, 1000);
 						}
+					})
+					.catch(({ response }: IRespAuthError) => {
+						setIsDisabledBtn(false);
+						setInfoText(response.data.message);
 					})
 				}}
 			>
@@ -100,8 +99,8 @@ const Login = ({ errorText, setErrorText, isDisabledBtn, setIsDisabledBtn }: IPr
 								<Text style={s`text-red-900 text-base`}>{errors.password}</Text>
 							) : ''}
 						</View>
-						{errorText && <View style={s`mb-5`}>
-							<Text style={s`text-red-900 text-base`}>{errorText}</Text>
+						{infoText && <View style={s`mb-5`}>
+							<Text style={s`text-red-900 text-base`}>{infoText}</Text>
 						</View>}
 						<TouchableOpacity 
 							style={s`bg-violet-700 border-rose-700 py-3`}

@@ -17,6 +17,7 @@ const ArticlesItems = ({ articles, onHandleNavigation }: IProps) => {
 					style={s`mb-4`}
 					activeOpacity={.7}
 					onPress={() => onHandleNavigation(item)}
+					key={`article_${index}`}
 				>
 					<Text style={s`mb-3 text-xl text-black`}>{index + 1}. {item.title}</Text>
 					<RenderHtml

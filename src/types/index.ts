@@ -62,4 +62,26 @@ interface IArticles {
 	article_section_id: IItem;
 }
 
-export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, IArticleSections, IArticles };
+interface IRespAuthData {
+	accessToken: string;
+	refreshToken: string; 
+	user: {
+		id: number;
+		city: string;
+		email: string;
+		gender: string; 
+		typesUsers: string;
+	}
+}
+
+interface IRespAuthError {
+	response: {
+		data: {
+			error?: string;
+			message: string;
+			statusCode: number;
+		}
+	}
+}
+
+export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, IArticleSections, IArticles, IRespAuthData, IRespAuthError };
