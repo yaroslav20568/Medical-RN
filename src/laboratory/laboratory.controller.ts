@@ -11,6 +11,7 @@ import {
   ValidationPipe,
   UsePipes,
   Put,
+  HttpCode,
 } from '@nestjs/common';
 import { ApiTags, ApiConsumes } from '@nestjs/swagger';
 import { LaboratoryService } from './laboratory.service';
@@ -25,11 +26,13 @@ export class LaboratoryController {
   constructor(private readonly laboratoryService: LaboratoryService) {}
 
   @Get('laboratories')
+  @HttpCode(200)
   async getLaboratories(): Promise<Laboratory[]> {
     return this.laboratoryService.getLaboratories();
   }
 
   @Post('laboratory')
+  @HttpCode(200)
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
     FileInterceptor('file', {
@@ -50,6 +53,7 @@ export class LaboratoryController {
   }
 
   @Delete('laboratory/:id')
+  @HttpCode(200)
   async deleteLaboratory(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<Laboratory> {
@@ -57,6 +61,7 @@ export class LaboratoryController {
   }
 
   @Put('laboratory/:id')
+  @HttpCode(200)
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
     FileInterceptor('file', {

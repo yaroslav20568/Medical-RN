@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsOptional, IsString } from 'class-validator';
+import { IsInt, IsOptional, IsString, IsEmail } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { Express } from 'multer';
 import { Regions } from 'src/constants';
@@ -31,6 +31,7 @@ export class LaboratoryDto {
   phone: string;
 
   @IsString()
+  @IsEmail()
   @ApiProperty()
   email: string;
 
@@ -100,6 +101,7 @@ export class LaboratoryUpdateDto {
   phone: string;
 
   @IsString()
+  @IsEmail()
   @IsOptional()
   @ApiProperty({ required: false })
   email: string;

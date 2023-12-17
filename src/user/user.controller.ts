@@ -8,6 +8,7 @@ import {
   Put,
   UsePipes,
   ValidationPipe,
+  HttpCode,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
@@ -20,16 +21,19 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('users')
+  @HttpCode(200)
   async getUsers(): Promise<User[]> {
     return this.userService.getUsers();
   }
 
   @Delete('user/:id')
+  @HttpCode(200)
   async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
     return this.userService.deleteUser(id);
   }
 
   @Put('user/:id')
+  @HttpCode(200)
   @UsePipes(new ValidationPipe())
   async updateUser(
     @Param('id', ParseIntPipe) id: number,
