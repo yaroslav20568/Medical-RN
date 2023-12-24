@@ -19,6 +19,7 @@ import { Laboratory } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express, diskStorage } from 'multer';
 import { LaboratoryDto, LaboratoryUpdateDto } from './dto/laboratory.dto';
+import ILaboratories from './types';
 
 @ApiTags('Laboratory')
 @Controller()
@@ -27,7 +28,7 @@ export class LaboratoryController {
 
   @Get('laboratories')
   @HttpCode(200)
-  async getLaboratories(): Promise<Laboratory[]> {
+  async getLaboratories(): Promise<ILaboratories> {
     return this.laboratoryService.getLaboratories();
   }
 

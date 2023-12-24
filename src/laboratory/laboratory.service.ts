@@ -6,13 +6,14 @@ import { unlinkSync } from 'node:fs';
 import { LaboratoryDto, LaboratoryUpdateDto } from './dto/laboratory.dto';
 import { CityDto } from 'src/city/dto/city.dto';
 import { TypeDto } from 'src/type/dto/type.dto';
+import ILaboratories from './types';
 
 @Injectable()
 export class LaboratoryService {
   constructor(private prisma: PrismaService) {}
 
-  async getLaboratories(): Promise<Laboratory[]> {
-    return this.prisma.laboratory.findMany({
+  async getLaboratories(): Promise<ILaboratories> {
+    const findLaboratories = this.prisma.laboratory.findMany({
       orderBy: [
         {
           id: 'asc',
@@ -23,6 +24,14 @@ export class LaboratoryService {
         type: true,
       },
     });
+
+    const currentPage = Math.ceil((await findLaboratories).length / 10);
+
+    return {
+      currentPage: 1,
+      totalPages: currentPage,
+      items: await findLaboratories,
+    };
   }
 
   async createLaboratory(
@@ -79,7 +88,7 @@ export class LaboratoryService {
         addInfo: laboratoryDto.addInfo,
         workingHours: laboratoryDto.workingHours,
         typeId: laboratoryDto.typeId,
-        photo: file ? file?.originalname : 'no-image.jpg',
+        photo: file ? 'laboratories/' + file?.originalname : 'no-image.jpg',
         typesUsers: laboratoryDto.typesUsers,
       },
       include: {
@@ -122,7 +131,7 @@ export class LaboratoryService {
     laboratoryDto: LaboratoryUpdateDto,
   ): Promise<Laboratory> {
     const findLaboratory: Laboratory = await this.prisma.laboratory.findUnique({
-      where: { name: laboratoryDto.name },
+      where: { id: id },
     });
 
     if (!findLaboratory) {
@@ -174,7 +183,7 @@ export class LaboratoryService {
         addInfo: laboratoryDto.addInfo,
         workingHours: laboratoryDto.workingHours,
         typeId: laboratoryDto.typeId,
-        photo: file ? file?.originalname : 'no-image.jpg',
+        photo: file && 'laboratories/' + file?.originalname,
         typesUsers: laboratoryDto.typesUsers,
       },
     });
