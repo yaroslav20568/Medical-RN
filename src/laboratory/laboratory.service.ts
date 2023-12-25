@@ -3,7 +3,11 @@ import { Laboratory } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { Express } from 'multer';
 import { unlinkSync } from 'node:fs';
-import { LaboratoryDto, LaboratoryUpdateDto } from './dto/laboratory.dto';
+import {
+  LaboratoryDto,
+  LaboratoryUpdateDto,
+  LaboratoryQuery,
+} from './dto/laboratory.dto';
 import { CityDto } from 'src/city/dto/city.dto';
 import { TypeDto } from 'src/type/dto/type.dto';
 import ILaboratories from './types';
@@ -12,7 +16,13 @@ import ILaboratories from './types';
 export class LaboratoryService {
   constructor(private prisma: PrismaService) {}
 
-  async getLaboratories(): Promise<ILaboratories> {
+  async getLaboratories(
+    laboratoryQuery: LaboratoryQuery,
+  ): Promise<ILaboratories> {
+    const totalPages = Math.ceil(
+      (await this.prisma.laboratory.findMany()).length / 10,
+    );
+
     const findLaboratories = this.prisma.laboratory.findMany({
       orderBy: [
         {
@@ -20,16 +30,21 @@ export class LaboratoryService {
         },
       ],
       include: {
-        city: true,
+        city: {
+          include: { country: true },
+        },
         type: true,
+      },
+      skip: laboratoryQuery.skip ? +laboratoryQuery.skip : 0,
+      take: 10,
+      where: {
+        name: { contains: laboratoryQuery.name, mode: 'insensitive' },
       },
     });
 
-    const currentPage = Math.ceil((await findLaboratories).length / 10);
-
     return {
-      currentPage: 1,
-      totalPages: currentPage,
+      skip: laboratoryQuery.skip ? +laboratoryQuery.skip : 0,
+      totalSkip: (totalPages - 1) * 10,
       items: await findLaboratories,
     };
   }

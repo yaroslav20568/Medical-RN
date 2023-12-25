@@ -12,13 +12,18 @@ import {
   UsePipes,
   Put,
   HttpCode,
+  Query,
 } from '@nestjs/common';
 import { ApiTags, ApiConsumes } from '@nestjs/swagger';
 import { LaboratoryService } from './laboratory.service';
 import { Laboratory } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express, diskStorage } from 'multer';
-import { LaboratoryDto, LaboratoryUpdateDto } from './dto/laboratory.dto';
+import {
+  LaboratoryDto,
+  LaboratoryQuery,
+  LaboratoryUpdateDto,
+} from './dto/laboratory.dto';
 import ILaboratories from './types';
 
 @ApiTags('Laboratory')
@@ -28,8 +33,10 @@ export class LaboratoryController {
 
   @Get('laboratories')
   @HttpCode(200)
-  async getLaboratories(): Promise<ILaboratories> {
-    return this.laboratoryService.getLaboratories();
+  async getLaboratories(
+    @Query() laboratoryQuery: LaboratoryQuery,
+  ): Promise<ILaboratories> {
+    return this.laboratoryService.getLaboratories(laboratoryQuery);
   }
 
   @Post('laboratory')

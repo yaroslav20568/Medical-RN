@@ -4,6 +4,18 @@ import { Transform } from 'class-transformer';
 import { Express } from 'multer';
 import { Regions } from 'src/constants';
 
+export class LaboratoryQuery {
+  @IsInt()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  skip: number;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  name: string;
+}
+
 export class LaboratoryDto {
   @IsString()
   @ApiProperty()

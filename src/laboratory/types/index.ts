@@ -1,8 +1,8 @@
 import { Laboratory } from '@prisma/client';
 
 interface ILaboratories {
-  currentPage: number;
-  totalPages: number;
+  skip: number;
+  totalSkip: number;
   items: Array<Laboratory>;
 }
 
