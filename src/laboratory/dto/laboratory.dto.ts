@@ -14,6 +14,26 @@ export class LaboratoryQuery {
   @IsOptional()
   @ApiProperty({ required: false })
   name: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  region: string;
+
+  @IsInt()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  cityId: number;
+
+  @IsInt()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  typeId: number;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  typesUsers: string;
 }
 
 export class LaboratoryDto {

@@ -26,11 +26,8 @@ export class AuthService {
       data: { ...userDto, password: await bcrypt.hash(userDto.password, 10) },
     });
 
-    const tokens = await this.getNewTokens((await newUser).id);
-
     return {
       user: await this.returnUserFields(await newUser),
-      ...tokens,
     };
   }
 

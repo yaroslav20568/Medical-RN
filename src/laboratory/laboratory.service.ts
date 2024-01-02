@@ -39,6 +39,12 @@ export class LaboratoryService {
       take: 10,
       where: {
         name: { contains: laboratoryQuery.name, mode: 'insensitive' },
+        region: laboratoryQuery.region ? laboratoryQuery.region : undefined,
+        cityId: laboratoryQuery.cityId ? +laboratoryQuery.cityId : undefined,
+        typeId: laboratoryQuery.typeId ? +laboratoryQuery.typeId : undefined,
+        typesUsers: laboratoryQuery.typesUsers
+          ? { contains: laboratoryQuery.typesUsers }
+          : undefined,
       },
     });
 
