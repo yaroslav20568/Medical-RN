@@ -61,7 +61,7 @@ const Map = ({ institutions }: IProps) => {
 			{institutions.map((item, index) => 
 				<Mapbox.PointAnnotation 
 					id='MyLocation'
-					coordinate={[+item.coordinates.split(',')[1], +item.coordinates.split(',')[0]]}
+					coordinate={[+item.coordinates.split(',')[0], +item.coordinates.split(',')[1]]}
 					key={`marker_${index}`}
 				>
 					<View></View>

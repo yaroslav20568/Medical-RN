@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { s } from 'react-native-wind';
 import { Login, Register, Tabs } from '../../components';
+import { institutionsStore } from '../../mobx';
 
 interface ITab {
 	label: string;
@@ -42,6 +43,7 @@ const StartPage = () => {
 					isDisabledBtn={isDisabledBtn} 
 					setIsDisabledBtn={setIsDisabledBtn} 
 					setCurrTab={setCurrTab}
+					typesUsers={institutionsStore.typesUsers}
 				/>}
 		</ScrollView>
 	)

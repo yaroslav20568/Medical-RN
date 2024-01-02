@@ -1,11 +1,11 @@
-import {NavigationProp, ParamListBase} from '@react-navigation/native';
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 interface IUser {
 	id: number;
 	email: string;
 	city: string;
 	gender: string;
-	types_users: string;
+	typesUsers: string;
 }
 
 interface IMenuItem {
@@ -26,19 +26,32 @@ interface ISelectItem {
 }
 
 interface IInstitution extends IItem {
-	city_id: IItem;
+	cityId: IItem;
+	city: {
+		id: number;
+		name: string;
+		countryId: number;
+		country: {
+			id: number;
+			name: string;
+		}
+	}
 	address: string;
 	coordinates: string;
 	phone: string;
 	email: string;
-	social_network: string;
-	link_website: string;
+	socialNetwork: string;
+	linkWebsite: string;
 	description: string;
-	add_info: string;
-	working_hours: string;
-	type_id: IItem;
+	addInfo: string;
+	workingHours: string;
+	typeId: IItem;
+	type: {
+		id: number;
+		name: string;
+	}
 	photo: string;
-	types_users: Array<IItem>;
+	typesUsers: string;
 }
 
 interface IInstitutionRB extends IInstitution {
@@ -46,7 +59,7 @@ interface IInstitutionRB extends IInstitution {
 }
 
 interface IHelpAbroad extends IInstitution {
-	country_id: IItem;
+	countryId: IItem;
 }
 
 type navigationType = NavigationProp<ParamListBase>;
@@ -84,4 +97,8 @@ interface IRespAuthError {
 	}
 }
 
-export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, IArticleSections, IArticles, IRespAuthData, IRespAuthError };
+interface ITypeUser extends IItem {
+	isChecked?: boolean;
+}
+
+export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, IArticleSections, IArticles, IRespAuthData, IRespAuthError, IItem, ITypeUser };

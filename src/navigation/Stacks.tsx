@@ -4,68 +4,60 @@ import { StartPage, Privacy } from '../pages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { observer } from 'mobx-react-lite';
-import { userStore } from '../mobx';
-import { IUser } from '../types';
+import { userStore, institutionsStore } from '../mobx';
+import { IRespAuthData } from '../types';
 import Tabs from './Tabs';
-import { siteUrl } from '../constants';
+import { siteUrl }  from '../constants';
 
-interface IUserData {
-	email: string;
-	password: string;
-}
-
-interface IRespData {
-	status: string;
-	data: {
-		user: IUser;
-	};
-}
+interface IUserData extends IRespAuthData {}
 
 const Stack = createNativeStackNavigator();
 
 const Stacks = observer(() => {
-	const getUserData = async () => {
-		// await AsyncStorage.clear();
-		const userData: IUserData | null = JSON.parse(await AsyncStorage.getItem('@userData') as string);
+  const getUserData = async () => {
+    // await AsyncStorage.clear();
+    const userData: IUserData | null = JSON.parse(
+      (await AsyncStorage.getItem('@userData')) as string,
+    );
 
-		if(userData) {
-			axios<IRespData>({
-				url: `${siteUrl}/api/auth`,
-				method: 'POST',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-				data: JSON.stringify(userData)
-			})
-			.then(({ data }) => {
-				if(data.status === 'success') {
-					userStore.setIsAuth(true);
-					userStore.setUserData(data.data.user);
-				}
-			})
-		}
-	}
+    if (userData) {
+      axios<IRespAuthData>({
+        url: `${siteUrl}/api/auth`,
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userData.accessToken}`,
+        },
+      }).then(response => {
+        if (response.status === 200) {
+          userStore.setIsAuth(true);
+          userStore.setUserData(response.data);
+        }
+      })
+    }
+  };
 
-	useEffect(() => { 
-		getUserData();
-	}, []);
+  useEffect(() => {
+    getUserData();
+		institutionsStore.getTypesUsers();
+  }, []);
 
   return (
     <Stack.Navigator
-			screenOptions={{
-				headerShown: false
-			}}
-		>
-			{!userStore.isAuth ? 
-				<>
-					<Stack.Screen name="Privacy" component={Privacy} />
-					<Stack.Screen name="StartPage" component={StartPage} />
-				</> : 
-				<Stack.Screen name="Tabs" component={Tabs} />
-			}
+      screenOptions={{
+        headerShown: false,
+      }}>
+      {!userStore.isAuth ? (
+        <>
+          <Stack.Screen name="Privacy" component={Privacy} />
+          <Stack.Screen name="StartPage" component={StartPage} />
+        </>
+      ) : (
+        <Stack.Screen name="Tabs" component={Tabs} />
+      )}
     </Stack.Navigator>
   );
-})
+});
 
 export default Stacks;

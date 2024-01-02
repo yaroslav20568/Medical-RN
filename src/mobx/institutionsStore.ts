@@ -1,63 +1,65 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import axios from "axios";
-import { ISelectItem, IInstitutionRB } from '../types';
+import { ISelectItem, IInstitutionRB, ITypeUser } from '../types';
 import { siteUrl } from "../constants";
+import { sortArray } from "../helpers";
 
 interface IRespData {
-	status: string;
-	data: {
-		current_page: number;
-		total_pages: number;
-		items: Array<IInstitutionRB>;
-	}
+	skip: number;
+	totalSkip: number;
+	items: Array<IInstitutionRB>;
 }
 
 class InstitutionsStore {
 	isLoading: boolean;
-	currentPage: number;
-	totalPages: number;
+	skip: number;
+	totalSkip: number;
 	institutions: Array<IInstitutionRB>;
 	isLoadingMore: boolean;
+	typesUsers: Array<ITypeUser>;
 
 	constructor() {
 		this.isLoading = false;
-		this.currentPage = 1;
-		this.totalPages = 1;
+		this.skip = 0;
+		this.totalSkip = 0;
 		this.institutions = [];
 		this.isLoadingMore = false;
+		this.typesUsers = [];
+
 		makeObservable(this, {
 			isLoading: observable,
-			currentPage: observable,
-			totalPages: observable,
+			skip: observable,
+			totalSkip: observable,
 			institutions: observable,
 			loadInstitutions: action,
 			loadMoreInstitutions: action,
-			isLoadingMore: observable
+			isLoadingMore: observable,
+			typesUsers: observable
 		})
 	}
 
 	loadInstitutions(searchValue: string, region: string, cityId: number | '', typeInstitutionId: number | '', typesUser: Array<number>) {
 		this.isLoading = true;
-		axios<IRespData>(`${siteUrl}/api/laboratories?name=${searchValue}&region=${region}&city_id=${cityId}&type_id=${typeInstitutionId}&types_users=${typesUser.join(',')}`)
+		axios<IRespData>(`${siteUrl}/api/laboratories?name=${searchValue}&region=${region}&cityId=${cityId}&typeId=${typeInstitutionId}&typesUsers=${sortArray(typesUser).join(',')}`)
     .then(({ data }) => {
 			runInAction(() => {
-				this.currentPage = data.data.current_page;
-				this.totalPages = data.data.total_pages;
-				this.institutions = data.data.items;
+				this.skip = data.skip;
+				this.totalSkip = data.totalSkip;
+				this.institutions = data.items;
 				this.isLoading = false;
 			});
 		})
 	}
 
 	loadMoreInstitutions() {
-		if(this.currentPage < this.totalPages) {
+		if(this.skip < this.totalSkip) {
 			this.isLoadingMore = true;
-			axios<IRespData>(`${siteUrl}/api/laboratories?page=${this.currentPage + 1}`)
+			axios<IRespData>(`${siteUrl}/api/laboratories?skip=${this.skip + 10}`)
 			.then(({ data }) => {
 				runInAction(() => {
-					this.currentPage = data.data.current_page;
-					this.totalPages = data.data.total_pages;
-					this.institutions = [...this.institutions, ...data.data.items];
+					this.skip = data.skip;
+					this.totalSkip = data.totalSkip;
+					this.institutions = [...this.institutions, ...data.items];
 					this.isLoadingMore = false;
 				});
 			})
@@ -65,16 +67,25 @@ class InstitutionsStore {
 	}
 
 	get getCities() {
-		return this.institutions.map(institution => { return {label: institution.city_id.name, value: institution.city_id.id} });
+		const citiesInstitution: Array<ISelectItem> = [];
+		this.institutions.forEach(institution => {
+			const bool = citiesInstitution.some(cityInstitution => cityInstitution?.value == institution.city?.id);
+
+			if(!bool) {
+				citiesInstitution.push({label: institution.city?.name, value: institution.city?.id});
+			}
+		});
+
+		return citiesInstitution;
 	}
 
 	get getTypesInstitution() {
 		const typesInstitution: Array<ISelectItem> = [];
 		this.institutions.forEach(institution => {
-			const bool = typesInstitution.some(typeInstitution => typeInstitution?.value == institution.type_id?.id);
+			const bool = typesInstitution.some(typeInstitution => typeInstitution?.value == institution.type?.id);
 
 			if(!bool) {
-				typesInstitution.push({label: institution.type_id?.name, value: institution.type_id?.id});
+				typesInstitution.push({label: institution.type?.name, value: institution.type?.id});
 			}
 		});
 
@@ -84,16 +95,27 @@ class InstitutionsStore {
 	get getTypesUser() {
 		const typesUser: Array<ISelectItem> = [];
 		this.institutions.forEach(institution => {
-			institution.types_users.forEach(type => {
-				const bool = typesUser.some(typeUser => typeUser?.value == type?.id - 1);
+			institution.typesUsers.split(',').forEach(type => {
+				const bool = typesUser.some(typeUser => typeUser?.value == +type);
 
 				if(!bool) {
-					typesUser.push({label: type.name, value: type.id - 1, isChecked: false});
+					typesUser.push({label: this.typesUsers[+type].name, value: this.typesUsers[+type].id - 1, isChecked: false});
 				}
 			});
 		});
 
 		return typesUser;
+	}
+
+	getTypesUsers() {
+		this.isLoading = true;
+		axios<Array<ITypeUser>>(`${siteUrl}/api/types-users`)
+    .then(({ data }) => {
+			runInAction(() => {
+				this.typesUsers = data;
+				this.isLoading = false;
+			});
+		})
 	}
 }
 

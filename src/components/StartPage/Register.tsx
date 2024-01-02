@@ -8,7 +8,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { siteUrl } from '../../constants';
-import { IRespAuthData, IRespAuthError } from '../../types';
+import { IRespAuthData, IRespAuthError, ITypeUser } from '../../types';
 
 interface IProps {
 	infoText: string;
@@ -16,11 +16,7 @@ interface IProps {
 	isDisabledBtn: boolean;
 	setIsDisabledBtn: (value: boolean) => void;
 	setCurrTab: (value: string) => void;
-}
-
-interface ItypesUsersArr {
-	name: string;
-	isChecked: boolean;
+	typesUsers: Array<ITypeUser>;
 }
 
 interface IFormValues {
@@ -53,17 +49,8 @@ const SignupSchema = Yup.object().shape({
 		.matches(/^([a-zа-яё]+)$/i, 'Цифры не должны присутствовать')
 });
 
-const Register = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn, setCurrTab }: IProps) => {
-	const initialState = [
-		{name: 'Люди, живущие с ВИЧ (ЛЖВ)', isChecked: false},
-		{name: 'Люди, употребляющие инъекционные наркотики (ЛУИН) ', isChecked: false},
-		{name: 'Работники коммерческого секса (РКС)', isChecked: false},
-		{name: 'Мужчины, практикующие сексуальные контакты с мужчинами (МСМ)', isChecked: false},
-		{name: 'Трансгендерные персоны (ТГ)', isChecked: false},
-		{name: 'Другое', isChecked: false}
-	];
-
-	const [typesUsersArrArray, setTypesUsersArrArray] = useState<ItypesUsersArr[]>(initialState);
+const Register = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn, setCurrTab, typesUsers }: IProps) => {
+	const [typesUsersArrArray, setTypesUsersArrArray] = useState<ITypeUser[]>(typesUsers);
 	const formValues:IFormValues = {email: '', password: '', gender: '', typesUsersArr: [], city: ''};
 
 	useEffect(() => {
@@ -96,10 +83,9 @@ const Register = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn, setC
 						setIsDisabledBtn(false);
 
 						if(response.status === 200) {
-							setInfoText('Вы зарегистрированы');
-							AsyncStorage.setItem('@userData', JSON.stringify(response.data));
+							setInfoText('Вы зарегистрированы, залогиньтесь');
 							resetForm();
-							setTypesUsersArrArray(initialState);
+							setTypesUsersArrArray(typesUsers);
 							setTimeout(() => {setCurrTab('login');}, 1000);
 						}
 					})
@@ -163,14 +149,14 @@ const Register = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn, setC
 										onValueChange={value =>
 											setTypesUsersArrArray(typesUsersArrArray.map((item, index) => {
 												if(currIndex === index) {
-													item.isChecked = value;
-													
-													if(item.isChecked && !values.typesUsersArr.includes(currIndex)) {
+													if(!item.isChecked && !values.typesUsersArr.includes(currIndex)) {
 														values.typesUsersArr = [...values.typesUsersArr, currIndex];
 													} else {
 														const findIndex = values.typesUsersArr.findIndex((item) => currIndex === item);
 														values.typesUsersArr = values.typesUsersArr.filter((item, i) => findIndex !== i);
 													}
+
+													return {...item, isChecked: value}
 												}
 
 												return item;

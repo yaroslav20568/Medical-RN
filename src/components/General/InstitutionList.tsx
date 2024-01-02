@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { s } from 'react-native-wind';
 import { IInstitutionRB, navigationType } from '../../types';
 import Loader from './Loader';
+import { siteUrl } from '../../constants';
 
 interface IProps {
 	institutions: Array<IInstitutionRB>;
@@ -27,7 +28,7 @@ const InstitutionList = ({ institutions, loadMoreInstitutions, isLoadingMore, na
 					onEndReachedThreshold={0}
 					onEndReached={loadMoreInstitutions}
 				/> : 
-				<Text style={[s`text-lg font-semibold`]}>Institutions not found</Text>
+				<Text style={[s`text-lg font-semibold`]}>Учреждения не найдены</Text>
 			}
 			{isLoadingMore && <View style={s`absolute w-full bottom-2`}><Loader /></View>}
 		</View>
@@ -49,7 +50,7 @@ const InstitutionItem = ({ institution, navigation }: IInstitutionItemProps) => 
 			onPress={() => navigation.navigate('Institution', {institution})}
 		>
 			<Image
-				source={{uri: photo}}
+				source={{uri: `${siteUrl}/${photo}`}}
 				style={{width: '40%', height: 130}}
 			/>
 			<Text style={[{width: '60%'}, s`text-base font-medium text-black px-2`]}>{name}</Text>

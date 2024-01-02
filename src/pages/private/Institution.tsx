@@ -7,11 +7,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { GoBack, HeaderLogo } from '../../components';
+import { siteUrl } from '../../constants';
+import { removeProtocolInUrl } from '../../helpers';
+import { institutionsStore } from '../../mobx';
 
 interface IProps extends NativeStackScreenProps<RootStackParams, 'Institution'> {}
 
 const Institution = ({ route, navigation }: IProps) => {
-	const { name, photo, address, phone, email, link_website, add_info } = route.params.institution;
+	const { name, city, region, photo, address, phone, email, socialNetwork, linkWebsite, description, addInfo, workingHours, type, typesUsers } = route.params.institution;
 
 	return (
 		<ScrollView
@@ -27,7 +30,7 @@ const Institution = ({ route, navigation }: IProps) => {
 			<View style={s`mt-3 mb-3 px-3`}>
 				<Text style={[s`text-xl font-bold text-black mb-3`, {lineHeight: 24}]}>{name}</Text>
 				<Image 
-					source={{uri: photo}}
+					source={{uri: `${siteUrl}/${photo}`}}
 					style={s`w-full h-60 rounded-xl mb-3`}
 				/>
 				<View style={s`flex-row mb-3`}>
@@ -37,7 +40,7 @@ const Institution = ({ route, navigation }: IProps) => {
 						color='#294CB4' 
 						style={s`mr-2`}
 					/>
-					<Text style={s`text-base text-black pr-8`}>{address}</Text>
+					<Text style={s`text-base text-black pr-8`}>{city.country.name}, {region} область, г. {city.name}, {address}</Text>
 				</View>
 				<View style={s`flex-row ml-1 mb-3`}>
 					<FontAwesome 
@@ -58,17 +61,51 @@ const Institution = ({ route, navigation }: IProps) => {
 					<Text style={s`text-base text-black pr-8`}>{email}</Text>
 				</View>
 				<View style={s`flex-row mb-3`}>
+					<FontAwesome 
+						name='telegram' 
+						size={25} 
+						color='#294CB4' 
+						style={s`mr-2`}
+					/>
+					<Text style={s`text-base text-black pr-8`}>{socialNetwork}</Text>
+				</View>
+				<View style={s`flex-row mb-3`}>
 					<MaterialCommunityIcons 
 						name='web' 
 						size={25} 
 						color='#294CB4' 
 						style={s`mr-2`}
 					/>
-					<Text style={s`text-base text-black underline pr-8`} onPress={() => Linking.openURL('link_website')}>{link_website}</Text>
+					<Text style={s`text-base text-black underline pr-8`} onPress={() => Linking.openURL(linkWebsite)}>{removeProtocolInUrl(linkWebsite)}</Text>
+				</View>
+				<View style={s`mb-3`}>
+					<Text style={s`text-lg font-bold text-black mb-2`}>Описание</Text>
+					<Text style={s`text-base text-black`}>{description}</Text>
+				</View>
+				<View style={s`mb-3`}>
+					<Text style={s`text-lg font-bold text-black mb-2`}>Дополнительная информация</Text>
+					<Text style={s`text-base text-black`}>{addInfo}</Text>
+				</View>
+				<View style={s`mb-3`}>
+					<Text style={s`text-lg font-bold text-black mb-2`}>Время работы</Text>
+					<Text style={s`text-base text-black`}>{workingHours}</Text>
+				</View>
+				<View style={s`mb-3`}>
+					<Text style={s`text-lg font-bold text-black mb-2`}>Тип организации</Text>
+					<Text style={s`text-base text-black`}>{type.name}</Text>
 				</View>
 				<View>
-					<Text style={s`text-lg font-bold text-black mb-2`}>Об учреждении</Text>
-					<Text style={s`text-base text-black`}>{add_info}</Text>
+					<Text style={s`text-lg font-bold text-black mb-2`}>К какому типу пользователей относится</Text>
+					<View>
+						{typesUsers.split(',').map((typeUser, index) => 
+							<Text
+								style={s`text-base text-black`}
+								key={`typeUser_${index}`}
+							>
+								{index + 1}. {institutionsStore.typesUsers[+typeUser].name}
+							</Text>
+						)}
+					</View>
 				</View>
 			</View>
 		</ScrollView>
