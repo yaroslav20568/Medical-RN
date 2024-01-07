@@ -26,12 +26,12 @@ const HomeStacks = () => {
 		<HomeStack.Navigator
 			screenOptions={{headerShown: false}}
 		>
-			<HomeStack.Screen name="HomeInner" component={Home} />
-			<HomeStack.Screen name="Institutions" component={Institutions} />
-			<HomeStack.Screen name="Institution" component={Institution} />
-			<HomeStack.Screen name="Library" component={Library} />
-			<HomeStack.Screen name="Articles" component={Articles} />
-			<HomeStack.Screen name="Article" component={Article} />
+			<HomeStack.Screen name="HomeInner" component={Home} options={{animation: 'slide_from_right'}} />
+			<HomeStack.Screen name="Institutions" component={Institutions} options={{animation: 'slide_from_right'}} />
+			<HomeStack.Screen name="Institution" component={Institution} options={{animation: 'slide_from_right'}} />
+			<HomeStack.Screen name="Library" component={Library} options={{animation: 'slide_from_right'}} />
+			<HomeStack.Screen name="Articles" component={Articles} options={{animation: 'slide_from_right'}} />
+			<HomeStack.Screen name="Article" component={Article} options={{animation: 'slide_from_right'}} />
 		</HomeStack.Navigator>
 	);
 }

@@ -6,7 +6,7 @@ import axios from 'axios';
 import { observer } from 'mobx-react-lite';
 import { userStore, institutionsStore } from '../mobx';
 import { IRespAuthData } from '../types';
-import Tabs from './Tabs';
+import { Tabs } from '../navigation';
 import { siteUrl }  from '../constants';
 
 interface IUserData extends IRespAuthData {}
@@ -50,8 +50,8 @@ const Stacks = observer(() => {
       }}>
       {!userStore.isAuth ? (
         <>
-          <Stack.Screen name="Privacy" component={Privacy} />
-          <Stack.Screen name="StartPage" component={StartPage} />
+          <Stack.Screen name="Privacy" component={Privacy} options={{animation: 'slide_from_right'}} />
+          <Stack.Screen name="StartPage" component={StartPage} options={{animation: 'slide_from_right'}} />
         </>
       ) : (
         <Stack.Screen name="Tabs" component={Tabs} />

@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { s } from 'react-native-wind';
+import Animated from 'react-native-reanimated';
 import { IInstitutionRB, navigationType } from '../../types';
 import Loader from './Loader';
 import { siteUrl } from '../../constants';
@@ -49,9 +50,10 @@ const InstitutionItem = ({ institution, navigation }: IInstitutionItemProps) => 
 			activeOpacity={.7}
 			onPress={() => navigation.navigate('Institution', {institution})}
 		>
-			<Image
+			<Animated.Image
 				source={{uri: `${siteUrl}/${photo}`}}
-				style={{width: '40%', height: 130}}
+				style={[s`rounded-2xl`, {width: '40%', height: 130}]}
+				sharedTransitionTag={`tag_${institution.id}`}
 			/>
 			<Text style={[{width: '60%'}, s`text-base font-medium text-black px-2`]}>{name}</Text>
 		</TouchableOpacity>

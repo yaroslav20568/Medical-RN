@@ -2,26 +2,35 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { s } from 'react-native-wind';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Animated, { FadeInUp } from 'react-native-reanimated';
 
 interface IProps {
 	title: string;
 	showModal: () => void;
 	setModalActive: (value: string) => void;
+	modalNameRef: {
+		current: string;
+	};
 }
 
-const WidgetsPanel = ({ title, showModal, setModalActive }: IProps) => {
+const WidgetsPanel = ({ title, showModal, setModalActive, modalNameRef }: IProps) => {
 	const onShowSearch = () => {
 		setModalActive('search');
 		showModal();
+		modalNameRef.current = 'search';
 	}
 
 	const onShowFilter = () => {
 		setModalActive('filter');
 		showModal();
+		modalNameRef.current = 'filter';
 	}
 
 	return (
-		<View style={s`py-4 px-3 flex-row items-center justify-between`}>
+		<Animated.View 
+			style={s`py-4 px-3 flex-row items-center justify-between`} 
+			entering={FadeInUp.delay(300).duration(1000)}
+		>
 			<Text style={s`text-2xl font-semibold text-black`}>{title}</Text>
 			<View style={s`flex-row`}>
 				<TouchableOpacity 
@@ -39,7 +48,7 @@ const WidgetsPanel = ({ title, showModal, setModalActive }: IProps) => {
 					<AntDesign name='filter' size={23} color='#fff' />
 				</TouchableOpacity>
 			</View>
-		</View>
+		</Animated.View>
 	)
 }
 

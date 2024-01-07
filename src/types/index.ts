@@ -1,4 +1,5 @@
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import { ReactNode } from 'react';
 
 interface IUser {
 	id: number;
@@ -101,4 +102,11 @@ interface ITypeUser extends IItem {
 	isChecked?: boolean;
 }
 
-export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, IArticleSections, IArticles, IRespAuthData, IRespAuthError, IItem, ITypeUser };
+interface ITab {
+	name: string;
+	label: string;
+	component: any;
+	icon: string;
+}
+
+export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, IArticleSections, IArticles, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab };

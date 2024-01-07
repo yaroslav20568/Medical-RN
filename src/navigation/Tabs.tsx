@@ -1,75 +1,49 @@
-import React, { ReactNode } from 'react';
-import { Text } from 'react-native';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home, Chat, Calendar, Account } from '../pages';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import HomeStacks from './HomeStacks';
+import { Chat, Calendar, Account } from '../pages';
+import { HomeStacks, CustomTabs } from '../navigation';
+import { ITab } from '../types';
 
 const Tab = createBottomTabNavigator();
-
-interface IIcon {
-	color: string;
-	size: number;
-	focused: boolean;
-}
-
-interface ITab {
-	name: string;
-	label: string;
-	component: any;
-	icon: ({ focused }: IIcon) => ReactNode | undefined;
-}
 
 const tabItems:Array<ITab> = [
 	{
 		name: 'Home', 
 		label: 'Главная', 
 		component: HomeStacks, 
-		icon: ({ focused }) => <Ionicons name={focused ? 'home-sharp' : 'home-outline'} size={30} color={focused ? '#294CB4' : '#999'} />
+		icon: 'home'
 	},
 	{
 		name: 'Chat',
 		label: 'Чат', 
 		component: Chat,
-		icon: ({ focused }) => <Ionicons name={focused ? 'chatbox' : 'chatbox-outline'} size={30} color={focused ? '#294CB4' : '#999'} />
+		icon: 'wechat'
 	},
 	{
 		name: 'Calendar',
 		label: 'Календарь', 
 		component: Calendar,
-		icon: ({ focused }) => <Ionicons name={focused ? 'calendar' : 'calendar-outline'} size={30} color={focused ? '#294CB4' : '#999'} />
+		icon: 'calendar'
 	},
 	{
 		name: 'Account',
 		label: 'Кабинет', 
 		component: Account,
-		icon: ({ focused }) => <FontAwesome name={focused ? 'user' : 'user-o'} size={30} color={focused ? '#294CB4' : '#999'} />
+		icon: 'user'
 	}
 ];
 
 const Tabs = () => {
   return (
     <Tab.Navigator
-			screenOptions={{
-				headerShown: false,
-				tabBarStyle: {
-					height: 60
-				},
-				tabBarItemStyle: {
-					paddingVertical: 5
-				}
-			}}
+			screenOptions={{headerShown: false}}
+			tabBar={(props) => <CustomTabs {...props} tabItems={tabItems} />}
 		>
       {tabItems.map((tab, index) => 
 				<Tab.Screen 
 					name={tab.name} 
 					component={tab.component} 
 					key={`tab_${index}`} 
-					options={{
-						tabBarLabel: ({ focused }) => <Text style={{color: focused ? '#294CB4' : '#999'}}>{tab.label}</Text>,
-						tabBarIcon: tab.icon
-					}}
 				/>	
 			)}
     </Tab.Navigator>

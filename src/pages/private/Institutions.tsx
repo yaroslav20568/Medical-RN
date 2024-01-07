@@ -27,8 +27,10 @@ const Institutions = observer(({ navigation }: IProps) => {
 		institutionsStore.loadMoreInstitutions();
 	}, []);
 
+	const modalNameRef = React.useRef<string>('search');
+
 	const clearFilterParams = useCallback(() => {
-		if(modalActive === 'search') {
+		if(modalNameRef.current === 'search') {
 			setInputValue('');
 		} else {
 			setRegion('');
@@ -47,21 +49,21 @@ const Institutions = observer(({ navigation }: IProps) => {
 		outputRange: [-width, 0]
 	})
 
-	const showModal = () => {
+	const showModal = useCallback(() => {
 		Animated.timing(animatedValue, {
       toValue: 1,
       duration: 500,
       useNativeDriver: true,
     }).start();
-	}
+	}, []);
 
-	const hideModal = () => {
+	const hideModal = useCallback(() => {
 		Animated.timing(animatedValue, {
       toValue: 0,
       duration: 500,
       useNativeDriver: true,
     }).start();
-	}
+	}, []);
 
 	return (
 		<>
@@ -82,6 +84,7 @@ const Institutions = observer(({ navigation }: IProps) => {
 					title='Учреждения'
 					showModal={showModal}
 					setModalActive={setModalActive}
+					modalNameRef={modalNameRef}
 				/>
 				{institutionsStore.isLoading ? 
 					<Loader /> : 
@@ -93,59 +96,51 @@ const Institutions = observer(({ navigation }: IProps) => {
 					/>
 				}
 			</ScrollView>
-			{modalActive === 'search' ? 
-				<Modal 
-					translateX={translateX}
-					animatedValue={animatedValue}
-				>
-					<HeaderModal 
-						title='Поиск' 
-						hideModal={hideModal} 
-						clearFilterParams={clearFilterParams}
-					/>
+			<Modal 
+				translateX={translateX}
+				animatedValue={animatedValue}
+			>
+				<HeaderModal 
+					title='Поиск' 
+					hideModal={hideModal} 
+					clearFilterParams={clearFilterParams}
+				/>
+				{modalActive === 'search' ?
 					<InstitutionSearch 
 						inputValue={inputValue}
 						setInputValue={setInputValue}
-					/>
-				</Modal> :
-				<Modal 
-					translateX={translateX}
-					animatedValue={animatedValue}
-				>
-					<HeaderModal 
-						title='Фильтр' 
-						hideModal={hideModal} 
-						clearFilterParams={clearFilterParams}
-					/>
-					<RNPickerSelect
-						placeholder = {{
-							label: 'Область',
-							value: '',
-							color: '#9EA0A4',
-						}}
-						value={region}
-						onValueChange={setRegion}
-						items={[
-							{label: 'Минская', value: 'Минская'},
-							{label: 'Витебская', value: 'Витебская'},
-							{label: 'Гродненская', value: 'Гродненская'},
-							{label: 'Брестская', value: 'Брестская'},
-							{label: 'Гомельская', value: 'Гомельская'},
-							{label: 'Могилёвская', value: 'Могилёвская'}
-						]}
-					/>
-					<FilterInstitutions 
-						cities={institutionsStore.getCities} 
-						cityId={cityId}
-						setCityId={setCityId}
-						typesInstitution={institutionsStore.getTypesInstitution}
-						typeInstitutionId={typeInstitutionId}
-						setTypeInstitutionId={setTypeInstitutionId}
-						typesUserItems={institutionsStore.getTypesUser}
-						typesUser={typesUser}
-						setTypesUser={setTypesUser}
-					/>
-				</Modal>}
+					/> :
+					<>
+						<RNPickerSelect
+							placeholder = {{
+								label: 'Область',
+								value: '',
+								color: '#9EA0A4',
+							}}
+							value={region}
+							onValueChange={setRegion}
+							items={[
+								{label: 'Минская', value: 'Минская'},
+								{label: 'Витебская', value: 'Витебская'},
+								{label: 'Гродненская', value: 'Гродненская'},
+								{label: 'Брестская', value: 'Брестская'},
+								{label: 'Гомельская', value: 'Гомельская'},
+								{label: 'Могилёвская', value: 'Могилёвская'}
+							]}
+						/>
+						<FilterInstitutions 
+							cities={institutionsStore.getCities} 
+							cityId={cityId}
+							setCityId={setCityId}
+							typesInstitution={institutionsStore.getTypesInstitution}
+							typeInstitutionId={typeInstitutionId}
+							setTypeInstitutionId={setTypeInstitutionId}
+							typesUserItems={institutionsStore.getTypesUser}
+							typesUser={typesUser}
+							setTypesUser={setTypesUser}
+						/>
+					</>}
+			</Modal>
 		</>
 	)
 })
