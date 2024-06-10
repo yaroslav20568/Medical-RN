@@ -75,24 +75,26 @@ export class LaboratoryService {
         where: { id: laboratoryDto.cityId },
       });
 
-      const findType: TypeDto = await this.prisma.type.findUnique({
-        where: { id: laboratoryDto.typeId },
-      });
-
       if (!findCity) {
         throw new HttpException(
           'No city with this id',
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
       }
+    }
 
-      if (!findType) {
+		if (laboratoryDto.cityId) {
+			const findType: TypeDto = await this.prisma.type.findUnique({
+        where: { id: laboratoryDto.typeId },
+      });
+			
+			if (!findType) {
         throw new HttpException(
           'No type with this id',
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
       }
-    }
+		}
 
     return this.prisma.laboratory.create({
       data: {
@@ -167,24 +169,26 @@ export class LaboratoryService {
         where: { id: laboratoryDto.cityId },
       });
 
-      const findType: TypeDto = await this.prisma.type.findUnique({
-        where: { id: laboratoryDto.typeId },
-      });
-
       if (!findCity) {
         throw new HttpException(
           'No city with this id',
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
       }
+    }
 
-      if (!findType) {
+		if (laboratoryDto.typeId) {
+			const findType: TypeDto = await this.prisma.type.findUnique({
+        where: { id: laboratoryDto.typeId },
+      });
+
+			if (!findType) {
         throw new HttpException(
           'No type with this id',
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
       }
-    }
+		}
 
     return this.prisma.laboratory.update({
       where: {
@@ -206,6 +210,10 @@ export class LaboratoryService {
         typeId: laboratoryDto.typeId,
         photo: file && 'laboratories/' + file?.originalname,
         typesUsers: laboratoryDto.typesUsers,
+      },
+			include: {
+        city: true,
+        type: true,
       },
     });
   }

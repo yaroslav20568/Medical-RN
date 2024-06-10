@@ -58,6 +58,21 @@ model User {
 }
 
 model TypeUser {
-	id         Int          @id @default(autoincrement())
-  name       String       @unique
+  id   Int    @id @default(autoincrement())
+  name String @unique
+}
+
+model LibraryItem {
+  id               Int            @id @default(autoincrement())
+  LibraryArticleId Int            @map("library_article_id")
+  type             LibraryArticle @relation(fields: [LibraryArticleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  title            String         @unique
+  text             String
+}
+
+model LibraryArticle {
+  id         Int           @id @default(autoincrement())
+  name       String        @unique
+  parent     Int
+  laboratory LibraryItem[]
 }

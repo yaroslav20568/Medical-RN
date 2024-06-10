@@ -48,7 +48,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('auth')
   @HttpCode(200)
-  async me(@Req() req) {
+  async auth(@Req() req) {
     return this.authService.returnUserFields(
       await this.userService.findOne(req.user.id),
     );

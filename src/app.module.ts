@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { TypeUserModule } from './type-user/type-user.module';
+import { LibraryArticleModule } from './library-article/library-article.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TypeUserModule } from './type-user/type-user.module';
       rootPath: join(__dirname, '..', 'uploads'),
     }),
     TypeUserModule,
+    LibraryArticleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
