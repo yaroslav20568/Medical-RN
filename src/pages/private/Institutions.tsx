@@ -27,10 +27,8 @@ const Institutions = observer(({ navigation }: IProps) => {
 		institutionsStore.loadMoreInstitutions();
 	}, []);
 
-	const modalNameRef = React.useRef<string>('search');
-
 	const clearFilterParams = useCallback(() => {
-		if(modalNameRef.current === 'search') {
+		if(modalActive === 'search') {
 			setInputValue('');
 		} else {
 			setRegion('');
@@ -84,7 +82,6 @@ const Institutions = observer(({ navigation }: IProps) => {
 					title='Учреждения'
 					showModal={showModal}
 					setModalActive={setModalActive}
-					modalNameRef={modalNameRef}
 				/>
 				{institutionsStore.isLoading ? 
 					<Loader /> : 

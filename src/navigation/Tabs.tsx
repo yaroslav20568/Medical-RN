@@ -1,7 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Chat, Calendar, Account } from '../pages';
-import { HomeStacks, CustomTabs } from '../navigation';
+import { CustomTabs } from '../navigation';
+import HomeStacks from '../navigation/HomeStacks';
 import { ITab } from '../types';
 
 const Tab = createBottomTabNavigator();

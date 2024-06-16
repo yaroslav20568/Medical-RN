@@ -8,22 +8,17 @@ interface IProps {
 	title: string;
 	showModal: () => void;
 	setModalActive: (value: string) => void;
-	modalNameRef: {
-		current: string;
-	};
 }
 
-const WidgetsPanel = ({ title, showModal, setModalActive, modalNameRef }: IProps) => {
+const WidgetsPanel = ({ title, showModal, setModalActive }: IProps) => {
 	const onShowSearch = () => {
 		setModalActive('search');
 		showModal();
-		modalNameRef.current = 'search';
 	}
 
 	const onShowFilter = () => {
 		setModalActive('filter');
 		showModal();
-		modalNameRef.current = 'filter';
 	}
 
 	return (

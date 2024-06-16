@@ -7,6 +7,7 @@ import Animated, { FadeInUp, FadeInDown } from 'react-native-reanimated';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import { GoBack, HeaderLogo } from '../../components';
 import { siteUrl } from '../../constants';
 import { removeProtocolInUrl } from '../../helpers';
@@ -72,8 +73,8 @@ const Institution = ({ route, navigation }: IProps) => {
 							<Text style={s`text-base text-black pr-8`}>{email}</Text>
 						</View>
 						<View style={s`flex-row mb-3`}>
-							<FontAwesome 
-								name='telegram' 
+							<Entypo 
+								name='network' 
 								size={25} 
 								color='#294CB4' 
 								style={s`mr-2`}

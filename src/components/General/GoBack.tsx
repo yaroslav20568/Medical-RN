@@ -20,11 +20,11 @@ const GoBack = ({ navigation }: IProps) => {
 			entering={FadeInRight.duration(1000)}
 		>
 			<TouchableOpacity 
-					onPress={goBackHandle}
-					style={[s`p-2 rounded-full`,{backgroundColor: '#294CB4'}]}
-					activeOpacity={.7}
-				>
-					<AntDesign name='back' size={23} color='#fff' />
+				onPress={goBackHandle}
+				style={[s`p-2 rounded-full`, {backgroundColor: '#294CB4'}]}
+				activeOpacity={.7}
+			>
+				<AntDesign name='back' size={23} color='#fff' />
 			</TouchableOpacity>
 		</Animated.View>
 	)
