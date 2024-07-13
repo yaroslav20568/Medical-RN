@@ -21,7 +21,7 @@ import { LibraryArticleDto, LibraryArticleUpdateDto } from './dto/library-articl
 export class LibraryArticleController {
   constructor(private readonly libraryArticleService: LibraryArticleService) {}
 
-  @Get('library-article')
+  @Get('library-articles')
   @HttpCode(200)
   async getLibraryArticles(): Promise<LibraryArticle[]> {
     return this.libraryArticleService.getLibraryArticles();

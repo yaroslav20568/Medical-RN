@@ -11,6 +11,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { TypeUserModule } from './type-user/type-user.module';
 import { LibraryArticleModule } from './library-article/library-article.module';
+import { ArticleItemModule } from './library-item/library-item.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { LibraryArticleModule } from './library-article/library-article.module';
     }),
     TypeUserModule,
     LibraryArticleModule,
+    ArticleItemModule,
   ],
   controllers: [AppController],
   providers: [AppService],

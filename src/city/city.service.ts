@@ -8,7 +8,7 @@ import { CountryDto } from 'src/country/dto/country.dto';
 export class CityService {
   constructor(private prisma: PrismaService) {}
 
-  async getCities(): Promise<City[] | null> {
+  async getCities(): Promise<City[]> {
     return this.prisma.city.findMany({
       include: {
         country: true,
