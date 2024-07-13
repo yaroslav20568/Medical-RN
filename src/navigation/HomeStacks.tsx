@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Home, Institutions, Institution, Library, Articles, Article } from '../pages';
-import { IInstitutionRB, IArticles } from '../types';
+import { Home, Institutions, Institution, Library, LibraryContent, LibraryItem } from '../pages';
+import { IInstitutionRB, ILibraryItem } from '../types';
 
 export type RootStackParams = {
   HomeInner: undefined;
@@ -10,12 +10,12 @@ export type RootStackParams = {
 		institution: IInstitutionRB;
 	};
 	Library: undefined;
-	Articles: {
+	LibraryContent: {
 		id: number;
 		name: string;
 	};
-	Article: {
-		item: IArticles;
+	LibraryItem: {
+		item: ILibraryItem;
 	};
 };
 
@@ -30,8 +30,8 @@ const HomeStacks = () => {
 			<HomeStack.Screen name="Institutions" component={Institutions} options={{animation: 'slide_from_right'}} />
 			<HomeStack.Screen name="Institution" component={Institution} options={{animation: 'slide_from_right'}} />
 			<HomeStack.Screen name="Library" component={Library} options={{animation: 'slide_from_right'}} />
-			<HomeStack.Screen name="Articles" component={Articles} options={{animation: 'slide_from_right'}} />
-			<HomeStack.Screen name="Article" component={Article} options={{animation: 'slide_from_right'}} />
+			<HomeStack.Screen name="LibraryContent" component={LibraryContent} options={{animation: 'slide_from_right'}} />
+			<HomeStack.Screen name="LibraryItem" component={LibraryItem} options={{animation: 'slide_from_right'}} />
 		</HomeStack.Navigator>
 	);
 }

@@ -1,58 +1,48 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import axios from "axios";
-import { IArticleSections, IArticles } from '../types';
+import { ILibraryArticle, ILibraryItem } from '../types';
 import { siteUrl } from "../constants";
 import { traversingTreeArray } from "../helpers";
 
-interface IRespArticleSections {
-	status: string;
-	data: Array<IArticleSections>;
-}
-
-interface IRespArticles {
-	status: string;
-	data: Array<IArticles>;
-}
-
 class LibraryStore {
-	isLoadingSections: boolean;
-	articleSections: Array<IArticleSections>;
 	isLoadingArticles: boolean;
-	articles: Array<IArticles>;
+	articles: Array<ILibraryArticle>;
+	isLoadingItems: boolean;
+	items: Array<ILibraryItem>;
 
 	constructor() {
-		this.isLoadingSections = false;
-		this.articleSections = [];
 		this.isLoadingArticles = false;
 		this.articles = [];
+		this.isLoadingItems = false;
+		this.items = [];
 		makeObservable(this, {
-			isLoadingSections: observable,
-			articleSections: observable,
-			loadArticleSections: action,
 			isLoadingArticles: observable,
 			articles: observable,
-			loadArticles: action
+			loadArticles: action,
+			isLoadingItems: observable,
+			items: observable,
+			loadItems: action
 		})
 	}
 
-	loadArticleSections() {
-		this.isLoadingSections = true;
-		axios<IRespArticleSections>(`${siteUrl}/api/article-sections`)
+	loadArticles() {
+		this.isLoadingArticles = true;
+		axios<Array<ILibraryArticle>>(`${siteUrl}/api/library-articles`)
     .then(({ data }) => {
 			runInAction(() => {
-				this.articleSections = traversingTreeArray(data.data);
-				this.isLoadingSections = false;
+				this.articles = traversingTreeArray(data);
+				this.isLoadingArticles = false;
 			});
 		})
 	}
 
-	loadArticles(id: number) {
-		this.isLoadingArticles = true;
-		axios<IRespArticles>(`${siteUrl}/api/article/${id}`)
+	loadItems(id: number) {
+		this.isLoadingItems = true;
+		axios<Array<ILibraryItem>>(`${siteUrl}/api/library-items/${id}`)
 		.then(({ data }) => {
 			runInAction(() => {
-				this.articles = data.data;
-				this.isLoadingArticles = false;
+				this.items = data;
+				this.isLoadingItems = false;
 			});
 		})
 	}

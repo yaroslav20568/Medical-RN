@@ -2,17 +2,17 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { s } from 'react-native-wind';
-import { IArticleSections } from '../../types';
+import { ILibraryArticle } from '../../types';
 
 interface IProps {
-	menuItems: Array<IArticleSections>;
+	libraryArticles: Array<ILibraryArticle>;
 	onHandleNavigation: (id: number, name: string) => void;
 }
 
-const LibraryMenuList = ({ menuItems, onHandleNavigation }: IProps) => {
+const LibraryArticles = ({ libraryArticles, onHandleNavigation }: IProps) => {
 	return (
 		<>
-			{menuItems.map((item, index) => 
+			{libraryArticles.map((item, index) => 
 				<TouchableOpacity 
 					style={s`flex-row items-center justify-between bg-white rounded-xl px-3 py-4 mb-4`}
 					onPress={() => onHandleNavigation(item.id, item.name)}
@@ -29,4 +29,4 @@ const LibraryMenuList = ({ menuItems, onHandleNavigation }: IProps) => {
 	)
 }
 
-export default LibraryMenuList;
+export default LibraryArticles;

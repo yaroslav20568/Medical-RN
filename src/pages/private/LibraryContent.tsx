@@ -3,20 +3,20 @@ import { View, Text, ScrollView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { s } from 'react-native-wind';
 import { RootStackParams } from '../../navigation/HomeStacks';
-import { ArticlesItems, GoBack, HeaderLogo, Loader } from '../../components';
+import { LibraryItems, GoBack, HeaderLogo, Loader } from '../../components';
 import { LibraryStore } from '../../mobx';
 import { observer } from 'mobx-react-lite';
-import { IArticles } from '../../types';
+import { ILibraryItem } from '../../types';
 
-interface IProps extends NativeStackScreenProps<RootStackParams, 'Articles'> {}
+interface IProps extends NativeStackScreenProps<RootStackParams, 'LibraryContent'> {}
 
-const Articles = observer(({ route, navigation }: IProps) => {
+const LibraryContent = observer(({ route, navigation }: IProps) => {
 	useEffect(() => {
-		LibraryStore.loadArticles(route.params.id);
+		LibraryStore.loadItems(route.params.id);
 	}, []);
 
-	const onHandleNavigation = useCallback((item: IArticles) => {
-		navigation.navigate('Article', {item})
+	const onHandleNavigation = useCallback((item: ILibraryItem) => {
+		navigation.navigate('LibraryItem', {item})
 	}, []);
 
 	return (
@@ -34,8 +34,8 @@ const Articles = observer(({ route, navigation }: IProps) => {
 				<Text style={s`text-2xl font-semibold text-black mb-4`}>Статьи раздела {route.params.name}: </Text>
 				{LibraryStore.isLoadingArticles ?
 					<Loader /> :
-					<ArticlesItems
-						articles={LibraryStore.articles}
+					<LibraryItems
+						articles={LibraryStore.items}
 						onHandleNavigation={onHandleNavigation}
 					/>
 				}
@@ -44,4 +44,4 @@ const Articles = observer(({ route, navigation }: IProps) => {
 	)
 })
 
-export default Articles;
+export default LibraryContent;

@@ -65,15 +65,17 @@ interface IHelpAbroad extends IInstitution {
 
 type navigationType = NavigationProp<ParamListBase>;
 
-interface IArticleSections extends IItem {
-	childrens: Array<IItem>;
+interface ILibraryArticle extends IItem {
+	// childrens: Array<IItem>;
+	parent: number;
 }
 
-interface IArticles {
+interface ILibraryItem {
 	id: number;
 	title: string;
 	text: string;
-	article_section_id: IItem;
+	libraryArticleId: number;
+	libraryArticle: ILibraryArticle;
 }
 
 interface IRespAuthData {
@@ -109,4 +111,4 @@ interface ITab {
 	icon: string;
 }
 
-export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, IArticleSections, IArticles, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab };
+export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab };

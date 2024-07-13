@@ -6,9 +6,9 @@ import RenderHtml from 'react-native-render-html';
 import { RootStackParams } from '../../navigation/HomeStacks';
 import { GoBack, HeaderLogo } from '../../components';
 
-interface IProps extends NativeStackScreenProps<RootStackParams, 'Article'> {}
+interface IProps extends NativeStackScreenProps<RootStackParams, 'LibraryItem'> {}
 
-const Article = ({ route, navigation }: IProps) => {
+const LibraryItem = ({ route, navigation }: IProps) => {
 	return (
 		<ScrollView
 			showsVerticalScrollIndicator={false}
@@ -31,4 +31,4 @@ const Article = ({ route, navigation }: IProps) => {
 	)
 }
 
-export default Article;
+export default LibraryItem;

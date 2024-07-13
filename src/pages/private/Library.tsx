@@ -5,21 +5,20 @@ import { s } from 'react-native-wind';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GoBack, HeaderLogo, Loader } from '../../components';
 import { LibraryStore } from '../../mobx';
-import { LibraryMenuList } from '../../components';
+import { LibraryArticles } from '../../components';
 import { RootStackParams } from '../../navigation/HomeStacks';
-import { traversingTreeArray } from '../../helpers';
 
 interface IProps extends NativeStackScreenProps<RootStackParams, 'Library'> {}
 
 const Library = observer(({ navigation }: IProps) => {
 	useEffect(() => {
-		LibraryStore.loadArticleSections();
+		LibraryStore.loadArticles();
 	}, []);
 
 	const onHandleNavigation = useCallback((id: number, name: string) => {
-		navigation.navigate('Articles', {id, name});
+		navigation.navigate('LibraryContent', {id, name});
 	}, []);
-	// console.log(traversingTreeArray(LibraryStore.articleSections));
+	
 	return (
 		<ScrollView
 			showsVerticalScrollIndicator={false}
@@ -33,10 +32,10 @@ const Library = observer(({ navigation }: IProps) => {
 			/>
 			<View style={s`mt-6 px-3`}>
 				<Text style={s`text-2xl font-semibold text-black mb-4`}>Разделы библиотеки: </Text>
-				{LibraryStore.isLoadingSections ?
+				{LibraryStore.isLoadingArticles ?
 					<Loader /> :
-					<LibraryMenuList 
-						menuItems={LibraryStore.articleSections}
+					<LibraryArticles 
+						libraryArticles={LibraryStore.articles}
 						onHandleNavigation={onHandleNavigation}
 					/>
 				}
