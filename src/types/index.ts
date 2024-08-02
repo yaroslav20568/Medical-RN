@@ -78,16 +78,19 @@ interface ILibraryItem {
 	libraryArticle: ILibraryArticle;
 }
 
+interface IUser {
+	id: number;
+	city: string;
+	email: string;
+	gender: string; 
+	typesUsers: string;
+	imageUrl: string;
+}
+
 interface IRespAuthData {
 	accessToken: string;
 	refreshToken: string; 
-	user: {
-		id: number;
-		city: string;
-		email: string;
-		gender: string; 
-		typesUsers: string;
-	}
+	user: IUser;
 }
 
 interface IRespAuthError {

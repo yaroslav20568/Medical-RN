@@ -17,6 +17,7 @@ export type RootStackParams = {
 	LibraryItem: {
 		item: ILibraryItem;
 	};
+	Account: undefined;
 };
 
 const HomeStack = createNativeStackNavigator<RootStackParams>();

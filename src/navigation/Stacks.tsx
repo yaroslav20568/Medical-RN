@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { observer } from 'mobx-react-lite';
 import { userStore, institutionsStore } from '../mobx';
-import { IRespAuthData } from '../types';
+import { IRespAuthData, IUser } from '../types';
 import { Tabs } from '../navigation';
 import { siteUrl }  from '../constants';
 
@@ -21,7 +21,7 @@ const Stacks = observer(() => {
     );
 
     if (userData) {
-      axios<IRespAuthData>({
+      axios<IUser>({
         url: `${siteUrl}/api/auth`,
         method: 'GET',
         headers: {

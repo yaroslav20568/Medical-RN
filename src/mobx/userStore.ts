@@ -1,9 +1,9 @@
 import { makeObservable, observable, action } from "mobx";
-import { IRespAuthData } from "../types";
+import { IUser } from "../types";
 
 class UserStore {
 	isAuth: boolean;
-	userData: IRespAuthData | null;
+	userData: IUser | null;
 
 	constructor() {
 		this.isAuth = false;
@@ -20,7 +20,7 @@ class UserStore {
 		this.isAuth = flag;
 	}
 
-	setUserData(userData: IRespAuthData) {
+	setUserData(userData: IUser) {
 		this.userData = userData;
 	}
 }

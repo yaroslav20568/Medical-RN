@@ -63,7 +63,10 @@ const Login = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn }: IProp
 							setInfoText('Вы залогинены');
 							AsyncStorage.setItem('@userData', JSON.stringify(response.data));
 							resetForm();
-							setTimeout(() => {userStore.setIsAuth(true);}, 1000);
+							setTimeout(() => {
+								userStore.setIsAuth(true);
+								userStore.setUserData(response.data.user);
+							}, 1000);
 						}
 					})
 					.catch(({ response }: IRespAuthError) => {

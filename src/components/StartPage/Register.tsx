@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, Text, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, Image, Platform } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { s } from "react-native-wind";
 import axios from 'axios';
 import RNPickerSelect from 'react-native-picker-select';
 import CheckBox from '@react-native-community/checkbox';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Feather from 'react-native-vector-icons/Feather';
 import { siteUrl } from '../../constants';
 import { IRespAuthData, IRespAuthError, ITypeUser } from '../../types';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 interface IProps {
 	infoText: string;
@@ -26,6 +27,14 @@ interface IFormValues {
 	typesUsersArr: Array<number>;
 	city: string;
 	typesUsers?: string;
+	file: object | null;
+	role: string;
+}
+
+interface IImage {
+	name: string | undefined;
+	type: string | undefined;
+	uri: string | undefined;
 }
 
 const SignupSchema = Yup.object().shape({
@@ -51,11 +60,28 @@ const SignupSchema = Yup.object().shape({
 
 const Register = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn, setCurrTab, typesUsers }: IProps) => {
 	const [typesUsersArrArray, setTypesUsersArrArray] = useState<ITypeUser[]>(typesUsers);
-	const formValues:IFormValues = {email: '', password: '', gender: '', typesUsersArr: [], city: ''};
+	const formValues: IFormValues = {email: '', password: '', gender: '', typesUsersArr: [], city: '', file: null, role: 'User'};
+	const [image, setImage] = useState<IImage | null>(null);
 
 	useEffect(() => {
 		setInfoText('');
 	}, []);
+
+	const chooseImage = async () => {
+		const currentImage = await launchImageLibrary({
+			mediaType: 'photo'
+		});
+
+		setImage({
+			name: currentImage.assets[0].fileName,
+			type: currentImage.assets[0].type,
+			uri: Platform.OS === "android" ? currentImage.assets[0].uri : currentImage.assets[0].uri.replace("file://", "")
+		});
+	}
+
+	const resetPhoto = () => {
+		setImage(null);
+	}
 
 	return (
 		<>
@@ -64,20 +90,29 @@ const Register = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn, setC
 				validationSchema={SignupSchema}
 				onSubmit={(values, { resetForm }) => {
 					const sortValues = values.typesUsersArr.slice().sort(function (a, b) {return a - b;})
-					values = {...values, typesUsersArr: sortValues};
+					values = {...values, typesUsersArr: sortValues, file: image};
 					const sendObject = {...values, typesUsers: values.typesUsersArr.join(',')} as Partial<IFormValues>;
 					delete sendObject.typesUsersArr;
+					if(sendObject.file === null) {
+						delete sendObject.file;
+					}
 
 					setIsDisabledBtn(true);
+
+					const formData = new FormData();
+
+					for (let key in sendObject) {
+						formData.append(key, sendObject[key as keyof IFormValues]);
+					}
 
 					axios<IRespAuthData>({
 						url: `${siteUrl}/api/register`,
 						method: 'POST',
 						headers: {
-							'Accept': 'application/json',
-							'Content-Type': 'application/json'
+							'Accept': 'multipart/form-data',
+							'Content-Type': 'multipart/form-data'
 						},
-						data: JSON.stringify(sendObject)
+						data: formData
 					})
 					.then((response) => {
 						setIsDisabledBtn(false);
@@ -181,6 +216,32 @@ const Register = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn, setC
 							{errors.city && touched.city ? (
 								<Text style={s`text-red-900 text-base`}>{errors.city}</Text>
 							) : ''}
+						</View>
+						<View style={s`mb-5`}>
+							<TouchableOpacity 
+								style={s`w-full bg-orange-400 rounded-lg flex-row items-center justify-center py-2 mb-2`}
+								onPress={chooseImage}
+								activeOpacity={.7}
+							>
+								<Text style={s`text-white text-lg color-orange-900 mr-3`}>Загрузить фото</Text>
+								<Feather name='download' size={25} color='#fff' />
+							</TouchableOpacity>
+							{image && 
+								<View style={[s`flex-row`, {width: 140, height: 140}]}>
+									<Image
+										source={{uri: image?.uri}}
+										style={s`w-full`}
+										resizeMode='cover'
+									/>
+									<TouchableOpacity
+										style={s`absolute top-1 right-1 bg-rose-500 rounded-full p-2`}
+										onPress={resetPhoto}
+										activeOpacity={.7}
+									>
+										<Feather name='delete' size={20} color='#fff' />
+									</TouchableOpacity>
+								</View>
+							}
 						</View>
 						{infoText && <View style={s`mb-5`}>
 							<Text style={s`text-red-900 text-base`}>{infoText}</Text>

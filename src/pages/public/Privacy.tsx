@@ -28,7 +28,7 @@ const Privacy = ({ navigation }: IProps) => {
 			</View>
 			<View style={s`items-center`}>
 				<TouchableOpacity
-					style={s`w-4/5 ${isChecked ? 'bg-orange-400' : 'bg-gray-400'} justify-center rounded-lg py-2`}
+					style={s`w-4/5 ${isChecked ? 'bg-orange-400' : 'bg-gray-400'} rounded-lg py-2`}
 					onPress={() => navigation.navigate('StartPage')}
 					activeOpacity={.7}
 					disabled={!isChecked}
