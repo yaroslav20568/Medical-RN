@@ -1,16 +1,20 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { Express } from 'multer';
 import { PrismaService } from 'src/prisma.service';
 import { LoginDto } from './dto/auth.dto';
 import { User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import { UserDto } from 'src/user/dto/user.dto';
+import { ITokens, IUser, IUserModific, IUserWithTokens } from 'src/user/types';
 
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
-  async register(userDto: UserDto) {
+  async register(file: Express.Multer.File, userDto: UserDto): Promise<IUserModific> {
+		// console.log(file);
+		// console.log(userDto);
     const findUser: User = await this.prisma.user.findUnique({
       where: { email: userDto.email },
     });
@@ -23,7 +27,15 @@ export class AuthService {
     }
 
     const newUser = this.prisma.user.create({
-      data: { ...userDto, password: await bcrypt.hash(userDto.password, 10) },
+      data: {
+				email: userDto.email,
+				gender: userDto.gender,
+				typesUsers: userDto.typesUsers,
+				city: userDto.city,
+        password: await bcrypt.hash(userDto.password, 10),
+        imageUrl: file ? 'users/' + file?.originalname : 'no-image.jpg',
+				role: userDto.role,
+      },
     });
 
     return {
@@ -31,7 +43,7 @@ export class AuthService {
     };
   }
 
-  async login(loginDto: LoginDto) {
+  async login(loginDto: LoginDto): Promise<IUserWithTokens> {
     const findUser: User = await this.prisma.user.findUnique({
       where: { email: loginDto.email },
     });
@@ -59,7 +71,7 @@ export class AuthService {
     };
   }
 
-  async getNewTokens(userId: number) {
+  async getNewTokens(userId: number): Promise<ITokens> {
     const payload = { id: userId };
 
     const accessToken = await this.jwtService.signAsync(payload, {
@@ -73,7 +85,7 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
-  async refreshTokens(refreshToken: string) {
+  async refreshTokens(refreshToken: string): Promise<IUserWithTokens> {
     const data = this.jwtService.verify(refreshToken);
 
     if (!data) {
@@ -95,13 +107,15 @@ export class AuthService {
     };
   }
 
-  async returnUserFields(user: User) {
+  async returnUserFields(user: User): Promise<IUser> {
     return {
       id: user.id,
       email: user.email,
       gender: user.gender,
       typesUsers: user.typesUsers,
       city: user.city,
+      imageUrl: user.imageUrl,
+			role: user.role
     };
   }
 }

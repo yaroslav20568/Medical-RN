@@ -1,8 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { User } from '@prisma/client';
+import { Express } from 'multer';
 import { PrismaService } from 'src/prisma.service';
-import { UserDto, UserUpdateDto } from './dto/user.dto';
+import { UserUpdateDto } from './dto/user.dto';
+import { unlinkSync } from 'fs';
 
 @Injectable()
 export class UserService {
@@ -30,12 +32,20 @@ export class UserService {
       );
     }
 
+    if (findUser.imageUrl !== 'no-image.jpg') {
+      unlinkSync(`uploads/${findUser.imageUrl}`);
+    }
+
     return this.prisma.user.delete({
       where: { id: id },
     });
   }
 
-  async updateUser(id: number, userDto: UserUpdateDto): Promise<User> {
+  async updateUser(
+    id: number,
+    file: Express.Multer.File,
+    userDto: UserUpdateDto,
+  ): Promise<User> {
     const findUser: User = await this.prisma.user.findUnique({
       where: { id: id },
     });
@@ -51,7 +61,15 @@ export class UserService {
       where: {
         id: id,
       },
-      data: { ...userDto, password: await bcrypt.hash(userDto.password, 10) },
+      data: {
+				email: userDto.email,
+				gender: userDto.gender,
+				typesUsers: userDto.typesUsers,
+				city: userDto.city,
+        password: userDto.password ? await bcrypt.hash(userDto.password, 10) : findUser.password,
+        imageUrl: file && 'users/' + file?.originalname,
+				role: userDto.role,
+      },
     });
   }
 

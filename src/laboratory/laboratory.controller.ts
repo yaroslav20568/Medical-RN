@@ -24,7 +24,7 @@ import {
   LaboratoryQuery,
   LaboratoryUpdateDto,
 } from './dto/laboratory.dto';
-import ILaboratories from './types';
+import { ILaboratories } from './types';
 
 @ApiTags('Laboratory')
 @Controller()

@@ -6,4 +6,4 @@ interface ILaboratories {
   items: Array<Laboratory>;
 }
 
-export default ILaboratories;
+export { ILaboratories };

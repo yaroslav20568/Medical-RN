@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString, MinLength, IsEmail } from 'class-validator';
-import { Genders } from 'src/constants';
+import { Express } from 'multer';
+import { Genders, Roles } from 'src/constants';
 
 export class UserDto {
   @IsString()
@@ -26,6 +27,13 @@ export class UserDto {
   @IsString()
   @ApiProperty()
   city: string;
+
+	@ApiProperty({ type: 'string', format: 'binary', required: false })
+  file: Express.multer.file;
+
+	@IsString()
+  @ApiProperty({ enum: Roles, enumName: 'Roles' })
+  role: string;
 }
 
 export class UserUpdateDto {
@@ -57,4 +65,12 @@ export class UserUpdateDto {
   @IsOptional()
   @ApiProperty({ required: false })
   city: string;
+
+	@ApiProperty({ type: 'string', format: 'binary', required: false })
+  file: Express.multer.file;
+
+	@IsString()
+  @IsOptional()
+  @ApiProperty({ enum: Roles, enumName: 'Roles', required: false })
+  role: string;
 }

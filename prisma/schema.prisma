@@ -55,6 +55,8 @@ model User {
   gender     String
   typesUsers String @map("types_users")
   city       String
+  imageUrl   String
+  role       String
 }
 
 model TypeUser {

@@ -10,7 +10,7 @@ import {
 } from './dto/laboratory.dto';
 import { CityDto } from 'src/city/dto/city.dto';
 import { TypeDto } from 'src/type/dto/type.dto';
-import ILaboratories from './types';
+import { ILaboratories } from './types';
 
 @Injectable()
 export class LaboratoryService {

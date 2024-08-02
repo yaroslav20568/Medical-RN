@@ -11,3 +11,8 @@ export enum Genders {
   Man = 'Мужской',
   Woman = 'Женский',
 }
+
+export enum Roles {
+	User = 'User',
+  Admin = 'Admin',
+}
