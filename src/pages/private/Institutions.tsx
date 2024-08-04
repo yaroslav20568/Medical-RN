@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Animated, Dimensions } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ScrollView } from 'react-native-virtualized-view';
 import { s } from 'react-native-wind';
 import { observer } from 'mobx-react-lite';
@@ -8,6 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParams } from '../../navigation/HomeStacks';
 import { HeaderLogo, Map, InstitutionList, Loader, WidgetsPanel, InstitutionSearch, HeaderModal, Modal, FilterInstitutions, GoBack } from '../../components';
 import { institutionsStore } from '../../mobx';
+import { useGetModalParams } from '../../hooks';
 
 interface IProps extends NativeStackScreenProps<RootStackParams, 'Institutions'> {}
 
@@ -18,6 +18,7 @@ const Institutions = observer(({ navigation }: IProps) => {
 	const [typeInstitutionId, setTypeInstitutionId] = useState<number | ''>('');
 	const [typesUser, setTypesUser] = useState<Array<number>>([]);
 	const [modalActive, setModalActive] = useState<string>('search');
+	const [animatedValue, translateX, showModal, hideModal] = useGetModalParams();
 
 	useEffect(() => {
 		institutionsStore.loadInstitutions(inputValue, region, cityId, typeInstitutionId, typesUser);
@@ -36,31 +37,6 @@ const Institutions = observer(({ navigation }: IProps) => {
 			setTypeInstitutionId('');
 			setTypesUser([]);
 		}
-	}, []);
-
-	const { width } = Dimensions.get('window');
-
-	const animatedValue = useRef(new Animated.Value(0)).current;
-
-	const translateX = animatedValue.interpolate({
-		inputRange: [0, 1],
-		outputRange: [-width, 0]
-	})
-
-	const showModal = useCallback(() => {
-		Animated.timing(animatedValue, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
-	}, []);
-
-	const hideModal = useCallback(() => {
-		Animated.timing(animatedValue, {
-      toValue: 0,
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
 	}, []);
 
 	return (
