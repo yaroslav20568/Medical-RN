@@ -8,6 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { observer } from 'mobx-react-lite';
 import { GoBack, HeaderLogo } from '../../components';
 import { siteUrl } from '../../constants';
 import { removeProtocolInUrl } from '../../helpers';
@@ -15,7 +16,7 @@ import { institutionsStore } from '../../mobx';
 
 interface IProps extends NativeStackScreenProps<RootStackParams, 'Institution'> {}
 
-const Institution = ({ route, navigation }: IProps) => {
+const Institution = observer(({ route, navigation }: IProps) => {
 	const { id, name, city, region, photo, address, phone, email, socialNetwork, linkWebsite, description, addInfo, workingHours, type, typesUsers } = route.params.institution;
 
 	return (
@@ -129,6 +130,6 @@ const Institution = ({ route, navigation }: IProps) => {
 			</View>
 		</ScrollView>
 	)
-}
+})
 
 export default Institution;

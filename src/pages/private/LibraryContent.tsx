@@ -3,9 +3,9 @@ import { View, Text, ScrollView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { s } from 'react-native-wind';
 import { RootStackParams } from '../../navigation/HomeStacks';
+import { observer } from 'mobx-react-lite';
 import { LibraryItems, GoBack, HeaderLogo, Loader } from '../../components';
 import { LibraryStore } from '../../mobx';
-import { observer } from 'mobx-react-lite';
 import { ILibraryItem } from '../../types';
 
 interface IProps extends NativeStackScreenProps<RootStackParams, 'LibraryContent'> {}

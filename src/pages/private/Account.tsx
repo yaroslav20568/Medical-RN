@@ -3,13 +3,14 @@ import { ScrollView } from 'react-native';
 import { s } from 'react-native-wind';
 import { RootStackParams } from '../../navigation/HomeStacks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { observer } from 'mobx-react-lite';
 import { AccountWidgetsPanel, ConfirmModal, GoBack, HeaderLogo, HeaderModal, Modal, UserProfile } from '../../components';
 import { institutionsStore, userStore } from '../../mobx';
 import { useGetModalParams } from '../../hooks';
 
 interface IProps extends NativeStackScreenProps<RootStackParams, 'Account'> {}
 
-const Account = ({ navigation }: IProps) => {
+const Account = observer(({ navigation }: IProps) => {
 	const [updateAnimatedValue, updateTranslateX, showUpdateModal, hideUpdateModal] = useGetModalParams();
 	const [deleteAnimatedValue, deleteTranslateX, showDeleteModal, hideDeleteModal] = useGetModalParams();
 
@@ -57,6 +58,6 @@ const Account = ({ navigation }: IProps) => {
 			/>
 		</>
 	)
-}
+})
 
 export default Account;

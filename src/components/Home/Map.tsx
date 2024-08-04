@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Dimensions, PermissionsAndroid, Alert } from 'react-native';
 import { s } from 'react-native-wind';
 import Mapbox from '@rnmapbox/maps';
+import { observer } from 'mobx-react-lite';
 import Geolocation from '@react-native-community/geolocation';
 import { IInstitutionRB } from '../../types';
 
@@ -12,7 +13,7 @@ interface IProps {
 Mapbox.setWellKnownTileServer(Mapbox.TileServers.Mapbox);
 Mapbox.setAccessToken('pk.eyJ1IjoicmVhY3QtbmF0aXZlMjA1NjgiLCJhIjoiY2xmNzd0bnoxMXRtMjN4cjBqMzV4a3lldCJ9.mypib9nlR80yCb3PAA5MaQ');
 
-const Map = ({ institutions }: IProps) => {
+const Map = observer(({ institutions }: IProps) => {
 	const [myCoords, setMyCoords] = React.useState([0, 0]);
 	const { width } = Dimensions.get('window');
 
@@ -69,6 +70,6 @@ const Map = ({ institutions }: IProps) => {
 			)}
 		</Mapbox.MapView>
 	)
-}
+})
 
 export default Map;

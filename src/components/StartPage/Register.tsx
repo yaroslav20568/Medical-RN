@@ -7,9 +7,10 @@ import axios from 'axios';
 import RNPickerSelect from 'react-native-picker-select';
 import CheckBox from '@react-native-community/checkbox';
 import Feather from 'react-native-vector-icons/Feather';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { observer } from 'mobx-react-lite';
 import { siteUrl } from '../../constants';
 import { IRespAuthData, IRespAuthError, ITypeUser } from '../../types';
-import { launchImageLibrary } from 'react-native-image-picker';
 
 interface IProps {
 	infoText: string;
@@ -58,7 +59,7 @@ const SignupSchema = Yup.object().shape({
 		.matches(/^([a-zа-яё]+)$/i, 'Цифры не должны присутствовать')
 });
 
-const Register = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn, setCurrTab, typesUsers }: IProps) => {
+const Register = observer(({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn, setCurrTab, typesUsers }: IProps) => {
 	const [typesUsersArrArray, setTypesUsersArrArray] = useState<ITypeUser[]>(typesUsers);
 	const formValues: IFormValues = {email: '', password: '', gender: '', typesUsersArr: [], city: '', file: null, role: 'User'};
 	const [image, setImage] = useState<IImage | null>(null);
@@ -259,6 +260,6 @@ const Register = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn, setC
 			</Formik>
 		</>
 	)
-}
+})
 
 export default Register;

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { s } from 'react-native-wind';
+import { observer } from 'mobx-react-lite';
 import { ILibraryArticle } from '../../types';
 
 interface IProps {
@@ -9,7 +10,7 @@ interface IProps {
 	onHandleNavigation: (id: number, name: string) => void;
 }
 
-const LibraryArticles = ({ libraryArticles, onHandleNavigation }: IProps) => {
+const LibraryArticles = observer(({ libraryArticles, onHandleNavigation }: IProps) => {
 	return (
 		<>
 			{libraryArticles.map((item, index) => 
@@ -27,6 +28,6 @@ const LibraryArticles = ({ libraryArticles, onHandleNavigation }: IProps) => {
 			)}
 		</>
 	)
-}
+})
 
 export default LibraryArticles;

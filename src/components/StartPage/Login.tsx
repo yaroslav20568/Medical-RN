@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { s } from "react-native-wind";
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { observer } from 'mobx-react-lite';
 import { userStore } from '../../mobx';
 import { siteUrl } from '../../constants';
 import { IRespAuthData, IRespAuthError } from '../../types';
@@ -32,7 +33,7 @@ const SignupSchema = Yup.object().shape({
 		.required('Заполните обязательно')
 });
 
-const Login = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn }: IProps) => {
+const Login = observer(({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn }: IProps) => {
 	const formValues:IFormValues = {email: '', password: ''};
 
 	useEffect(() => {
@@ -118,6 +119,6 @@ const Login = ({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn }: IProp
 			</Formik>
 		</>
 	)
-}
+})
 
 export default Login;
