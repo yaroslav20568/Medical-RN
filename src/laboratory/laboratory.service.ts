@@ -111,7 +111,7 @@ export class LaboratoryService {
         addInfo: laboratoryDto.addInfo,
         workingHours: laboratoryDto.workingHours,
         typeId: laboratoryDto.typeId,
-        photo: file ? 'laboratories/' + file?.originalname : 'no-image.jpg',
+        photo: file ? 'laboratories/' + file?.originalname : 'laboratories/no-image.jpg',
         typesUsers: laboratoryDto.typesUsers,
       },
       include: {
@@ -133,7 +133,7 @@ export class LaboratoryService {
       );
     }
 
-    if (findLaboratory.photo !== 'no-image.jpg') {
+    if (findLaboratory.photo !== 'laboratories/no-image.jpg') {
       unlinkSync(`uploads/laboratories/${findLaboratory.photo}`);
     }
 

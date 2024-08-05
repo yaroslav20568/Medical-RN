@@ -5,6 +5,7 @@ import { Express } from 'multer';
 import { PrismaService } from 'src/prisma.service';
 import { UserUpdateDto } from './dto/user.dto';
 import { unlinkSync } from 'fs';
+import { IUser } from './types';
 
 @Injectable()
 export class UserService {
@@ -20,7 +21,7 @@ export class UserService {
     });
   }
 
-  async deleteUser(id: number): Promise<User> {
+  async deleteUser(id: number): Promise<IUser> {
     const findUser: User = await this.prisma.user.findUnique({
       where: { id: id },
     });
@@ -32,12 +33,22 @@ export class UserService {
       );
     }
 
-    if (findUser.imageUrl !== 'no-image.jpg') {
+    if (findUser.imageUrl !== 'users/no-image.png') {
       unlinkSync(`uploads/${findUser.imageUrl}`);
     }
 
     return this.prisma.user.delete({
       where: { id: id },
+			select: {
+				id: true,
+				email: true,
+				password: false,
+				gender: true,
+				typesUsers: true,
+				city: true,
+        imageUrl: true,
+				role: true,
+			},
     });
   }
 
@@ -45,7 +56,7 @@ export class UserService {
     id: number,
     file: Express.Multer.File,
     userDto: UserUpdateDto,
-  ): Promise<User> {
+  ): Promise<IUser> {
     const findUser: User = await this.prisma.user.findUnique({
       where: { id: id },
     });
@@ -63,13 +74,23 @@ export class UserService {
       },
       data: {
 				email: userDto.email,
+				password: userDto.password ? await bcrypt.hash(userDto.password, 10) : findUser.password,
 				gender: userDto.gender,
 				typesUsers: userDto.typesUsers,
 				city: userDto.city,
-        password: userDto.password ? await bcrypt.hash(userDto.password, 10) : findUser.password,
         imageUrl: file && 'users/' + file?.originalname,
 				role: userDto.role,
       },
+			select: {
+				id: true,
+				email: true,
+				password: false,
+				gender: true,
+				typesUsers: true,
+				city: true,
+        imageUrl: true,
+				role: true,
+			},
     });
   }
 

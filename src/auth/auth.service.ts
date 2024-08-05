@@ -13,8 +13,6 @@ export class AuthService {
   constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
   async register(file: Express.Multer.File, userDto: UserDto): Promise<IUserModific> {
-		// console.log(file);
-		// console.log(userDto);
     const findUser: User = await this.prisma.user.findUnique({
       where: { email: userDto.email },
     });
@@ -29,11 +27,11 @@ export class AuthService {
     const newUser = this.prisma.user.create({
       data: {
 				email: userDto.email,
+				password: await bcrypt.hash(userDto.password, 10),
 				gender: userDto.gender,
 				typesUsers: userDto.typesUsers,
 				city: userDto.city,
-        password: await bcrypt.hash(userDto.password, 10),
-        imageUrl: file ? 'users/' + file?.originalname : 'no-image.jpg',
+        imageUrl: file ? 'users/' + file?.originalname : 'users/no-image.png',
 				role: userDto.role,
       },
     });

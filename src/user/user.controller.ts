@@ -18,6 +18,7 @@ import { Express, diskStorage } from 'multer';
 import { User } from '@prisma/client';
 import { UserUpdateDto } from './dto/user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { IUser } from './types';
 
 @ApiTags('User')
 @Controller()
@@ -32,7 +33,7 @@ export class UserController {
 
   @Delete('user/:id')
   @HttpCode(200)
-  async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
+  async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<IUser> {
     return this.userService.deleteUser(id);
   }
 
@@ -54,7 +55,7 @@ export class UserController {
     @Param('id', ParseIntPipe) id: number,
 		@UploadedFile('file') file: Express.Multer.File,
     @Body() userDto: UserUpdateDto,
-  ): Promise<User> {
+  ): Promise<IUser> {
     return this.userService.updateUser(id, file, userDto);
   }
 }
