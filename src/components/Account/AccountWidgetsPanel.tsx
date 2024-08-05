@@ -25,17 +25,17 @@ const AccountWidgetsPanel = ({ title, showModal, showConfirmModal }: IProps) => 
 			>
 				<TouchableOpacity 
 					onPress={showConfirmModal}
-					style={[s`p-2 rounded-full mr-6`,{backgroundColor: '#294CB4'}]}
+					style={[s`w-10 h-10 items-center justify-center rounded-full mr-6`,{backgroundColor: '#294CB4'}]}
 					activeOpacity={.7}
 				>
-					<FontAwesome5 name='user-minus' size={20} color='#fff' />
+					<FontAwesome5 name='user-minus' size={18} color='#fff' />
 				</TouchableOpacity>
 				<TouchableOpacity 
 					onPress={showModal}
-					style={[s`p-2 rounded-full`,{backgroundColor: '#294CB4'}]}
+					style={[s`w-10 h-10 items-center justify-center rounded-full`,{backgroundColor: '#294CB4'}]}
 					activeOpacity={.7}
 				>
-					<FontAwesome5 name='user-edit' size={20} color='#fff' />
+					<FontAwesome5 name='user-edit' size={18} color='#fff' />
 				</TouchableOpacity>
 			</Animated.View>
 		</View>

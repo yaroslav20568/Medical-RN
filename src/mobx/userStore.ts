@@ -20,7 +20,7 @@ class UserStore {
 		this.isAuth = flag;
 	}
 
-	setUserData(userData: IUser) {
+	setUserData(userData: IUser | null) {
 		this.userData = userData;
 	}
 }

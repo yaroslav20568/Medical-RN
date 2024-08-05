@@ -15,8 +15,8 @@ const UserProfile = observer(({ user, typesUsers }: IProps) => {
 		<View style={s`px-3`}>
 			<Image
 				source={{uri: `${siteUrl}/${user?.imageUrl}`}}
-				style={[s`w-full mb-3`, {height: 250}]}
-				resizeMode='cover'
+				style={[s`w-full mb-3`, {height: 325}]}
+				resizeMode={`${user?.imageUrl.includes('no-image') ? 'contain' : 'cover'}`}
 			/>
 			<Text style={s`text-base text-black pr-8 mb-3`}>E-mail: {user?.email}</Text>
 			<Text style={s`text-base text-black pr-8 mb-3`}>Город: {user?.city}</Text>

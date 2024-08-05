@@ -21,7 +21,7 @@ const GoBack = ({ navigation }: IProps) => {
 		>
 			<TouchableOpacity 
 				onPress={goBackHandle}
-				style={[s`p-2 rounded-full`, {backgroundColor: '#294CB4'}]}
+				style={[s`w-10 h-10 items-center justify-center rounded-full`, {backgroundColor: '#294CB4'}]}
 				activeOpacity={.7}
 			>
 				<AntDesign name='back' size={23} color='#fff' />

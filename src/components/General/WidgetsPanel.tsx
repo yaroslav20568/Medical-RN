@@ -30,14 +30,14 @@ const WidgetsPanel = ({ title, showModal, setModalActive }: IProps) => {
 			<View style={s`flex-row`}>
 				<TouchableOpacity 
 					onPress={onShowSearch}
-					style={[s`p-2 rounded-full mr-6`,{backgroundColor: '#294CB4'}]}
+					style={[s`w-10 h-10 items-center justify-center rounded-full mr-6`,{backgroundColor: '#294CB4'}]}
 					activeOpacity={.7}
 				>
 					<AntDesign name='search1' size={23} color='#fff' />
 				</TouchableOpacity>
 				<TouchableOpacity 
 					onPress={onShowFilter}
-					style={[s`p-2 rounded-full`,{backgroundColor: '#294CB4'}]}
+					style={[s`w-10 h-10 items-center justify-center rounded-full`,{backgroundColor: '#294CB4'}]}
 					activeOpacity={.7}
 				>
 					<AntDesign name='filter' size={23} color='#fff' />
