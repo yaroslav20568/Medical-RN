@@ -2,15 +2,18 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { s } from 'react-native-wind';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Animated, { FadeInLeft, FadeInRight } from 'react-native-reanimated';
 
 interface IProps {
 	title: string;
 	showModal: () => void;
-	showConfirmModal: () => void;
+	showDeleteAccModal: () => void;
+	showDeletePhotoModal: () => void;
+	imageUrl: string | undefined;
 }
 
-const AccountWidgetsPanel = ({ title, showModal, showConfirmModal }: IProps) => {
+const AccountWidgetsPanel = ({ title, showModal, showDeleteAccModal, showDeletePhotoModal, imageUrl }: IProps) => {
 	return (
 		<View style={s`py-4 px-3 flex-row items-center justify-between`}>
 			<Animated.Text 
@@ -24,12 +27,21 @@ const AccountWidgetsPanel = ({ title, showModal, showConfirmModal }: IProps) => 
 				entering={FadeInRight.delay(300).duration(1000)}
 			>
 				<TouchableOpacity 
-					onPress={showConfirmModal}
+					onPress={showDeleteAccModal}
 					style={[s`w-10 h-10 items-center justify-center rounded-full mr-6`,{backgroundColor: '#294CB4'}]}
 					activeOpacity={.7}
 				>
 					<FontAwesome5 name='user-minus' size={18} color='#fff' />
 				</TouchableOpacity>
+				{!imageUrl?.includes('no-image') &&
+					<TouchableOpacity 
+						onPress={showDeletePhotoModal}
+						style={[s`w-10 h-10 items-center justify-center rounded-full mr-6`,{backgroundColor: '#294CB4'}]}
+						activeOpacity={.7}
+						disabled={imageUrl?.includes('no-image') ? true : false}
+					>
+						<MaterialCommunityIcons name='file-image-remove' size={23} color='#fff' />
+					</TouchableOpacity>}
 				<TouchableOpacity 
 					onPress={showModal}
 					style={[s`w-10 h-10 items-center justify-center rounded-full`,{backgroundColor: '#294CB4'}]}

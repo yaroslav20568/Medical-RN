@@ -15,11 +15,12 @@ import { IUser } from '../../types';
 interface IProps extends NativeStackScreenProps<RootStackParams, 'Account'> {}
 
 const Account = observer(({ navigation }: IProps) => {
-	const [updateAnimatedValue, updateTranslateX, showUpdateModal, hideUpdateModal] = useGetModalParams();
-	const [deleteAnimatedValue, deleteTranslateX, showDeleteModal, hideDeleteModal] = useGetModalParams();
+	const [updateAccAnimatedValue, updateAccTranslateX, showUpdateAccModal, hideUpdateAccModal] = useGetModalParams();
+	const [deleteAccAnimatedValue, deleteAccTranslateX, showDeleteAccModal, hideDeleteAccModal] = useGetModalParams();
+	const [deletePhotoAnimatedValue, deletePhotoTranslateX, showDeletePhotoModal, hideDeletePhotoModal] = useGetModalParams();
 
 	const deleteUser = useCallback((): void => {
-		hideDeleteModal();
+		hideDeleteAccModal();
 
 		axios<IUser>({
 			url: `${siteUrl}/api/user/${userStore.userData?.id}`,
@@ -40,6 +41,26 @@ const Account = observer(({ navigation }: IProps) => {
 		})
 	}, []);
 
+	const deletePhoto = useCallback(() => {
+		hideDeletePhotoModal();
+
+		axios<IUser>({
+			url: `${siteUrl}/api/user/delete-photo/${userStore.userData?.id}`,
+			method: 'DELETE',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+		})
+		.then((response) => {
+			if(response.status === 200) {
+				setTimeout(() => {
+					userStore.setUserData(response.data);
+				}, 1000);
+			}
+		})
+	}, []);
+
 	return (
 		<>
 			<ScrollView
@@ -54,8 +75,10 @@ const Account = observer(({ navigation }: IProps) => {
 				/>
 				<AccountWidgetsPanel 
 					title='Пользователь'
-					showModal={showUpdateModal}
-					showConfirmModal={showDeleteModal}
+					showModal={showUpdateAccModal}
+					showDeleteAccModal={showDeleteAccModal}
+					showDeletePhotoModal={showDeletePhotoModal}
+					imageUrl={userStore.userData?.imageUrl}
 				/>
 				<UserProfile 
 					user={userStore.userData}
@@ -63,21 +86,28 @@ const Account = observer(({ navigation }: IProps) => {
 				/>
 			</ScrollView>
 			<Modal
-				translateX={updateTranslateX}
-				animatedValue={updateAnimatedValue}
+				translateX={updateAccTranslateX}
+				animatedValue={updateAccAnimatedValue}
 			>
 				<HeaderModal 
 					title='Обновление данных' 
-					hideModal={hideUpdateModal} 
+					hideModal={hideUpdateAccModal} 
 					clearFilterParams={() => {}}
 				/>
 			</Modal>
 			<ConfirmModal
-				translateX={deleteTranslateX}
-				animatedValue={deleteAnimatedValue}
-				hideModal={hideDeleteModal}
+				translateX={deleteAccTranslateX}
+				animatedValue={deleteAccAnimatedValue}
+				hideModal={hideDeleteAccModal}
 				onPress={deleteUser}
 				message='Вы действительно хотите удалить свой аккаунт?'
+			/>
+			<ConfirmModal
+				translateX={deletePhotoTranslateX}
+				animatedValue={deletePhotoAnimatedValue}
+				hideModal={hideDeletePhotoModal}
+				onPress={deletePhoto}
+				message='Вы действительно хотите удалить своё фото?'
 			/>
 		</>
 	)
