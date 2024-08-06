@@ -58,4 +58,10 @@ export class UserController {
   ): Promise<IUser> {
     return this.userService.updateUser(id, file, userDto);
   }
+
+	@Delete('user/delete-photo/:id')
+  @HttpCode(200)
+	async deleteUserPhoto(@Param('id', ParseIntPipe) id: number): Promise<IUser> {
+    return this.userService.deleteUserPhoto(id);
+  }
 }

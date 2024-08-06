@@ -94,6 +94,42 @@ export class UserService {
     });
   }
 
+	async deleteUserPhoto(id: number): Promise<IUser> {
+    const findUser: User = await this.prisma.user.findUnique({
+      where: { id: id },
+    });
+
+    if (!findUser) {
+      throw new HttpException(
+        'No user with this id',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
+		if (findUser.imageUrl !== 'users/no-image.png') {
+      unlinkSync(`uploads/${findUser.imageUrl}`);
+    }
+
+    return this.prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        imageUrl: 'users/no-image.png',
+      },
+			select: {
+				id: true,
+				email: true,
+				password: false,
+				gender: true,
+				typesUsers: true,
+				city: true,
+        imageUrl: true,
+				role: true,
+			},
+    });
+  }
+
   findOne(id: number): Promise<User | undefined> {
     const user = this.prisma.user.findUnique({
       where: { id: id },
