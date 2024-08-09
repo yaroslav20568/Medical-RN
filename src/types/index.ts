@@ -1,5 +1,4 @@
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
-import { ReactNode } from 'react';
 
 interface IUser {
 	id: number;
@@ -66,7 +65,6 @@ interface IHelpAbroad extends IInstitution {
 type navigationType = NavigationProp<ParamListBase>;
 
 interface ILibraryArticle extends IItem {
-	// childrens: Array<IItem>;
 	parent: number;
 }
 
@@ -114,4 +112,21 @@ interface ITab {
 	icon: string;
 }
 
-export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab };
+interface IUserFormValues {
+	email: string;
+	password: string;
+	gender: string;
+	typesUsersArr: Array<number>;
+	city: string;
+	typesUsers?: string;
+	file: object | null;
+	role: string;
+}
+
+interface IImage {
+	name: string | undefined;
+	type: string | undefined;
+	uri: string | undefined;
+}
+
+export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IImage };

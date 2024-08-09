@@ -34,7 +34,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Login = observer(({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn }: IProps) => {
-	const formValues:IFormValues = {email: '', password: ''};
+	const formValues: IFormValues = {email: '', password: ''};
 
 	useEffect(() => {
 		setInfoText('');

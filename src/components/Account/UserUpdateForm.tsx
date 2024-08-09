@@ -10,30 +10,13 @@ import Feather from 'react-native-vector-icons/Feather';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { observer } from 'mobx-react-lite';
 import { siteUrl } from '../../constants';
-import { ITypeUser, IUser } from '../../types';
+import { IImage, ITypeUser, IUser, IUserFormValues } from '../../types';
 import { userStore } from '../../mobx';
 
 interface IProps {
 	typesUsers: Array<ITypeUser>;
 	userId: number | undefined;
 	hideModal: () => void;
-}
-
-interface IFormValues {
-	email: string;
-	password: string;
-	gender: string;
-	typesUsersArr: Array<number>;
-	city: string;
-	typesUsers?: string;
-	file: object | null;
-	role: string;
-}
-
-interface IImage {
-	name: string | undefined;
-	type: string | undefined;
-	uri: string | undefined;
 }
 
 const SignupSchema = Yup.object().shape({
@@ -53,7 +36,7 @@ const SignupSchema = Yup.object().shape({
 
 const UserUpdateForm = observer(({ typesUsers, userId, hideModal }: IProps) => {
 	const [typesUsersArrArray, setTypesUsersArrArray] = useState<ITypeUser[]>(typesUsers);
-	const formValues: IFormValues = {email: '', password: '', gender: '', typesUsersArr: [], city: '', file: null, role: 'User'};
+	const formValues: IUserFormValues = {email: '', password: '', gender: '', typesUsersArr: [], city: '', file: null, role: 'User'};
 	const [image, setImage] = useState<IImage | null>(null);
 	const [isDisabledBtn, setIsDisabledBtn] = useState<boolean>(false);
 
@@ -87,7 +70,7 @@ const UserUpdateForm = observer(({ typesUsers, userId, hideModal }: IProps) => {
 				onSubmit={(values, { resetForm }) => {
 					const sortValues = values.typesUsersArr.slice().sort(function (a, b) {return a - b;})
 					values = {...values, typesUsersArr: sortValues, file: image};
-					const sendObject = {...values, typesUsers: values.typesUsersArr.join(',')} as Partial<IFormValues>;
+					const sendObject = {...values, typesUsers: values.typesUsersArr.join(',')} as Partial<IUserFormValues>;
 					delete sendObject.typesUsersArr;
 					if(sendObject.file === null) {
 						delete sendObject.file;
@@ -98,8 +81,8 @@ const UserUpdateForm = observer(({ typesUsers, userId, hideModal }: IProps) => {
 					const formData = new FormData();
 
 					for (let key in sendObject) {
-						if(sendObject[key as keyof IFormValues]) {
-							formData.append(key, sendObject[key as keyof IFormValues]);
+						if(sendObject[key as keyof IUserFormValues]) {
+							formData.append(key, sendObject[key as keyof IUserFormValues]);
 						}
 					}
 
