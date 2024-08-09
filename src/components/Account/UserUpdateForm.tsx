@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, Image, Platform } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -10,15 +10,13 @@ import Feather from 'react-native-vector-icons/Feather';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { observer } from 'mobx-react-lite';
 import { siteUrl } from '../../constants';
-import { IRespAuthData, IRespAuthError, ITypeUser } from '../../types';
+import { ITypeUser, IUser } from '../../types';
+import { userStore } from '../../mobx';
 
 interface IProps {
-	infoText: string;
-	setInfoText: (value: string) => void;
-	isDisabledBtn: boolean;
-	setIsDisabledBtn: (value: boolean) => void;
-	setCurrTab: (value: string) => void;
 	typesUsers: Array<ITypeUser>;
+	userId: number | undefined;
+	hideModal: () => void;
 }
 
 interface IFormValues {
@@ -41,32 +39,23 @@ interface IImage {
 const SignupSchema = Yup.object().shape({
 	email: Yup.string().email('Не корректный email')
 		.min(2, 'От 2 символов')
-		.max(30, 'до 30 символов')
-		.required('Заполните обязательно'),
+		.max(30, 'до 30 символов'),
 	password: Yup.string()
 		.min(6, 'От 6 символов')
-		.max(16, 'до 16 символов')
-		.required('Заполните обязательно'),
-	gender: Yup.string()
-		.required('Выберите пункт'),
-	typesUsersArr: Yup.array().of(Yup.number())
-		.min(1, 'Заполните хотя бы 1 чекбокс')
-		.required('Заполните обязательно'),
+		.max(16, 'до 16 символов'),
+	gender: Yup.string(),
+	typesUsersArr: Yup.array().of(Yup.number()),
 	city: Yup.string()
 		.min(2, 'От 2 символов')
 		.max(16, 'до 16 символов')
-		.required('Заполните обязательно')
 		.matches(/^([a-zа-яё]+)$/i, 'Цифры не должны присутствовать')
 });
 
-const Register = observer(({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn, setCurrTab, typesUsers }: IProps) => {
+const UserUpdateForm = observer(({ typesUsers, userId, hideModal }: IProps) => {
 	const [typesUsersArrArray, setTypesUsersArrArray] = useState<ITypeUser[]>(typesUsers);
 	const formValues: IFormValues = {email: '', password: '', gender: '', typesUsersArr: [], city: '', file: null, role: 'User'};
 	const [image, setImage] = useState<IImage | null>(null);
-
-	useEffect(() => {
-		setInfoText('');
-	}, []);
+	const [isDisabledBtn, setIsDisabledBtn] = useState<boolean>(false);
 
 	const chooseImage = async () => {
 		const currentImage = await launchImageLibrary({
@@ -78,6 +67,12 @@ const Register = observer(({ infoText, setInfoText, isDisabledBtn, setIsDisabled
 			type: currentImage.assets[0].type,
 			uri: Platform.OS === "android" ? currentImage.assets[0].uri : currentImage.assets[0].uri.replace("file://", "")
 		});
+	}
+
+	const resetFormValues = (resetForm: () => void) => {
+		resetForm();
+		resetPhoto();
+		setTypesUsersArrArray(typesUsers);
 	}
 
 	const resetPhoto = () => {
@@ -103,12 +98,14 @@ const Register = observer(({ infoText, setInfoText, isDisabledBtn, setIsDisabled
 					const formData = new FormData();
 
 					for (let key in sendObject) {
-						formData.append(key, sendObject[key as keyof IFormValues]);
+						if(sendObject[key as keyof IFormValues]) {
+							formData.append(key, sendObject[key as keyof IFormValues]);
+						}
 					}
 
-					axios<IRespAuthData>({
-						url: `${siteUrl}/api/register`,
-						method: 'POST',
+					axios<IUser>({
+						url: `${siteUrl}/api/user/${userId}`,
+						method: 'PUT',
 						headers: {
 							'Accept': 'multipart/form-data',
 							'Content-Type': 'multipart/form-data'
@@ -116,24 +113,28 @@ const Register = observer(({ infoText, setInfoText, isDisabledBtn, setIsDisabled
 						data: formData
 					})
 					.then((response) => {
-						setIsDisabledBtn(false);
-
 						if(response.status === 200) {
-							setInfoText('Вы зарегистрированы, залогиньтесь');
 							resetForm();
 							resetPhoto();
 							setTypesUsersArrArray(typesUsers);
-							setTimeout(() => {setCurrTab('login');}, 1000);
+							userStore.setUserData(response.data);
+							hideModal();
 						}
 					})
-					.catch(({ response }: IRespAuthError) => {
-						setIsDisabledBtn(false);
-						setInfoText(response.data.message);
-					})
+					.finally(() => setIsDisabledBtn(false))
 				}}
 			>
-				{({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
+				{({ handleChange, handleBlur, handleSubmit, values, touched, errors, resetForm }) => (
 					<View>
+						<View style={s`flex-row justify-end`}>
+							<TouchableOpacity
+								onPress={() => resetFormValues(resetForm)}
+								activeOpacity={.7}
+								style={s`mb-3`}
+							>
+								<Feather name='delete' size={30} />
+							</TouchableOpacity>
+						</View>
 						<View style={s`mb-4`}>
 							<TextInput
 								placeholder='email'
@@ -245,16 +246,12 @@ const Register = observer(({ infoText, setInfoText, isDisabledBtn, setIsDisabled
 								</View>
 							}
 						</View>
-						{infoText && <View style={s`mb-5`}>
-							<Text style={s`text-red-900 text-base`}>{infoText}</Text>
-						</View>}
 						<TouchableOpacity 
 							style={s`${isDisabledBtn ? 'bg-violet-500' : 'bg-violet-700'} border-rose-700 py-3`}
 							onPress={handleSubmit}
 							activeOpacity={.7}
-							disabled={isDisabledBtn}
 						>
-							<Text style={s`text-white text-center text-lg`}>Зарегестрироваться</Text>
+							<Text style={s`text-white text-center text-lg`}>Обновить данные</Text>
 						</TouchableOpacity>
 					</View>
 				)}
@@ -263,4 +260,4 @@ const Register = observer(({ infoText, setInfoText, isDisabledBtn, setIsDisabled
 	)
 })
 
-export default Register;
+export default UserUpdateForm;

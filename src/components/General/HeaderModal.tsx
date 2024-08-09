@@ -7,7 +7,7 @@ import Feather from 'react-native-vector-icons/Feather';
 interface IProps {
 	title: string;
 	hideModal: () => void;
-	clearFilterParams: () => void;
+	clearFilterParams?: () => void;
 }
 
 const HeaderModal = ({ title, hideModal, clearFilterParams }: IProps) => {
@@ -15,13 +15,13 @@ const HeaderModal = ({ title, hideModal, clearFilterParams }: IProps) => {
 		<View style={s`flex-row items-center justify-between mb-3`}>
 			<Text style={s`text-xl font-medium`}>{title}</Text>
 			<View style={s`flex-row`}>
-				<TouchableOpacity
+				{clearFilterParams && <TouchableOpacity
 					onPress={() => clearFilterParams()}
 					activeOpacity={.7}
 					style={s`mr-3`}
 				>
 					<Feather name='delete' size={30} />
-				</TouchableOpacity>
+				</TouchableOpacity>}
 				<TouchableOpacity
 					onPress={() => hideModal()}
 					activeOpacity={.7}

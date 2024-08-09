@@ -107,7 +107,7 @@ const Login = observer(({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn
 							<Text style={s`text-red-900 text-base`}>{infoText}</Text>
 						</View>}
 						<TouchableOpacity 
-							style={s`bg-violet-700 border-rose-700 py-3`}
+							style={s`${isDisabledBtn ? 'bg-violet-500' : 'bg-violet-700'} border-rose-700 py-3`}
 							onPress={handleSubmit}
 							activeOpacity={.7}
 							disabled={isDisabledBtn}

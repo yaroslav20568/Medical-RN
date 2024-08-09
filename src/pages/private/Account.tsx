@@ -6,7 +6,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { observer } from 'mobx-react-lite';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AccountWidgetsPanel, ConfirmModal, GoBack, HeaderLogo, HeaderModal, Modal, UserProfile } from '../../components';
+import { AccountWidgetsPanel, ConfirmModal, GoBack, HeaderLogo, HeaderModal, Modal, UserUpdateForm, UserProfile } from '../../components';
 import { institutionsStore, userStore } from '../../mobx';
 import { useGetModalParams } from '../../hooks';
 import { siteUrl } from '../../constants';
@@ -92,7 +92,11 @@ const Account = observer(({ navigation }: IProps) => {
 				<HeaderModal 
 					title='Обновление данных' 
 					hideModal={hideUpdateAccModal} 
-					clearFilterParams={() => {}}
+				/>
+				<UserUpdateForm 
+					typesUsers={institutionsStore.typesUsers} 
+					userId={userStore.userData?.id}
+					hideModal={hideUpdateAccModal}
 				/>
 			</Modal>
 			<ConfirmModal
