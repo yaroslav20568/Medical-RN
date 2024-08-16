@@ -49,14 +49,16 @@ model Type {
 }
 
 model User {
-  id         Int    @id @default(autoincrement())
-  email      String @unique
+  id         Int       @id @default(autoincrement())
+  email      String    @unique
   password   String
   gender     String
-  typesUsers String @map("types_users")
+  typesUsers String    @map("types_users")
   city       String
   imageUrl   String
   role       String
+  message    Message[]
+  // dialog     Dialog[]
 }
 
 model TypeUser {
@@ -77,4 +79,22 @@ model LibraryArticle {
   name        String        @unique
   parent      Int
   libraryItem LibraryItem[]
+}
+
+model Dialog {
+  id       Int       @id @default(autoincrement())
+  userId   Int       @map("user_id")
+  adminId  Int       @map("admin_id")
+  // admin    User      @relation(fields: [adminId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  messages Message[]
+}
+
+model Message {
+  id       Int    @id @default(autoincrement())
+  time     String
+  text     String
+  userId   Int    @map("user_id")
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  dialogId Int    @map("dialog_id")
+  dialog   Dialog @relation(fields: [dialogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

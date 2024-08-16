@@ -12,6 +12,12 @@ import { join } from 'path';
 import { TypeUserModule } from './type-user/type-user.module';
 import { LibraryArticleModule } from './library-article/library-article.module';
 import { ArticleItemModule } from './library-item/library-item.module';
+import { ChatGateway } from './chat/chat.geteway';
+import { DialogModule } from './dialog/dialog.module';
+import { MessageModule } from './message/message.module';
+import { DialogService } from './dialog/dialog.service';
+import { PrismaService } from './prisma.service';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -27,6 +33,9 @@ import { ArticleItemModule } from './library-item/library-item.module';
     TypeUserModule,
     LibraryArticleModule,
     ArticleItemModule,
+    DialogModule,
+    MessageModule,
+		ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
