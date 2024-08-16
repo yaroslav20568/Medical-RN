@@ -6,6 +6,7 @@ interface IUser {
 	city: string;
 	gender: string;
 	typesUsers: string;
+	role: string;
 }
 
 interface IMenuItem {
@@ -129,4 +130,24 @@ interface IImage {
 	uri: string | undefined;
 }
 
-export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IImage };
+interface IRespChatData {
+	messages: Array<IMessage>;
+}
+
+interface IDialog {
+	id: number;
+	userId: number;
+	adminId: number;
+	messages: Array<IMessage>;
+}
+
+interface IMessage {
+	id: number;
+	time: string;
+	text: string;
+	userId: number;
+	user: IUser;
+	dialogId: number;
+}
+
+export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IImage, IRespChatData, IDialog, IMessage };

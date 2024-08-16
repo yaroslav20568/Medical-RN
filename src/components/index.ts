@@ -22,3 +22,7 @@ export { default as AccountWidgetsPanel } from './Account/AccountWidgetsPanel';
 export { default as ConfirmModal } from './General/ConfirmModal';
 export { default as UserProfile } from './Account/UserProfile';
 export { default as UserUpdateForm } from './Account/UserUpdateForm';
+
+export { default as ChatMessages } from './Chat/ChatMessages';
+export { default as ChatForm } from './Chat/ChatForm';
+export { default as ChatMessage } from './Chat/ChatMessage';
