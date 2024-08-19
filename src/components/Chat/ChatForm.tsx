@@ -16,7 +16,7 @@ const ChatForm = ({ onPress }: IProps) => {
 				<TextInput 
 					value={message}
 					onChangeText={(text) => setMessage(text)}
-					style={s`px-5 text-base`} 
+					style={s`text-base pl-5 pr-20`} 
 					placeholder='Напишите что вас интересует'
 				/>
 				<TouchableOpacity

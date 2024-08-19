@@ -15,7 +15,7 @@ const LibraryContent = observer(({ route, navigation }: IProps) => {
 		LibraryStore.loadItems(route.params.id);
 	}, []);
 
-	const onHandleNavigation = useCallback((item: ILibraryItem) => {
+	const onHandleNavigation = useCallback((item: ILibraryItem): void => {
 		navigation.navigate('LibraryItem', {item})
 	}, []);
 

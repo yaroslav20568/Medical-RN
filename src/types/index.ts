@@ -137,6 +137,7 @@ interface IRespChatData {
 interface IDialog {
 	id: number;
 	userId: number;
+	user: IUser;
 	adminId: number;
 	messages: Array<IMessage>;
 }

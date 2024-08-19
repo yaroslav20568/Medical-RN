@@ -18,6 +18,7 @@ const Account = observer(({ navigation }: IProps) => {
 	const [updateAccAnimatedValue, updateAccTranslateX, showUpdateAccModal, hideUpdateAccModal] = useGetModalParams();
 	const [deleteAccAnimatedValue, deleteAccTranslateX, showDeleteAccModal, hideDeleteAccModal] = useGetModalParams();
 	const [deletePhotoAnimatedValue, deletePhotoTranslateX, showDeletePhotoModal, hideDeletePhotoModal] = useGetModalParams();
+	const [logOutAnimatedValue, logOutTranslateX, showLogOutModal, hideLogOutModal] = useGetModalParams();
 
 	const deleteUser = useCallback((): void => {
 		hideDeleteAccModal();
@@ -41,7 +42,7 @@ const Account = observer(({ navigation }: IProps) => {
 		})
 	}, []);
 
-	const deletePhoto = useCallback(() => {
+	const deletePhoto = useCallback((): void => {
 		hideDeletePhotoModal();
 
 		axios<IUser>({
@@ -61,6 +62,16 @@ const Account = observer(({ navigation }: IProps) => {
 		})
 	}, []);
 
+	const logOut = useCallback((): void => {
+		hideLogOutModal();
+
+		AsyncStorage.setItem('@userData', '');
+		setTimeout(() => {
+			userStore.setIsAuth(false);
+			userStore.setUserData(null);
+		}, 1000);
+	}, []);
+
 	return (
 		<>
 			<ScrollView
@@ -78,6 +89,7 @@ const Account = observer(({ navigation }: IProps) => {
 					showModal={showUpdateAccModal}
 					showDeleteAccModal={showDeleteAccModal}
 					showDeletePhotoModal={showDeletePhotoModal}
+					showLogOutModal={showLogOutModal}
 					imageUrl={userStore.userData?.imageUrl}
 				/>
 				<UserProfile 
@@ -112,6 +124,13 @@ const Account = observer(({ navigation }: IProps) => {
 				hideModal={hideDeletePhotoModal}
 				onPress={deletePhoto}
 				message='Вы действительно хотите удалить своё фото?'
+			/>
+			<ConfirmModal
+				translateX={logOutTranslateX}
+				animatedValue={logOutAnimatedValue}
+				hideModal={hideLogOutModal}
+				onPress={logOut}
+				message='Вы действительно хотите выйти с аккаута?'
 			/>
 		</>
 	)

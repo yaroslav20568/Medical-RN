@@ -17,7 +17,7 @@ const CustomTabs = ({ state, navigation, tabItems }: IProps) => {
 	const width = Dimensions.get('window').width;
 	const translateX = useSharedValue(0);
 	
-	const tabNavigate = useCallback((name: string, index: number) => {
+	const tabNavigate = useCallback((name: string, index: number): void => {
 		if(state.index === 0) {
 			navigation.navigate(name);
 			translateX.value = withSpring(index * width / tabItems.length);

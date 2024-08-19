@@ -24,11 +24,11 @@ const Institutions = observer(({ navigation }: IProps) => {
 		institutionsStore.loadInstitutions(inputValue, region, cityId, typeInstitutionId, typesUser);
 	}, [inputValue, region, cityId, typeInstitutionId, typesUser]);
 
-	const loadMoreInstitutions = useCallback(() => {
+	const loadMoreInstitutions = useCallback((): void => {
 		institutionsStore.loadMoreInstitutions();
 	}, []);
 
-	const clearFilterParams = useCallback(() => {
+	const clearFilterParams = useCallback((): void => {
 		if(modalActive === 'search') {
 			setInputValue('');
 		} else {

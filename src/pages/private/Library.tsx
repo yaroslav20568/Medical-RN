@@ -15,7 +15,7 @@ const Library = observer(({ navigation }: IProps) => {
 		LibraryStore.loadArticles();
 	}, []);
 
-	const onHandleNavigation = useCallback((id: number, name: string) => {
+	const onHandleNavigation = useCallback((id: number, name: string): void => {
 		navigation.navigate('LibraryContent', {id, name});
 	}, []);
 	

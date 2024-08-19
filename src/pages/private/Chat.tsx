@@ -1,28 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { ScrollView } from 'react-native';
 import { s } from 'react-native-wind';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParams } from '../../navigation/HomeStacks';
+import { observer } from 'mobx-react-lite';
 import { ChatForm, ChatMessages, GoBack, HeaderLogo } from '../../components';
 import socket from '../../socket/chat-socket';
-import { userStore } from '../../mobx';
+import { chatStore, userStore } from '../../mobx';
 import { IMessage } from '../../types';
 
 interface IProps extends NativeStackScreenProps<RootStackParams, 'Account'> {}
 
-const Chat = ({ navigation }: IProps) => {
+const Chat = observer(({ navigation }: IProps) => {
 	const scrollViewRef = useRef<ScrollView>(null);
-	const [messages, setMessages] = useState<Array<IMessage>>([]);
-
-	useEffect(() => {
-		socket.emit('join-room', userStore.userData?.id);
-		if(userStore.userData?.role === 'User') {
-			socket.emit('get-messages', userStore.userData.id);
-			socket.on('return-messages', (messages: Array<IMessage>) => {
-				setMessages(messages);
-			});
-		}
-	}, []);
 
 	const sendMessage = (message: string, setMessage: (message: string) => void) => {
 		setMessage('');
@@ -32,8 +22,8 @@ const Chat = ({ navigation }: IProps) => {
 			userId: userStore.userData?.id,
 			user: userStore.userData
 		});
-		socket.on('return-messages', (message: IMessage) => {
-			setMessages([...messages, message]);
+		socket.on('return-message', (message: IMessage) => {
+			chatStore.addNewMessage(message);
 		});
 	}
 
@@ -53,7 +43,7 @@ const Chat = ({ navigation }: IProps) => {
 				/>
 				{userStore.userData?.role === 'User' ?
 					<ChatMessages 
-						messages={messages}
+						messages={chatStore.messages}
 						userId={userStore.userData?.id}
 					/> : 
 					''
@@ -64,6 +54,6 @@ const Chat = ({ navigation }: IProps) => {
 			}
 		</>
 	)
-}
+})
 
 export default Chat;
