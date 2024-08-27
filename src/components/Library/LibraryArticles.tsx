@@ -16,7 +16,7 @@ const LibraryArticles = observer(({ libraryArticles, onHandleNavigation }: IProp
 			{libraryArticles.length ? 
 				libraryArticles.map((item, index) => 
 					<TouchableOpacity 
-						style={s`flex-row items-center justify-between bg-white rounded-xl px-3 py-4 mb-4`}
+						style={s`flex-row items-center justify-between bg-white rounded-xl px-3 py-3 mb-4`}
 						onPress={() => onHandleNavigation(item.id, item.name)}
 						activeOpacity={.7}
 						key={`libraryMenuItem_${index}`}

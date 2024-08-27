@@ -31,7 +31,7 @@ const SignupSchema = Yup.object().shape({
 	city: Yup.string()
 		.min(2, 'От 2 символов')
 		.max(16, 'до 16 символов')
-		.matches(/^([a-zа-яё]+)$/i, 'Цифры не должны присутствовать')
+		.matches(/^([a-zа-яё]+)$/i, 'Цифры и пробелы не должны присутствовать')
 });
 
 const UserUpdateForm = observer(({ typesUsers, userId, hideModal }: IProps) => {

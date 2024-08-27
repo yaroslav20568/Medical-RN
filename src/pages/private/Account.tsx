@@ -116,21 +116,21 @@ const Account = observer(({ navigation }: IProps) => {
 				animatedValue={deleteAccAnimatedValue}
 				hideModal={hideDeleteAccModal}
 				onPress={deleteUser}
-				message='Вы действительно хотите удалить свой аккаунт?'
+				message='Вы действительно хотите удалить аккаунт?'
 			/>
 			<ConfirmModal
 				translateX={deletePhotoTranslateX}
 				animatedValue={deletePhotoAnimatedValue}
 				hideModal={hideDeletePhotoModal}
 				onPress={deletePhoto}
-				message='Вы действительно хотите удалить своё фото?'
+				message='Вы действительно хотите удалить фото?'
 			/>
 			<ConfirmModal
 				translateX={logOutTranslateX}
 				animatedValue={logOutAnimatedValue}
 				hideModal={hideLogOutModal}
 				onPress={logOut}
-				message='Вы действительно хотите выйти с аккаута?'
+				message='Вы действительно хотите выйти с аккаунта?'
 			/>
 		</>
 	)

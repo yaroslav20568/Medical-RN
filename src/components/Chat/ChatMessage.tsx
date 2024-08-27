@@ -11,11 +11,11 @@ interface IProps {
 
 const ChatMessage = ({ message, userId }: IProps) => {
 	return (
-		<View style={s`flex-row items-center justify-between`}>
+		<View style={s`flex-row items-center justify-between mb-4`}>
 			{message.user.id === userId ? 
 				<>
 					<View style={s`w-5/6`}>
-						<Text style={s`text-xs mb-1 ml-3`}>{message.time}</Text>
+						<Text style={s`text-xs mb-1 ml-3`}>{new Date(message.time).toLocaleString('ru', {timeZone: 'Europe/Moscow'})}</Text>
 						<View style={s`bg-blue-500 rounded-2xl py-4 px-3`}>
 							<Text style={s`text-white`}>{message.text}</Text>
 						</View>
@@ -23,7 +23,7 @@ const ChatMessage = ({ message, userId }: IProps) => {
 					<View style={s`w-12`}>
 						<Image
 							source={{uri: `${siteUrl}/${message.user.imageUrl}`}}
-							style={[s`h-12 rounded-full`]}
+							style={s`h-12 rounded-full`}
 							resizeMode='cover'
 						/>
 					</View>
@@ -32,12 +32,12 @@ const ChatMessage = ({ message, userId }: IProps) => {
 					<View style={s`w-12`}>
 						<Image
 							source={{uri: `${siteUrl}/${message.user.imageUrl}`}}
-							style={[s`h-12 rounded-full`]}
+							style={s`h-12 rounded-full`}
 							resizeMode='cover'
 						/>
 					</View>
 					<View style={s`w-5/6`}>
-						<Text style={s`text-xs mb-1 ml-3`}>{message.time}</Text>
+						<Text style={s`text-xs mb-1 ml-3`}>{new Date(message.time).toLocaleString('ru', {timeZone: 'Europe/Moscow'})}</Text>
 						<View style={s`bg-warmGray-200 rounded-2xl py-4 px-3`}>
 							<Text>{message.text}</Text>
 						</View>

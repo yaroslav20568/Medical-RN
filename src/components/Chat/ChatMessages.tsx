@@ -12,7 +12,7 @@ interface IProps {
 
 const ChatMessages = observer(({ messages, userId }: IProps) => {
 	return (
-		<View style={s`px-3 pt-4 pb-20`}>
+		<View style={s`px-3 mt-3 pb-16`}>
 			{messages.length ?
 				messages.map((message, index) => 
 					<ChatMessage 

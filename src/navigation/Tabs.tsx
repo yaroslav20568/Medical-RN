@@ -4,6 +4,7 @@ import { Chat, Calendar, Account } from '../pages';
 import { CustomTabs } from '../navigation';
 import HomeStacks from '../navigation/HomeStacks';
 import { ITab } from '../types';
+import ChatStacks from './ChatStacks';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,7 +18,7 @@ const tabItems:Array<ITab> = [
 	{
 		name: 'Chat',
 		label: 'Чат', 
-		component: Chat,
+		component: ChatStacks,
 		icon: 'wechat'
 	},
 	{

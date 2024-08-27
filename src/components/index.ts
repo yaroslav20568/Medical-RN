@@ -26,3 +26,4 @@ export { default as UserUpdateForm } from './Account/UserUpdateForm';
 export { default as ChatMessages } from './Chat/ChatMessages';
 export { default as ChatForm } from './Chat/ChatForm';
 export { default as ChatMessage } from './Chat/ChatMessage';
+export { default as ChatDialogs } from './Chat/ChatDialogs';

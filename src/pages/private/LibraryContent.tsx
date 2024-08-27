@@ -30,7 +30,7 @@ const LibraryContent = observer(({ route, navigation }: IProps) => {
 			<GoBack 
 				navigation={navigation} 
 			/>
-			<View style={s`mt-6 px-3`}>
+			<View style={s`mt-3 px-3`}>
 				<Text style={s`text-2xl font-semibold text-black mb-4`}>Статьи раздела {route.params.name}: </Text>
 				{LibraryStore.isLoadingArticles ?
 					<Loader /> :

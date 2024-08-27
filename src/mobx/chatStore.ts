@@ -1,15 +1,19 @@
 import { makeObservable, observable, action } from "mobx";
-import { IMessage } from "../types";
+import { IMessage, IDialog } from "../types";
 
 class ChatStore {
 	messages: Array<IMessage>;
+	dialogs: Array<IDialog>;
 
 	constructor() {
 		this.messages = [];
+		this.dialogs = []
 		makeObservable(this, {
 			messages: observable,
+			dialogs: observable,
 			setMessages: action,
-			addNewMessage: action
+			addNewMessage: action,
+			setDialogs: action
 		})
 	}
 
@@ -19,6 +23,10 @@ class ChatStore {
 
 	addNewMessage(message: IMessage) {
 		this.messages = [...this.messages, message]
+	}
+
+	setDialogs(dialogs: Array<IDialog>) {
+		this.dialogs = dialogs;
 	}
 }
 

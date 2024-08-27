@@ -6,6 +6,8 @@ import { s } from 'react-native-wind';
 import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
 import { ITab } from '../types';
 import { CustomTab } from '../navigation';
+import socket from '../socket/chat-socket';
+import { userStore } from '../mobx';
 
 interface IProps {
 	state: TabNavigationState<ParamListBase>;
@@ -21,6 +23,14 @@ const CustomTabs = ({ state, navigation, tabItems }: IProps) => {
 		if(state.index === 0) {
 			navigation.navigate(name);
 			translateX.value = withSpring(index * width / tabItems.length);
+		}
+
+		if(name === 'Chat') {
+			if(userStore.userData?.role === 'User') {
+				socket.emit('join-room', userStore.userData?.id);
+			}
+		} else {
+			socket.emit('leave-room', userStore.userData?.id);
 		}
 	}, []);
 

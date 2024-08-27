@@ -41,7 +41,7 @@ interface IMenuItemProps {
 const MenuListItem = ({ menuItem, navigation }: IMenuItemProps) => {
 	return (
 		<TouchableOpacity 
-			style={s`flex-row items-center justify-between bg-white rounded-xl px-3 py-4 mb-4`}
+			style={s`flex-row items-center justify-between bg-white rounded-xl px-3 py-3 mb-4`}
 			onPress={() => navigation.navigate(menuItem.name)}
 			activeOpacity={.7}
 		>

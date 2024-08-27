@@ -11,3 +11,5 @@ export { default as Institution } from './private/Institution';
 export { default as Library } from './private/Library';
 export { default as LibraryContent } from './private/LibraryContent';
 export { default as LibraryItem } from './private/LibraryItem';
+
+export { default as ChatDialog } from './private/ChatDialog';

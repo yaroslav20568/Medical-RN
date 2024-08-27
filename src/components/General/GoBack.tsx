@@ -7,11 +7,13 @@ import { navigationType } from '../../types';
 
 interface IProps {
 	navigation: navigationType;
+	onPress?: () => void;
 }
 
-const GoBack = ({ navigation }: IProps) => {
+const GoBack = ({ navigation, onPress }: IProps) => {
 	const goBackHandle = () => {
 		navigation.goBack();
+		onPress && onPress();
 	};
 
 	return (

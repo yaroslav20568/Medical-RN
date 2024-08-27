@@ -149,6 +149,7 @@ interface IMessage {
 	userId: number;
 	user: IUser;
 	dialogId: number;
+	isRead: boolean;
 }
 
 export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IImage, IRespChatData, IDialog, IMessage };

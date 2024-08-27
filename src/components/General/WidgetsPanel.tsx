@@ -23,7 +23,7 @@ const WidgetsPanel = ({ title, showModal, setModalActive }: IProps) => {
 
 	return (
 		<Animated.View 
-			style={s`py-4 px-3 flex-row items-center justify-between`} 
+			style={s`py-3 px-3 flex-row items-center justify-between`} 
 			entering={FadeInUp.delay(300).duration(1000)}
 		>
 			<Text style={s`text-2xl font-semibold text-black`}>{title}</Text>

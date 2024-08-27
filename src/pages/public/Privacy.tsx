@@ -16,7 +16,7 @@ const Privacy = ({ navigation }: IProps) => {
 			showsVerticalScrollIndicator={false}
 			contentContainerStyle={s`flex-grow justify-center px-4 py-6`}
 		>
-			<View style={s`border-2 border-orange-300 rounded-xl px-3 py-4 mb-8`}>
+			<View style={s`border-2 border-orange-300 rounded-xl px-3 py-3 mb-8`}>
 				<Text style={s`text-base text-center`}>В соответствии с закондательством Республики Беларусь оказывать консультационные услуги можно гражданам с 18 лет</Text>
 			</View>
 			<View style={s`flex-row items-center justify-center mb-8`}>

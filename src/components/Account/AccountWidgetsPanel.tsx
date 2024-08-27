@@ -17,7 +17,7 @@ interface IProps {
 
 const AccountWidgetsPanel = ({ title, showModal, showDeleteAccModal, showDeletePhotoModal, showLogOutModal, imageUrl }: IProps) => {
 	return (
-		<View style={s`py-4 px-3 flex-row items-center justify-between`}>
+		<View style={s`my-3 px-3 flex-row items-center justify-between`}>
 			<Animated.Text 
 				style={s`text-2xl font-semibold text-black`}
 				entering={FadeInLeft.delay(300).duration(1000)}
