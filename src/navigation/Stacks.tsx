@@ -15,7 +15,6 @@ const Stack = createNativeStackNavigator();
 
 const Stacks = observer(() => {
   const getUserData = async () => {
-    // await AsyncStorage.clear();
     const userData: IUserData | null = JSON.parse(
       (await AsyncStorage.getItem('@userData')) as string,
     );

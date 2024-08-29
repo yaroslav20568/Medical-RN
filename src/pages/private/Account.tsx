@@ -7,10 +7,11 @@ import { observer } from 'mobx-react-lite';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AccountWidgetsPanel, ConfirmModal, GoBack, HeaderLogo, HeaderModal, Modal, UserUpdateForm, UserProfile } from '../../components';
-import { institutionsStore, userStore } from '../../mobx';
+import { chatStore, institutionsStore, userStore } from '../../mobx';
 import { useGetModalParams } from '../../hooks';
 import { siteUrl } from '../../constants';
 import { IUser } from '../../types';
+import socket from '../../socket/chat-socket';
 
 interface IProps extends NativeStackScreenProps<RootStackParams, 'Account'> {}
 
@@ -35,8 +36,13 @@ const Account = observer(({ navigation }: IProps) => {
 			if(response.status === 200) {
 				AsyncStorage.setItem('@userData', '');
 				setTimeout(() => {
+					if(userStore.userData?.role === 'User') {
+						socket.emit('get-dialogs-admin');
+					}
 					userStore.setIsAuth(false);
 					userStore.setUserData(null);
+					chatStore.messages.length && chatStore.setMessages([]);
+					chatStore.dialogs.length && chatStore.setDialogs([]);
 				}, 1000);
 			}
 		})
@@ -69,6 +75,8 @@ const Account = observer(({ navigation }: IProps) => {
 		setTimeout(() => {
 			userStore.setIsAuth(false);
 			userStore.setUserData(null);
+			chatStore.messages.length && chatStore.setMessages([]);
+			chatStore.dialogs.length && chatStore.setDialogs([]);
 		}, 1000);
 	}, []);
 

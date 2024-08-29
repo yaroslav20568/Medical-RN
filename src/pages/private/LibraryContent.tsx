@@ -5,14 +5,14 @@ import { s } from 'react-native-wind';
 import { RootStackParams } from '../../navigation/HomeStacks';
 import { observer } from 'mobx-react-lite';
 import { LibraryItems, GoBack, HeaderLogo, Loader } from '../../components';
-import { LibraryStore } from '../../mobx';
+import { libraryStore } from '../../mobx';
 import { ILibraryItem } from '../../types';
 
 interface IProps extends NativeStackScreenProps<RootStackParams, 'LibraryContent'> {}
 
 const LibraryContent = observer(({ route, navigation }: IProps) => {
 	useEffect(() => {
-		LibraryStore.loadItems(route.params.id);
+		libraryStore.loadItems(route.params.id);
 	}, []);
 
 	const onHandleNavigation = useCallback((item: ILibraryItem): void => {
@@ -32,10 +32,10 @@ const LibraryContent = observer(({ route, navigation }: IProps) => {
 			/>
 			<View style={s`mt-3 px-3`}>
 				<Text style={s`text-2xl font-semibold text-black mb-4`}>Статьи раздела {route.params.name}: </Text>
-				{LibraryStore.isLoadingArticles ?
+				{libraryStore.isLoadingArticles ?
 					<Loader /> :
 					<LibraryItems
-						articles={LibraryStore.items}
+						articles={libraryStore.items}
 						onHandleNavigation={onHandleNavigation}
 					/>
 				}

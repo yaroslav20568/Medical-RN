@@ -1,4 +1,4 @@
-const removeProtocolInUrl = (url: string) => {
+const removeProtocolInUrl = (url: string): string => {
 	return url.replace('https://', '') || url.replace('http://', '');
 }
 

@@ -3,7 +3,7 @@ const messageTimeDifference = (messageStringDate: string): string => {
 	const diffTime = timeDiff / 1000;
 
 	if(diffTime < 60) {
-		return `${Math.round(diffTime)} cек`;
+		return `< 1 мин`;
 	}	else if(diffTime >= 60 && diffTime < 60 * 60) {
 		return `${Math.round(diffTime / 60)} мин`;
 	} else if(diffTime >= 60 * 60 && diffTime < 60 * 60 * 24) {

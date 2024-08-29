@@ -23,7 +23,7 @@ const Home = ({ navigation }: IProps) => {
 			socket.emit('get-messages-user', userStore.userData.id);
 			socket.on('return-messages-user', returnMessagesUser);
 		} else {
-			socket.emit('get-dialogs-admin', userStore.userData?.id);
+			socket.emit('get-dialogs-admin');
 			socket.on('return-dialogs-admin', returnDialogsAdmin);
 		}
 

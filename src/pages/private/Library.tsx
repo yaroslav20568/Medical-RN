@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { s } from 'react-native-wind';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GoBack, HeaderLogo, Loader } from '../../components';
-import { LibraryStore } from '../../mobx';
+import { libraryStore } from '../../mobx';
 import { LibraryArticles } from '../../components';
 import { RootStackParams } from '../../navigation/HomeStacks';
 
@@ -12,7 +12,7 @@ interface IProps extends NativeStackScreenProps<RootStackParams, 'Library'> {}
 
 const Library = observer(({ navigation }: IProps) => {
 	useEffect(() => {
-		LibraryStore.loadArticles();
+		libraryStore.loadArticles();
 	}, []);
 
 	const onHandleNavigation = useCallback((id: number, name: string): void => {
@@ -32,10 +32,10 @@ const Library = observer(({ navigation }: IProps) => {
 			/>
 			<View style={s`mt-3 px-3`}>
 				<Text style={s`text-2xl font-semibold text-black mb-4`}>Разделы библиотеки: </Text>
-				{LibraryStore.isLoadingArticles ?
+				{libraryStore.isLoadingArticles ?
 					<Loader /> :
 					<LibraryArticles 
-						libraryArticles={LibraryStore.articles}
+						libraryArticles={libraryStore.articles}
 						onHandleNavigation={onHandleNavigation}
 					/>
 				}

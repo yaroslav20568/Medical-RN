@@ -7,7 +7,8 @@ import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
 import { ITab } from '../types';
 import { CustomTab } from '../navigation';
 import socket from '../socket/chat-socket';
-import { userStore } from '../mobx';
+import { chatStore, userStore } from '../mobx';
+import { findPartnerId } from '../helpers';
 
 interface IProps {
 	state: TabNavigationState<ParamListBase>;
@@ -27,7 +28,11 @@ const CustomTabs = ({ state, navigation, tabItems }: IProps) => {
 
 		if(name === 'Chat') {
 			if(userStore.userData?.role === 'User') {
-				socket.emit('join-room', userStore.userData?.id);
+				socket.emit('join-room', userStore.userData.id);
+
+				if(chatStore.messages.filter(item => item.userId !== userStore.userData?.id && !item.isRead).length) {
+					socket.emit('set-is-read-messages', findPartnerId(userStore.userData.id, chatStore.messages));
+				}
 			}
 		} else {
 			socket.emit('leave-room', userStore.userData?.id);
