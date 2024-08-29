@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt } from 'class-validator';
+import { IsInt, IsOptional } from 'class-validator';
+
+export class DialogQuery {
+  @IsInt()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  adminId: number;
+}
 
 export class DialogDto {
 	@IsInt()

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsString } from 'class-validator';
+import { IsBoolean, IsInt, IsString } from 'class-validator';
 
 export class MessageDto {
 	@IsString()
@@ -17,4 +17,8 @@ export class MessageDto {
   @IsInt()
   @ApiProperty({ default: 1 })
   dialogId: number;
+
+	@IsBoolean()
+	@ApiProperty({ default: false })
+	isRead: boolean;
 }

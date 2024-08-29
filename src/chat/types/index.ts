@@ -1,7 +1,16 @@
-interface IMessage {
+import { User } from "@prisma/client";
+
+interface IMessageUser {
 	time: string;
 	text: string;
 	userId: number;
+	user: User;
+	dialogId?: number;
 }
 
-export { IMessage };
+interface ISetAdminDialog {
+	dialogId: number;
+	adminId: number;
+}
+
+export { IMessageUser, ISetAdminDialog };

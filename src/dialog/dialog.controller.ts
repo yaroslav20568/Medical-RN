@@ -1,7 +1,10 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, HttpCode } from '@nestjs/common';
 import { DialogService } from './dialog.service';
+import { Dialog } from '@prisma/client';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('dialog')
+@ApiTags('Dialog')
+@Controller()
 export class DialogController {
   constructor(private readonly dialogService: DialogService) {}
 }

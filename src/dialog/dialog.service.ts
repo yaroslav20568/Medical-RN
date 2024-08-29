@@ -7,7 +7,31 @@ import { DialogDto } from './dto/dialog.dto';
 export class DialogService {
 	constructor(private prisma: PrismaService) {}
 
-	async getDialogs(): Promise<Dialog | {}> {
+	async getDialogById(id: number): Promise<Dialog> {
+		return this.prisma.dialog.findFirst({
+			where: {
+				id: id,
+			},
+    });
+	}
+
+	async getDialogByUserId(userId: number): Promise<Dialog> {
+		return this.prisma.dialog.findFirst({
+			where: {
+				userId: userId,
+			},
+    });
+	}
+
+	async getDialogByAdminId(adminId: number): Promise<Dialog> {
+		return this.prisma.dialog.findFirst({
+			where: {
+				adminId: adminId,
+			},
+    });
+	}
+
+	async getDialogs(): Promise<Dialog[]> {
 		return this.prisma.dialog.findMany({
       orderBy: [
         {
@@ -15,10 +39,15 @@ export class DialogService {
         },
       ],
 			include: {
+				user: true,
         messages: {
+					orderBy: [
+						{
+							id: 'asc',
+						},
+					],
 					include: {
 						user: true,
-						dialog: true,
 					}
 				},
       },
@@ -48,4 +77,15 @@ export class DialogService {
 
 		return (await newDialog).id;
   }
+
+	async setAdminInDialog(dialogId: number, adminId: number): Promise<Dialog> {
+		return this.prisma.dialog.update({
+			where: {
+				id: dialogId,
+			},
+			data: {
+				adminId: adminId,
+			},
+		})
+	}
 }

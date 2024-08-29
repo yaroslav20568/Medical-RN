@@ -58,7 +58,7 @@ model User {
   imageUrl   String
   role       String
   message    Message[]
-  // dialog     Dialog[]
+  dialog     Dialog[]
 }
 
 model TypeUser {
@@ -84,17 +84,18 @@ model LibraryArticle {
 model Dialog {
   id       Int       @id @default(autoincrement())
   userId   Int       @map("user_id")
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   adminId  Int       @map("admin_id")
-  // admin    User      @relation(fields: [adminId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   messages Message[]
 }
 
 model Message {
-  id       Int    @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   time     String
   text     String
-  userId   Int    @map("user_id")
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  dialogId Int    @map("dialog_id")
-  dialog   Dialog @relation(fields: [dialogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId   Int     @map("user_id")
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  dialogId Int     @map("dialog_id")
+  dialog   Dialog  @relation(fields: [dialogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  isRead   Boolean @map("is_read")
 }

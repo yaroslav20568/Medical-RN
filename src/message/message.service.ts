@@ -7,10 +7,10 @@ import { MessageDto } from './dto/messages.dto';
 export class MessageService {
 	constructor(private prisma: PrismaService) {}
 
-	async getMessages(id: number): Promise<Message | {}> {
+	async getMessages(dialogId: number): Promise<Message[]> {
 		return this.prisma.message.findMany({
 			where: {
-				userId: id,
+				dialogId: dialogId,
 			},
       orderBy: [
         {
@@ -19,7 +19,6 @@ export class MessageService {
       ],
 			include: {
 				user: true,
-				// dialog: true,
       },
     });
 	}
@@ -29,4 +28,15 @@ export class MessageService {
       data: messageDto,
     });
   }
+
+	async setIsReadMessages(partnerId: number) {
+		return this.prisma.message.updateMany({
+			where: {
+				userId: partnerId,
+			},
+			data: {
+				isRead: true,
+			},
+		})
+	}
 }
