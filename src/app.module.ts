@@ -18,6 +18,7 @@ import { MessageModule } from './message/message.module';
 import { DialogService } from './dialog/dialog.service';
 import { PrismaService } from './prisma.service';
 import { ChatModule } from './chat/chat.module';
+import { HotlineModule } from './hotline/hotline.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { ChatModule } from './chat/chat.module';
     DialogModule,
     MessageModule,
 		ChatModule,
+		HotlineModule,
   ],
   controllers: [AppController],
   providers: [AppService],

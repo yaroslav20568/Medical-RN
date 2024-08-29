@@ -17,7 +17,7 @@ export class TypeService {
     });
   }
 
-  async createType(typeDto: TypeDto) {
+  async createType(typeDto: TypeDto): Promise<Type> {
     const findType: Type = await this.prisma.type.findUnique({
       where: { name: typeDto.name },
     });
