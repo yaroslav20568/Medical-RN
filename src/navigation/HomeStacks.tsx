@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Home, Institutions, Institution, Library, LibraryContent, LibraryItem } from '../pages';
+import { Home, Institutions, Institution, Library, LibraryContent, LibraryItem, QuickHelp } from '../pages';
 import { IInstitutionRB, ILibraryItem, IMessage } from '../types';
 
 export type RootStackParams = {
@@ -24,6 +24,7 @@ export type RootStackParams = {
 		userId: number;
 		messages: Array<IMessage>;
 	};
+	QuickHelp: undefined;
 };
 
 const HomeStack = createNativeStackNavigator<RootStackParams>();
@@ -39,6 +40,7 @@ const HomeStacks = () => {
 			<HomeStack.Screen name="Library" component={Library} options={{animation: 'slide_from_right'}} />
 			<HomeStack.Screen name="LibraryContent" component={LibraryContent} options={{animation: 'slide_from_right'}} />
 			<HomeStack.Screen name="LibraryItem" component={LibraryItem} options={{animation: 'slide_from_right'}} />
+			<HomeStack.Screen name="QuickHelp" component={QuickHelp} options={{animation: 'slide_from_right'}} />
 		</HomeStack.Navigator>
 	);
 }

@@ -27,3 +27,6 @@ export { default as ChatMessages } from './Chat/ChatMessages';
 export { default as ChatForm } from './Chat/ChatForm';
 export { default as ChatMessage } from './Chat/ChatMessage';
 export { default as ChatDialogs } from './Chat/ChatDialogs';
+
+export { default as Hotlines } from './QuickHelp/Hotlines';
+export { default as Hotline } from './QuickHelp/Hotline';
