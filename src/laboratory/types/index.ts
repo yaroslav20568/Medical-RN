@@ -1,9 +1,9 @@
 import { Laboratory } from '@prisma/client';
 
-interface ILaboratories {
+interface ILaboratory {
   skip: number;
   totalSkip: number;
   items: Array<Laboratory>;
 }
 
-export { ILaboratories };
+export { ILaboratory };

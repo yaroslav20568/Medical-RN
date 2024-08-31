@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString } from 'class-validator';
+import { IsInt, IsOptional, IsString } from 'class-validator';
+
+export class HotlineQuery {
+  @IsInt()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  skip: number;
+}
 
 export class HotlineDto {
 	@IsString()

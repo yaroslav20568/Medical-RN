@@ -10,7 +10,7 @@ import {
 } from './dto/laboratory.dto';
 import { CityDto } from 'src/city/dto/city.dto';
 import { TypeDto } from 'src/type/dto/type.dto';
-import { ILaboratories } from './types';
+import { ILaboratory } from './types';
 
 @Injectable()
 export class LaboratoryService {
@@ -18,9 +18,10 @@ export class LaboratoryService {
 
   async getLaboratories(
     laboratoryQuery: LaboratoryQuery,
-  ): Promise<ILaboratories> {
+  ): Promise<ILaboratory> {
+		const count = 10;
     const totalPages = Math.ceil(
-      (await this.prisma.laboratory.findMany()).length / 10,
+      (await this.prisma.laboratory.findMany()).length / count,
     );
 
     const findLaboratories = this.prisma.laboratory.findMany({
@@ -36,7 +37,7 @@ export class LaboratoryService {
         type: true,
       },
       skip: laboratoryQuery.skip ? +laboratoryQuery.skip : 0,
-      take: 10,
+      take: count,
       where: {
         name: { contains: laboratoryQuery.name, mode: 'insensitive' },
         region: laboratoryQuery.region ? laboratoryQuery.region : undefined,
@@ -50,7 +51,7 @@ export class LaboratoryService {
 
     return {
       skip: laboratoryQuery.skip ? +laboratoryQuery.skip : 0,
-      totalSkip: (totalPages - 1) * 10,
+      totalSkip: (totalPages - 1) * count,
       items: await findLaboratories,
     };
   }

@@ -1,20 +1,34 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Hotline } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
-import { HotlineDto, HotlineUpdateDto } from './dto/hotline.dto';
+import { HotlineDto, HotlineQuery, HotlineUpdateDto } from './dto/hotline.dto';
+import { IHotline } from './types';
 
 @Injectable()
 export class HotlineService {
   constructor(private prisma: PrismaService) {}
 
-  async getHotlines(): Promise<Hotline[]> {
-    return this.prisma.hotline.findMany({
+  async getHotlines(hotlineQuery: HotlineQuery): Promise<IHotline> {
+		const count = 2;
+		const totalPages = Math.ceil(
+      (await this.prisma.hotline.findMany()).length / count,
+    );
+		
+    const findHotlines = this.prisma.hotline.findMany({
       orderBy: [
         {
           id: 'asc',
         },
       ],
+			skip: hotlineQuery.skip ? +hotlineQuery.skip : 0,
+      take: count,
     });
+
+		return {
+      skip: hotlineQuery.skip ? +hotlineQuery.skip : 0,
+      totalSkip: (totalPages - 1) * count,
+      items: await findHotlines,
+    };
   }
 
   async createHotline(hotlineDto: HotlineDto) {

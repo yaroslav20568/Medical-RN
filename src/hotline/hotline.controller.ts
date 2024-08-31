@@ -10,11 +10,13 @@ import {
   UsePipes,
   ValidationPipe,
   HttpCode,
+	Query,
 } from '@nestjs/common';
 import { HotlineService } from './hotline.service';
 import { ApiTags } from '@nestjs/swagger';
 import { Hotline } from '@prisma/client';
-import { HotlineDto, HotlineUpdateDto } from './dto/hotline.dto';
+import { HotlineDto, HotlineQuery, HotlineUpdateDto } from './dto/hotline.dto';
+import { IHotline } from './types';
 
 @ApiTags('Hotline')
 @Controller()
@@ -23,8 +25,8 @@ export class HotlineController {
 
   @Get('hotlines')
   @HttpCode(200)
-  async getHotlines(): Promise<Hotline[]> {
-    return this.hotlineService.getHotlines();
+  async getHotlines(@Query() hotlineQuery: HotlineQuery): Promise<IHotline> {
+    return this.hotlineService.getHotlines(hotlineQuery);
   }
 
   @Post('hotline')

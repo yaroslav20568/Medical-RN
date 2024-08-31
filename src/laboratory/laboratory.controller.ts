@@ -24,7 +24,7 @@ import {
   LaboratoryQuery,
   LaboratoryUpdateDto,
 } from './dto/laboratory.dto';
-import { ILaboratories } from './types';
+import { ILaboratory } from './types';
 
 @ApiTags('Laboratory')
 @Controller()
@@ -35,7 +35,7 @@ export class LaboratoryController {
   @HttpCode(200)
   async getLaboratories(
     @Query() laboratoryQuery: LaboratoryQuery,
-  ): Promise<ILaboratories> {
+  ): Promise<ILaboratory> {
     return this.laboratoryService.getLaboratories(laboratoryQuery);
   }
 
