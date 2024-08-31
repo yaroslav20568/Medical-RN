@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { s } from 'react-native-wind';
@@ -17,7 +17,7 @@ interface IProps {
 	setTypesUser: (value: Array<number>) => void;
 }
 
-const FilterInstitutions = ({ cities, cityId, setCityId, typesInstitution, typeInstitutionId, setTypeInstitutionId, typesUserItems, typesUser, setTypesUser }: IProps) => {
+const InstitutionsFilter = ({ cities, cityId, setCityId, typesInstitution, typeInstitutionId, setTypeInstitutionId, typesUserItems, typesUser, setTypesUser }: IProps) => {
 	return (
 		<View>
 			<RNPickerSelect
@@ -65,4 +65,4 @@ const FilterInstitutions = ({ cities, cityId, setCityId, typesInstitution, typeI
 	)
 }
 
-export default FilterInstitutions;
+export default InstitutionsFilter;

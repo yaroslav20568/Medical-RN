@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import RNPickerSelect from 'react-native-picker-select';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParams } from '../../navigation/HomeStacks';
-import { HeaderLogo, Map, InstitutionList, Loader, WidgetsPanel, InstitutionSearch, HeaderModal, Modal, FilterInstitutions, GoBack } from '../../components';
+import { HeaderLogo, Map, InstitutionList, Loader, InstitutionsWidgetsPanel, InstitutionSearch, HeaderModal, Modal, InstitutionsFilter, GoBack } from '../../components';
 import { institutionsStore } from '../../mobx';
 import { useGetModalParams } from '../../hooks';
 
@@ -54,7 +54,7 @@ const Institutions = observer(({ navigation }: IProps) => {
 				<Map
 					institutions={institutionsStore.institutions}
 				/>
-				<WidgetsPanel
+				<InstitutionsWidgetsPanel
 					title='Учреждения'
 					showModal={showModal}
 					setModalActive={setModalActive}
@@ -101,7 +101,7 @@ const Institutions = observer(({ navigation }: IProps) => {
 								{label: 'Могилёвская', value: 'Могилёвская'}
 							]}
 						/>
-						<FilterInstitutions 
+						<InstitutionsFilter 
 							cities={institutionsStore.getCities} 
 							cityId={cityId}
 							setCityId={setCityId}

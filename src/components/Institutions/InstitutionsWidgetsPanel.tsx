@@ -10,7 +10,7 @@ interface IProps {
 	setModalActive: (value: string) => void;
 }
 
-const WidgetsPanel = ({ title, showModal, setModalActive }: IProps) => {
+const InstitutionsWidgetsPanel = ({ title, showModal, setModalActive }: IProps) => {
 	const onShowSearch = () => {
 		setModalActive('search');
 		showModal();
@@ -47,4 +47,4 @@ const WidgetsPanel = ({ title, showModal, setModalActive }: IProps) => {
 	)
 }
 
-export default WidgetsPanel;
+export default InstitutionsWidgetsPanel;
