@@ -12,25 +12,26 @@ import { join } from 'path';
 import { TypeUserModule } from './type-user/type-user.module';
 import { LibraryArticleModule } from './library-article/library-article.module';
 import { ArticleItemModule } from './library-item/library-item.module';
-import { ChatGateway } from './chat/chat.geteway';
 import { DialogModule } from './dialog/dialog.module';
 import { MessageModule } from './message/message.module';
-import { DialogService } from './dialog/dialog.service';
-import { PrismaService } from './prisma.service';
 import { ChatModule } from './chat/chat.module';
 import { HotlineModule } from './hotline/hotline.module';
+import { QuizModule } from './quiz/quiz.module';
+import { QuestionModule } from './question/question.module';
+import { QuestionAnswerModule } from './question-answer/question-answer.module';
+import { QuestionResultModule } from './question-result/question-result.module';
 
 @Module({
   imports: [
+		ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+    }),
     LaboratoryModule,
     TypeModule,
     CountryModule,
     CityModule,
     UserModule,
     AuthModule,
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'uploads'),
-    }),
     TypeUserModule,
     LibraryArticleModule,
     ArticleItemModule,
@@ -38,6 +39,10 @@ import { HotlineModule } from './hotline/hotline.module';
     MessageModule,
 		ChatModule,
 		HotlineModule,
+		QuizModule,
+		QuestionModule,
+		QuestionAnswerModule,
+		QuestionResultModule,
   ],
   controllers: [AppController],
   providers: [AppService],

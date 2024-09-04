@@ -19,7 +19,7 @@ export class HotlineDto {
 
 	@IsString()
   @ApiProperty()
-  number: string;
+  phone: string;
 
 	@IsString()
   @ApiProperty()
@@ -48,7 +48,7 @@ export class HotlineUpdateDto {
 	@IsString()
 	@IsOptional()
   @ApiProperty()
-  number: string;
+  phone: string;
 
 	@IsString()
 	@IsOptional()
