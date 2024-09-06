@@ -10,7 +10,11 @@ export class QuizService {
   async getQuizzes(): Promise<Quiz[]> {
     return this.prisma.quiz.findMany({
       include: {
-        questions: true,
+        questions: {
+					include: {
+						answers: true,
+					},
+				},
       },
       orderBy: [
         {
