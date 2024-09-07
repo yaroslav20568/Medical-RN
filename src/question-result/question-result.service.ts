@@ -1,10 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { QuestionResult, User } from '@prisma/client';
+import { Question, QuestionAnswer, QuestionResult, Quiz, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { QuestionResultDto } from './dto/question-result.doto';
-import { QuizDto } from 'src/quiz/dto/quiz.dto';
-import { QuestionDto } from 'src/question/dto/question.dto';
-import { QuestionAnswerDto } from 'src/question-answer/dto/question-answer.dto';
+// import { QuizDto } from 'src/quiz/dto/quiz.dto';
+// import { QuestionDto } from 'src/question/dto/question.dto';
+// import { QuestionAnswerDto } from 'src/question-answer/dto/question-answer.dto';
 
 @Injectable()
 export class QuestionResultService {
@@ -26,15 +26,15 @@ export class QuestionResultService {
   }
 
   async createQuestionResult(questionResultDto: QuestionResultDto): Promise<QuestionResult> {
-    const findQuiz: QuizDto = await this.prisma.quiz.findUnique({
+    const findQuiz: Quiz = await this.prisma.quiz.findUnique({
       where: { id: questionResultDto.quizId },
     });
 
-		const findQuestion: QuestionDto = await this.prisma.question.findUnique({
+		const findQuestion: Question = await this.prisma.question.findUnique({
       where: { id: questionResultDto.questionId },
     });
 
-		const findQuestionAnswer: QuestionAnswerDto = await this.prisma.questionAnswer.findUnique({
+		const findQuestionAnswer: QuestionAnswer = await this.prisma.questionAnswer.findUnique({
       where: { id: questionResultDto.questionAnswerId },
     });
 

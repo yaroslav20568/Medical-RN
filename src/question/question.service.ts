@@ -1,8 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Question } from '@prisma/client';
+import { Question, Quiz } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { QuestionDto, QuestionUpdateDto } from './dto/question.dto';
-import { QuizDto } from 'src/quiz/dto/quiz.dto';
 
 @Injectable()
 export class QuestionService {
@@ -26,7 +25,7 @@ export class QuestionService {
       where: { name: questionDto.name },
     });
 
-    const findQuiz: QuizDto = await this.prisma.quiz.findUnique({
+    const findQuiz: Quiz = await this.prisma.quiz.findUnique({
       where: { id: questionDto.quizId },
     });
 
@@ -81,7 +80,7 @@ export class QuestionService {
     }
 
     if (questionDto.quizId) {
-      const findQuiz: QuizDto = await this.prisma.quiz.findUnique({
+      const findQuiz: Quiz = await this.prisma.quiz.findUnique({
         where: { id: questionDto.quizId },
       });
 

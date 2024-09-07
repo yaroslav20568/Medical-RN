@@ -1,8 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { City } from '@prisma/client';
+import { City, Country } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CityDto, CityUpdateDto } from './dto/city.dto';
-import { CountryDto } from 'src/country/dto/country.dto';
 
 @Injectable()
 export class CityService {
@@ -26,7 +25,7 @@ export class CityService {
       where: { name: cityDto.name },
     });
 
-    const findCountry: CountryDto = await this.prisma.country.findUnique({
+    const findCountry: Country = await this.prisma.country.findUnique({
       where: { id: cityDto.countryId },
     });
 
@@ -81,7 +80,7 @@ export class CityService {
     }
 
     if (cityDto.countryId) {
-      const findCountry: CountryDto = await this.prisma.country.findUnique({
+      const findCountry: Country = await this.prisma.country.findUnique({
         where: { id: cityDto.countryId },
       });
 

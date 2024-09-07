@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Laboratory } from '@prisma/client';
+import { Laboratory, City, Type } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { Express } from 'multer';
 import { unlinkSync } from 'node:fs';
@@ -8,8 +8,6 @@ import {
   LaboratoryUpdateDto,
   LaboratoryQuery,
 } from './dto/laboratory.dto';
-import { CityDto } from 'src/city/dto/city.dto';
-import { TypeDto } from 'src/type/dto/type.dto';
 import { ILaboratory } from './types';
 
 @Injectable()
@@ -72,7 +70,7 @@ export class LaboratoryService {
     }
 
     if (laboratoryDto.cityId) {
-      const findCity: CityDto = await this.prisma.city.findUnique({
+      const findCity: City = await this.prisma.city.findUnique({
         where: { id: laboratoryDto.cityId },
       });
 
@@ -85,7 +83,7 @@ export class LaboratoryService {
     }
 
 		if (laboratoryDto.cityId) {
-			const findType: TypeDto = await this.prisma.type.findUnique({
+			const findType: Type = await this.prisma.type.findUnique({
         where: { id: laboratoryDto.typeId },
       });
 			
@@ -166,7 +164,7 @@ export class LaboratoryService {
     }
 
     if (laboratoryDto.cityId) {
-      const findCity: CityDto = await this.prisma.city.findUnique({
+      const findCity: City = await this.prisma.city.findUnique({
         where: { id: laboratoryDto.cityId },
       });
 
@@ -179,7 +177,7 @@ export class LaboratoryService {
     }
 
 		if (laboratoryDto.typeId) {
-			const findType: TypeDto = await this.prisma.type.findUnique({
+			const findType: Type = await this.prisma.type.findUnique({
         where: { id: laboratoryDto.typeId },
       });
 

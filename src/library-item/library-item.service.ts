@@ -2,7 +2,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { LibraryArticle, LibraryItem } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { LibraryItemDto, LibraryItemUpdateDto } from './dto/library-item.dto';
-import { LibraryArticleDto } from 'src/library-article/dto/library-article.dto';
 
 @Injectable()
 export class LibraryItemService {
@@ -88,7 +87,7 @@ export class LibraryItemService {
     }
 
     if (libraryItemUpdateDto.libraryArticleId) {
-      const findLibraryArticle: LibraryArticleDto = await this.prisma.libraryArticle.findUnique({
+      const findLibraryArticle: LibraryArticle = await this.prisma.libraryArticle.findUnique({
         where: { id: libraryItemUpdateDto.libraryArticleId },
       });
 
