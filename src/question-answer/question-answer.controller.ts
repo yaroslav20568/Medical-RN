@@ -21,7 +21,7 @@ import { QuestionAnswer } from '@prisma/client';
 export class QuestionAnswerController {
   constructor(private readonly questionAnswerService: QuestionAnswerService) {}
 
-  @Get('question-answer')
+  @Get('question-answers')
   @HttpCode(200)
   getQuestionAnswers(): Promise<QuestionAnswer[]> {
     return this.questionAnswerService.getQuestionAnswers();

@@ -142,4 +142,5 @@ model QuestionResult {
   question         Question       @relation(fields: [questionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   questionAnswerId Int            @map("question_answer_id")
   questionAnswer   QuestionAnswer @relation(fields: [questionAnswerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId           Int            @map("user_id")
 }
