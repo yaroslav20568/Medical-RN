@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Question, Quiz } from '@prisma/client';
+import { Question } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
-import { QuestionDto, QuestionUpdateDto } from './dto/question.dto';
+import { QuestionDto } from './dto/question.dto';
 
 @Injectable()
 export class QuestionService {
@@ -25,20 +25,9 @@ export class QuestionService {
       where: { name: questionDto.name },
     });
 
-    const findQuiz: Quiz = await this.prisma.quiz.findUnique({
-      where: { id: questionDto.quizId },
-    });
-
     if (findQuestion) {
       throw new HttpException(
         'A question with this name has already been created',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-
-    if (!findQuiz) {
-      throw new HttpException(
-        'No quiz with this id',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -67,7 +56,7 @@ export class QuestionService {
     });
   }
 
-  async updateQuestion(id: number, questionDto: QuestionUpdateDto): Promise<Question> {
+  async updateQuestion(id: number, questionDto: QuestionDto): Promise<Question> {
     const findQuestion: Question = await this.prisma.question.findUnique({
       where: { id: id },
     });
@@ -77,19 +66,6 @@ export class QuestionService {
         'No question with this id',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
-    }
-
-    if (questionDto.quizId) {
-      const findQuiz: Quiz = await this.prisma.quiz.findUnique({
-        where: { id: questionDto.quizId },
-      });
-
-      if (!findQuiz) {
-        throw new HttpException(
-          'No quiz with this id',
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-      }
     }
 
     return this.prisma.question.update({

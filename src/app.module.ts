@@ -16,7 +16,6 @@ import { DialogModule } from './dialog/dialog.module';
 import { MessageModule } from './message/message.module';
 import { ChatModule } from './chat/chat.module';
 import { HotlineModule } from './hotline/hotline.module';
-import { QuizModule } from './quiz/quiz.module';
 import { QuestionModule } from './question/question.module';
 import { QuestionAnswerModule } from './question-answer/question-answer.module';
 import { QuestionResultModule } from './question-result/question-result.module';
@@ -39,7 +38,6 @@ import { QuestionResultModule } from './question-result/question-result.module';
     MessageModule,
 		ChatModule,
 		HotlineModule,
-		QuizModule,
 		QuestionModule,
 		QuestionAnswerModule,
 		QuestionResultModule,

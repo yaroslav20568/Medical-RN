@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { ApiTags } from '@nestjs/swagger';
-import { QuestionDto, QuestionUpdateDto } from './dto/question.dto';
+import { QuestionDto } from './dto/question.dto';
 import { Question } from '@prisma/client';
 
 @ApiTags('Question')
@@ -45,7 +45,7 @@ export class QuestionController {
   @UsePipes(new ValidationPipe())
   async updateQuestion(
     @Param('id', ParseIntPipe) id: number,
-    @Body() questionDto: QuestionUpdateDto,
+    @Body() questionDto: QuestionDto,
   ): Promise<Question> {
     return this.questionService.updateQuestion(id, questionDto);
   }
