@@ -21,7 +21,7 @@ export class QuestionResultService {
     });
   }
 
-  async createQuestionResult(questionResultDto: QuestionResultDto): Promise<QuestionResult> {
+  async createQuestionResult(questionResultDto: QuestionResultDto): Promise<string> {
 		const findQuestion: Question = await this.prisma.question.findUnique({
       where: { id: questionResultDto.questionId },
     });
@@ -55,8 +55,10 @@ export class QuestionResultService {
       );
     }
 
-    return this.prisma.questionResult.create({
+    await this.prisma.questionResult.create({
       data: questionResultDto,
     });
+
+		return 'Спасибо за ответ, он для нас очень важен';
   }
 }

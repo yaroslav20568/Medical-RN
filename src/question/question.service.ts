@@ -1,16 +1,57 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Question } from '@prisma/client';
+import { Question, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
-import { QuestionDto } from './dto/question.dto';
+import { QuestionDto, QuestionQuery } from './dto/question.dto';
 
 @Injectable()
 export class QuestionService {
   constructor(private prisma: PrismaService) {}
 
-  async getQuestions(): Promise<Question[]> {
+  async getQuestions(questionQuery: QuestionQuery): Promise<Question[]> {
+		const findUser: User = await this.prisma.user.findUnique({
+      where: { id: +questionQuery.userId },
+    });
+		
+		if (!questionQuery.userId) {
+      throw new HttpException(
+        'A userId required param',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
+		if (!findUser) {
+      throw new HttpException(
+        'No user with this id',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
     return this.prisma.question.findMany({
       include: {
         answers: true,
+      },
+			where: {
+				questionResults: {
+					every: {
+						NOT: {
+							userId: +questionQuery.userId,
+						}
+					}
+				}
+			},
+      orderBy: [
+        {
+          id: 'asc',
+        },
+      ],
+    });
+  }
+
+	async getQuestionsWithResults(): Promise<Question[]> {
+    return this.prisma.question.findMany({
+      include: {
+        answers: true,
+				questionResults: true,
       },
       orderBy: [
         {

@@ -10,10 +10,11 @@ import {
   UsePipes,
   ValidationPipe,
   HttpCode,
+	Query,
 } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { ApiTags } from '@nestjs/swagger';
-import { QuestionDto } from './dto/question.dto';
+import { QuestionDto, QuestionQuery } from './dto/question.dto';
 import { Question } from '@prisma/client';
 
 @ApiTags('Question')
@@ -23,8 +24,14 @@ export class QuestionController {
 
   @Get('questions')
   @HttpCode(200)
-  getQuestions(): Promise<Question[]> {
-    return this.questionService.getQuestions();
+  getQuestions(@Query() questionQuery: QuestionQuery): Promise<Question[]> {
+    return this.questionService.getQuestions(questionQuery);
+  }
+
+	@Get('questions-with-results')
+  @HttpCode(200)
+  getQuestionsWithResults(): Promise<Question[]> {
+    return this.questionService.getQuestionsWithResults();
   }
 
   @Post('question')

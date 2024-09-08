@@ -26,7 +26,7 @@ export class QuestionResultController {
   @Post('question-result')
   @HttpCode(200)
   @UsePipes(new ValidationPipe({ transform: true }))
-  createQuestionResult(@Body() questionResultDto: QuestionResultDto): Promise<QuestionResult> {
+  createQuestionResult(@Body() questionResultDto: QuestionResultDto): Promise<string> {
     return this.questionResultService.createQuestionResult(questionResultDto);
   }
 }

@@ -114,7 +114,7 @@ model Question {
   id             Int              @id @default(autoincrement())
   name           String           @unique
   answers        QuestionAnswer[]
-  questionResult QuestionResult[]
+  questionResults QuestionResult[]
 }
 
 model QuestionAnswer {
