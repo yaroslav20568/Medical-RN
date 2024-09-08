@@ -3,7 +3,7 @@ import { Text, FlatList, View } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { IHotline } from '../../types';
 import { s } from 'react-native-wind';
-import Loader from '../General/Loader';
+import { Loader } from '../../components';
 import { Hotline } from '../../components';
 
 interface IProps {

@@ -30,3 +30,5 @@ export { default as ChatDialogs } from './Chat/ChatDialogs';
 
 export { default as Hotlines } from './QuickHelp/Hotlines';
 export { default as Hotline } from './QuickHelp/Hotline';
+
+export { default as QuestionList } from './Questions/QuestionList';

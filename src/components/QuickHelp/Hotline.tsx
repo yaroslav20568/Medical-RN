@@ -10,7 +10,7 @@ interface IProps extends IHotline {
 	index: number;
 }
 
-const Hotline = ({ type, name, number, services, addInfo, typesUsers, index }: IProps) => {
+const Hotline = ({ type, name, phone, services, addInfo, typesUsers, index }: IProps) => {
 	return (
 		<View>
 			<Text 
@@ -30,7 +30,7 @@ const Hotline = ({ type, name, number, services, addInfo, typesUsers, index }: I
 					color='#294CB4' 
 					style={s`mr-2`}
 				/>
-				<Text style={s`text-base text-black pr-8`}>{number}</Text>
+				<Text style={s`text-base text-black pr-8`}>{phone}</Text>
 			</View>
 			<View style={s`flex-row ml-0.5 mb-3`}>
 				<MaterialIcons 

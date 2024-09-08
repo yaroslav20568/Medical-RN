@@ -156,10 +156,30 @@ interface IHotline {
 	id: number;
   type: string;
   name: string;
-  number: string;
+  phone: string;
   services: string;
   addInfo: string;
   typesUsers: string;
 }
 
-export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IImage, IRespChatData, IDialog, IMessage, IHotline };
+interface IQuestion {
+	id: number;
+  name: string;
+  answers: Array<IQuestionAnswer>;
+	questionResults: Array<IQuestionResult>;
+}
+
+interface IQuestionAnswer {
+	id: number;
+	name: string;
+	questionId: number;
+}
+
+interface IQuestionResult {
+	id: number;
+	questionId: number;
+	questionAnswerId: number;
+	userId: number;
+}
+
+export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IImage, IRespChatData, IDialog, IMessage, IHotline, IQuestion };

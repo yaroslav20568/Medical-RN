@@ -30,7 +30,7 @@ const Institution = observer(({ route, navigation }: IProps) => {
 			<GoBack 
 				navigation={navigation} 
 			/>
-			<View style={s`mt-3 mb-3 px-3`}>
+			<View style={s`mt-3 px-3`}>
 				<View>
 					<Animated.Text 
 						style={[s`text-xl font-bold text-black mb-3`, {lineHeight: 24}]} 

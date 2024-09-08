@@ -15,3 +15,6 @@ export { default as Chat } from './private/Chat';
 export { default as ChatDialog } from './private/ChatDialog';
 
 export { default as QuickHelp } from './private/QuickHelp';
+
+export { default as Questions } from './private/Questions';
+export { default as Question } from './private/Question';

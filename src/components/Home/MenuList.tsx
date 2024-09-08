@@ -16,7 +16,7 @@ const MenuItems = [
 	{name: 'Account', label: 'Личный кабинет', icon: 'user-o'},
 	{name: 'Library', label: 'Библиотека', icon: 'book'},
 	{name: 'HelpAbroad', label: 'Помощь за границей', icon: 'flag-o'},
-	{name: 'Quiz', label: 'Опрос', icon: 'list-alt'}
+	{name: 'Questions', label: 'Вопросы', icon: 'list-alt'}
 ];
 
 const MenuList = ({ navigation }: IProps) => {
