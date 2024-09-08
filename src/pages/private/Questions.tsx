@@ -3,7 +3,7 @@ import { View, ScrollView, Text } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { s } from 'react-native-wind';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { GoBack, HeaderLogo, Loader, QuestionList } from '../../components';
+import { GoBack, HeaderLogo, Loader, QuestionList, QuestionResultList } from '../../components';
 import { questionsStore, userStore } from '../../mobx';
 import { RootStackParams } from '../../navigation/HomeStacks';
 import { IQuestion } from '../../types';
@@ -12,7 +12,11 @@ interface IProps extends NativeStackScreenProps<RootStackParams, 'Questions'> {}
 
 const Questions = observer(({ navigation }: IProps) => {
 	useEffect(() => {
-		questionsStore.loadQuestions(userStore.userData?.id);
+		if(userStore.userData?.role === 'User') {
+			questionsStore.loadQuestions(userStore.userData?.id);
+		} else {
+			questionsStore.loadQuestionsWithResults();
+		}
 	}, []);
 
 	const onHandleNavigation = useCallback((question: IQuestion): void => {
@@ -34,10 +38,14 @@ const Questions = observer(({ navigation }: IProps) => {
 				<Text style={s`text-2xl font-semibold text-black mb-4`}>Вопросы: </Text>
 				{questionsStore.isLoading ?
 					<Loader /> :
-					<QuestionList 
-						questions={questionsStore.questions}
-						onHandleNavigation={onHandleNavigation}
-					/>
+					userStore.userData?.role === 'User' ?
+						<QuestionList 
+							questions={questionsStore.questions}
+							onHandleNavigation={onHandleNavigation}
+						/> : 
+						<QuestionResultList 
+							questionsWithResults={questionsStore.questionsWithResults}
+						/>
 				}
 			</View>
 		</ScrollView>

@@ -21,9 +21,7 @@ const LibraryArticles = observer(({ libraryArticles, onHandleNavigation }: IProp
 						activeOpacity={.7}
 						key={`libraryMenuItem_${index}`}
 					>
-						<View style={s`flex-row items-center`}>
-							<Text style={s`text-base text-black`}>{item.name}</Text>
-						</View>
+						<Text style={s`text-base text-black`}>{item.name}</Text>
 						<SimpleLineIcons name='arrow-right' size={20} color='#294CB4' />
 					</TouchableOpacity>
 				) : 

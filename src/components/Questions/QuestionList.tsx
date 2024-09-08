@@ -15,14 +15,12 @@ const QuestionList = observer(({ questions, onHandleNavigation }: IProps) => {
 			{questions.length ? 
 				questions.map((item, index) => 
 					<TouchableOpacity 
-						style={s`flex-row items-center justify-between bg-white rounded-xl px-3 py-3 mb-4`}
+						style={s`bg-white rounded-xl px-3 py-3 mb-4`}
 						onPress={() => onHandleNavigation(item)}
 						activeOpacity={.7}
-						key={`libraryMenuItem_${index}`}
+						key={`question_${index}`}
 					>
-						<View style={s`flex-row items-center`}>
-							<Text style={s`text-base text-black`}>{item.name}</Text>
-						</View>
+						<Text style={s`text-base text-black`}>{item.name}</Text>
 					</TouchableOpacity>
 				) : 
 				<Text style={[s`text-lg font-semibold`]}>Вопросы не найдены</Text>}

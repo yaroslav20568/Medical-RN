@@ -1,19 +1,23 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import axios from "axios";
-import { IQuestion } from "../types";
+import { IQuestion, IQuestionWithResult } from "../types";
 import { siteUrl } from "../constants";
 
 class QuestionsStore {
 	isLoading: boolean;
 	questions: Array<IQuestion>;
+	questionsWithResults: Array<IQuestionWithResult>;
 
 	constructor() {
 		this.isLoading = false;
 		this.questions = [];
+		this.questionsWithResults = [];
 		makeObservable(this, {
 			isLoading: observable,
 			questions: observable,
-			loadQuestions: action
+			questionsWithResults: observable,
+			loadQuestions: action,
+			loadQuestionsWithResults: action
 		})
 	}
 
@@ -22,8 +26,18 @@ class QuestionsStore {
 		axios<Array<IQuestion>>(`${siteUrl}/api/questions?userId=${userId}`)
     .then(({ data }) => {
 			runInAction(() => {
-				console.log(data);
 				this.questions = data;
+				this.isLoading = false;
+			});
+		})
+	}
+
+	loadQuestionsWithResults() {
+		this.isLoading = true;
+		axios<Array<IQuestionWithResult>>(`${siteUrl}/api/questions-with-results`)
+    .then(({ data }) => {
+			runInAction(() => {
+				this.questionsWithResults = data;
 				this.isLoading = false;
 			});
 		})

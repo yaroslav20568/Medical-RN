@@ -166,13 +166,16 @@ interface IQuestion {
 	id: number;
   name: string;
   answers: Array<IQuestionAnswer>;
-	questionResults: Array<IQuestionResult>;
 }
 
 interface IQuestionAnswer {
 	id: number;
 	name: string;
 	questionId: number;
+}
+
+interface IQuestionWithResult extends IQuestion {
+	questionResults: Array<IQuestionResult>;
 }
 
 interface IQuestionResult {
@@ -182,4 +185,4 @@ interface IQuestionResult {
 	userId: number;
 }
 
-export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IImage, IRespChatData, IDialog, IMessage, IHotline, IQuestion };
+export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IImage, IRespChatData, IDialog, IMessage, IHotline, IQuestion, IQuestionWithResult };
