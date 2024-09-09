@@ -10,10 +10,11 @@ import {
   UsePipes,
   ValidationPipe,
   HttpCode,
+	Query,
 } from '@nestjs/common';
 import { LibraryItemService } from './library-item.service';
 import { ApiTags } from '@nestjs/swagger';
-import { LibraryItemDto, LibraryItemUpdateDto } from './dto/library-item.dto';
+import { LibraryItemDto, LibraryItemQuery, LibraryItemUpdateDto } from './dto/library-item.dto';
 import { LibraryItem } from '@prisma/client';
 
 @ApiTags('Library-item')
@@ -21,10 +22,10 @@ import { LibraryItem } from '@prisma/client';
 export class LibraryItemController {
   constructor(private readonly libraryItemService: LibraryItemService) {}
 
-  @Get('library-items/:id')
+  @Get('library-items')
   @HttpCode(200)
-  getLibraryItems(@Param('id', ParseIntPipe) libraryArticleId: number): Promise<LibraryItem[]> {
-    return this.libraryItemService.getLibraryItems(libraryArticleId);
+  getLibraryItems(@Query() libraryItemQuery: LibraryItemQuery): Promise<LibraryItem[]> {
+    return this.libraryItemService.getLibraryItems(libraryItemQuery);
   }
 
   @Post('library-item')

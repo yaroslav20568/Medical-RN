@@ -1,15 +1,15 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { LibraryArticle, LibraryItem } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
-import { LibraryItemDto, LibraryItemUpdateDto } from './dto/library-item.dto';
+import { LibraryItemDto, LibraryItemQuery, LibraryItemUpdateDto } from './dto/library-item.dto';
 
 @Injectable()
 export class LibraryItemService {
   constructor(private prisma: PrismaService) {}
 
-  async getLibraryItems(id: number): Promise<LibraryItem[]> {
+  async getLibraryItems(libraryItemQuery: LibraryItemQuery): Promise<LibraryItem[]> {
     return this.prisma.libraryItem.findMany({
-			where: { libraryArticleId: id },
+			where: { libraryArticleId: +libraryItemQuery.libraryArticleId },
       include: {
         libraryArticle: true,
       },

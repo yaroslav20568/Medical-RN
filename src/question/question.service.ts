@@ -8,16 +8,16 @@ export class QuestionService {
   constructor(private prisma: PrismaService) {}
 
   async getQuestions(questionQuery: QuestionQuery): Promise<Question[]> {
-		const findUser: User = await this.prisma.user.findUnique({
-      where: { id: +questionQuery.userId },
-    });
-		
 		if (!questionQuery.userId) {
       throw new HttpException(
         'A userId required param',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+		
+		const findUser: User = await this.prisma.user.findUnique({
+      where: { id: +questionQuery.userId },
+    });
 
 		if (!findUser) {
       throw new HttpException(
@@ -28,7 +28,13 @@ export class QuestionService {
 
     return this.prisma.question.findMany({
       include: {
-        answers: true,
+        answers: {
+					orderBy: [
+						{
+							id: 'asc',
+						},
+					],
+				},
       },
 			where: {
 				questionResults: {
@@ -50,7 +56,13 @@ export class QuestionService {
 	async getQuestionsWithResults(): Promise<Question[]> {
     return this.prisma.question.findMany({
       include: {
-        answers: true,
+        answers: {
+					orderBy: [
+						{
+							id: 'asc',
+						},
+					],
+				},
 				questionResults: true,
       },
       orderBy: [

@@ -1,6 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsOptional, IsString } from 'class-validator';
 
+export class LibraryItemQuery {
+  @IsInt()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  libraryArticleId: number;
+}
+
 export class LibraryItemDto {
   @IsInt()
   @ApiProperty({ default: 1 })
