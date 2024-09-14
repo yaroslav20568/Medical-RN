@@ -4,10 +4,10 @@ import { s } from 'react-native-wind';
 import Mapbox from '@rnmapbox/maps';
 import { observer } from 'mobx-react-lite';
 import Geolocation from '@react-native-community/geolocation';
-import { IInstitutionRB } from '../../types';
+import { IInstitution } from '../../types';
 
 interface IProps {
-	institutions: Array<IInstitutionRB>;
+	institutions: Array<IInstitution>;
 }
 
 Mapbox.setWellKnownTileServer(Mapbox.TileServers.Mapbox);

@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { s } from 'react-native-wind';
 import Animated from 'react-native-reanimated';
-import { IInstitutionRB, navigationType } from '../../types';
+import { IInstitution, navigationType } from '../../types';
 import { Loader } from '../../components';
 import { siteUrl } from '../../constants';
 
 interface IProps {
-	institutions: Array<IInstitutionRB>;
+	institutions: Array<IInstitution>;
 	loadMoreInstitutions: () => void;
 	isLoadingMore: boolean;
 	navigation: navigationType;
@@ -37,7 +37,7 @@ const InstitutionList = ({ institutions, loadMoreInstitutions, isLoadingMore, na
 }
 
 interface IInstitutionItemProps {
-	institution: IInstitutionRB;
+	institution: IInstitution;
 	navigation: navigationType;
 }
 

@@ -15,7 +15,7 @@ const MenuItems = [
 	{name: 'QuickHelp', label: 'Быстрая помощь', icon: 'handshake-o'},
 	{name: 'Account', label: 'Личный кабинет', icon: 'user-o'},
 	{name: 'Library', label: 'Библиотека', icon: 'book'},
-	{name: 'HelpAbroad', label: 'Помощь за границей', icon: 'flag-o'},
+	{name: 'HelpAbroads', label: 'Помощь за границей', icon: 'flag-o'},
 	{name: 'Questions', label: 'Вопросы', icon: 'list-alt'}
 ];
 

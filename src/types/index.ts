@@ -28,6 +28,7 @@ interface ISelectItem {
 
 interface IInstitution extends IItem {
 	cityId: number;
+	region?: string;
 	city: {
 		id: number;
 		name: string;
@@ -48,12 +49,6 @@ interface IInstitution extends IItem {
 	photo: string;
 	typesUsers: string;
 }
-
-interface IInstitutionRB extends IInstitution {
-	region: string;
-}
-
-interface IHelpAbroad extends IInstitution {}
 
 type navigationType = NavigationProp<ParamListBase>;
 
@@ -171,4 +166,4 @@ interface IQuestionResult {
 	userId: number;
 }
 
-export type { IUser, IMenuItem, ISelectItem, IInstitutionRB, IHelpAbroad, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IImage, IRespChatData, IDialog, IMessage, IHotline, IQuestion, IQuestionWithResult };
+export type { IUser, IMenuItem, ISelectItem, IInstitution, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IImage, IRespChatData, IDialog, IMessage, IHotline, IQuestion, IQuestionWithResult };

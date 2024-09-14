@@ -53,7 +53,9 @@ const Institution = observer(({ route, navigation }: IProps) => {
 								color='#294CB4' 
 								style={s`mr-2`}
 							/>
-							<Text style={s`text-base text-black pr-8`}>{city.country.name}, {region} область, г. {city.name}, {address}</Text>
+							<Text style={s`text-base text-black pr-8`}>
+								{city.country.name}, {region ? `${region} область`: `${city.country.name} страна`}, г. {city.name}, {address}
+							</Text>
 						</View>
 						<View style={s`flex-row ml-1 mb-3`}>
 							<FontAwesome 
