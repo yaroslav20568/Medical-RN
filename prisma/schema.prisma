@@ -34,6 +34,7 @@ model City {
   countryId  Int          @map("city_id")
   country    Country      @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   Laboratory Laboratory[]
+  HelpAbroad HelpAbroad[]
 }
 
 model Country {
@@ -46,6 +47,7 @@ model Type {
   id         Int          @id @default(autoincrement())
   name       String       @unique
   laboratory Laboratory[]
+  HelpAbroad HelpAbroad[]
 }
 
 model User {
@@ -111,9 +113,9 @@ model Hotline {
 }
 
 model Question {
-  id             Int              @id @default(autoincrement())
-  name           String           @unique
-  answers        QuestionAnswer[]
+  id              Int              @id @default(autoincrement())
+  name            String           @unique
+  answers         QuestionAnswer[]
   questionResults QuestionResult[]
 }
 
@@ -132,4 +134,24 @@ model QuestionResult {
   questionAnswerId Int            @map("question_answer_id")
   questionAnswer   QuestionAnswer @relation(fields: [questionAnswerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId           Int            @map("user_id")
+}
+
+model HelpAbroad {
+  id            Int    @id @default(autoincrement())
+  name          String @unique
+  cityId        Int    @map("city_id")
+  city          City   @relation(fields: [cityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  address       String
+  coordinates   String
+  phone         String
+  email         String
+  socialNetwork String @map("social_network")
+  linkWebsite   String @map("link_website")
+  description   String
+  addInfo       String @map("add_info")
+  workingHours  String @map("working_hours")
+  typeId        Int    @map("type_id")
+  type          Type   @relation(fields: [typeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  photo         String
+  typesUsers    String @map("types_users")
 }

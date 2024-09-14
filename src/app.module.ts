@@ -19,6 +19,7 @@ import { HotlineModule } from './hotline/hotline.module';
 import { QuestionModule } from './question/question.module';
 import { QuestionAnswerModule } from './question-answer/question-answer.module';
 import { QuestionResultModule } from './question-result/question-result.module';
+import { HelpAbroadModule } from './help-abroad/help-abroad.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { QuestionResultModule } from './question-result/question-result.module';
 		QuestionModule,
 		QuestionAnswerModule,
 		QuestionResultModule,
+		HelpAbroadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

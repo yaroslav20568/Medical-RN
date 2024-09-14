@@ -133,7 +133,7 @@ export class LaboratoryService {
     }
 
     if (findLaboratory.photo !== 'laboratories/no-image.jpg') {
-      unlinkSync(`uploads/laboratories/${findLaboratory.photo}`);
+      unlinkSync(`uploads/${findLaboratory.photo}`);
     }
 
     return this.prisma.laboratory.delete({
