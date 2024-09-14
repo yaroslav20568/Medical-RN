@@ -19,7 +19,7 @@ const InstitutionList = ({ institutions, loadMoreInstitutions, isLoadingMore, na
 			{institutions.length ? 
 				<FlatList
 					data={institutions}
-					renderItem={({ item }) => 
+					renderItem={({item}) => 
 						<InstitutionItem 
 							key={`institution_${item.id}`} 
 							institution={item} 

@@ -27,15 +27,12 @@ interface ISelectItem {
 }
 
 interface IInstitution extends IItem {
-	cityId: IItem;
+	cityId: number;
 	city: {
 		id: number;
 		name: string;
 		countryId: number;
-		country: {
-			id: number;
-			name: string;
-		}
+		country: IItem;
 	}
 	address: string;
 	coordinates: string;
@@ -46,11 +43,8 @@ interface IInstitution extends IItem {
 	description: string;
 	addInfo: string;
 	workingHours: string;
-	typeId: IItem;
-	type: {
-		id: number;
-		name: string;
-	}
+	typeId: number;
+	type: IItem;
 	photo: string;
 	typesUsers: string;
 }
@@ -59,9 +53,7 @@ interface IInstitutionRB extends IInstitution {
 	region: string;
 }
 
-interface IHelpAbroad extends IInstitution {
-	countryId: IItem;
-}
+interface IHelpAbroad extends IInstitution {}
 
 type navigationType = NavigationProp<ParamListBase>;
 
@@ -152,25 +144,19 @@ interface IMessage {
 	isRead: boolean;
 }
 
-interface IHotline {
-	id: number;
-  type: string;
-  name: string;
+interface IHotline extends IItem {
+	type: string;
   phone: string;
   services: string;
   addInfo: string;
   typesUsers: string;
 }
 
-interface IQuestion {
-	id: number;
-  name: string;
+interface IQuestion extends IItem {
   answers: Array<IQuestionAnswer>;
 }
 
-interface IQuestionAnswer {
-	id: number;
-	name: string;
+interface IQuestionAnswer extends IItem {
 	questionId: number;
 }
 
