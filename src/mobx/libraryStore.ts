@@ -38,7 +38,7 @@ class LibraryStore {
 
 	loadItems(id: number) {
 		this.isLoadingItems = true;
-		axios<Array<ILibraryItem>>(`${siteUrl}/api/library-items/${id}`)
+		axios<Array<ILibraryItem>>(`${siteUrl}/api/library-items/?libraryArticleId=${id}`)
 		.then(({ data }) => {
 			runInAction(() => {
 				this.items = data;
