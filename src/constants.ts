@@ -16,3 +16,10 @@ export enum Roles {
 	User = 'User',
   Admin = 'Admin',
 }
+
+export enum TypesEvents {
+	TreatmentRegimen = 'Схема лечения',
+  DoctorAppointment = 'Запись к врачу',
+	TakingTests = 'Сдача анализов',
+	AnotherReminder = 'Другое напоминание',
+}

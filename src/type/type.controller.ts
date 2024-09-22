@@ -29,6 +29,7 @@ export class TypeController {
 
   @Post('type')
   @HttpCode(200)
+	@UsePipes(new ValidationPipe())
   async createType(@Body() typeDto: TypeDto): Promise<Type> {
     return this.typeService.createType(typeDto);
   }

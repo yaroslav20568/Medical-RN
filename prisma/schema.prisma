@@ -51,16 +51,18 @@ model Type {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  email      String    @unique
-  password   String
-  gender     String
-  typesUsers String    @map("types_users")
-  city       String
-  imageUrl   String
-  role       String
-  message    Message[]
-  dialog     Dialog[]
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  password      String
+  gender        String
+  typesUsers    String          @map("types_users")
+  city          String
+  imageUrl      String
+  role          String
+  message       Message[]
+  dialog        Dialog[]
+  Analysis      Analysis[]
+  CalendarEvent CalendarEvent[]
 }
 
 model TypeUser {
@@ -154,4 +156,23 @@ model HelpAbroad {
   type          Type   @relation(fields: [typeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   photo         String
   typesUsers    String @map("types_users")
+}
+
+model CalendarEvent {
+  id        Int    @id @default(autoincrement())
+  name      String @unique
+  userId    Int    @map("user_id")
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  typeEvent String
+  dateEvent String @map("date_event")
+  timeEvent String @map("time_event")
+}
+
+model Analysis {
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  userId   Int    @map("user_id")
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  category String
+  photo    String
 }

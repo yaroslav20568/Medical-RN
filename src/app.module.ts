@@ -20,6 +20,8 @@ import { QuestionModule } from './question/question.module';
 import { QuestionAnswerModule } from './question-answer/question-answer.module';
 import { QuestionResultModule } from './question-result/question-result.module';
 import { HelpAbroadModule } from './help-abroad/help-abroad.module';
+import { CalendarEventModule } from './calendar-event/calendar-event.module';
+import { AnalysisModule } from './analysis/analysis.module';
 
 @Module({
   imports: [
@@ -43,6 +45,8 @@ import { HelpAbroadModule } from './help-abroad/help-abroad.module';
 		QuestionAnswerModule,
 		QuestionResultModule,
 		HelpAbroadModule,
+		CalendarEventModule,
+		AnalysisModule,
   ],
   controllers: [AppController],
   providers: [AppService],
