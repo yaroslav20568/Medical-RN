@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsOptional, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { Express } from 'multer';
 import { Analyzes } from 'src/constants';
 
 export class AnalysisQuery {
@@ -15,6 +17,7 @@ export class AnalysisDto {
   name: string;
 
 	@IsInt()
+	@Transform(({ value }) => parseInt(value))
   @ApiProperty({ default: 1 })
   userId: number;
 
@@ -22,9 +25,8 @@ export class AnalysisDto {
   @ApiProperty({ enum: Analyzes, enumName: 'Analyzes' })
   category: string;
 
-	@IsString()
-  @ApiProperty()
-  photo: string;
+	@ApiProperty({ type: 'string', format: 'binary', required: false })
+  file: Express.multer.file;
 }
 
 export class AnalysisUpdateDto {
@@ -35,6 +37,7 @@ export class AnalysisUpdateDto {
 
 	@IsInt()
   @IsOptional()
+	@Transform(({ value }) => parseInt(value))
   @ApiProperty({ default: 1, required: false })
   userId: number;
 
@@ -43,8 +46,6 @@ export class AnalysisUpdateDto {
   @ApiProperty({ enum: Analyzes, enumName: 'Analyzes', required: false })
   category: string;
 
-	@IsString()
-	@IsOptional()
-  @ApiProperty({ required: false })
-  photo: string;
+	@ApiProperty({ type: 'string', format: 'binary', required: false })
+  file: Express.multer.file;
 }

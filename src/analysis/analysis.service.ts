@@ -1,5 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Analysis, User } from '@prisma/client';
+import { Express } from 'multer';
+import { unlinkSync } from 'node:fs';
 import { PrismaService } from 'src/prisma.service';
 import { AnalysisDto, AnalysisQuery, AnalysisUpdateDto } from './dto/analysis.dto';
 
@@ -23,7 +25,7 @@ export class AnalysisService {
     });
   }
 
-  async createAnalysis(analysisDto: AnalysisDto): Promise<Analysis> {
+  async createAnalysis(file: Express.Multer.File, analysisDto: AnalysisDto): Promise<Analysis> {
     const findAnalysis: Analysis = await this.prisma.analysis.findUnique({
       where: { name: analysisDto.name },
     });
@@ -47,7 +49,12 @@ export class AnalysisService {
     }
 
     return this.prisma.analysis.create({
-      data: analysisDto,
+      data: {
+				name: analysisDto.name,
+				userId: analysisDto.userId,
+				category: analysisDto.category,
+				photo: file ? 'analyzes/' + file?.originalname : 'analyzes/no-image.jpg',
+			},
     });
   }
 
@@ -58,9 +65,13 @@ export class AnalysisService {
 
     if (!findAnalysis) {
       throw new HttpException(
-        'No analysis event with this id',
+        'No analysis with this id',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
+    }
+
+    if (findAnalysis.photo !== 'analyzes/no-image.jpg') {
+      unlinkSync(`uploads/${findAnalysis.photo}`);
     }
 
     return this.prisma.analysis.delete({
@@ -70,8 +81,8 @@ export class AnalysisService {
     });
   }
 
-  async updateAnalysis(id: number, analysisUpdateDto: AnalysisUpdateDto): Promise<Analysis> {
-    const findAnalysis: Analysis = await this.prisma.analysis.findUnique({
+  async updateAnalysis(id: number, file: Express.Multer.File, analysisUpdateDto: AnalysisUpdateDto): Promise<Analysis> {
+		const findAnalysis: Analysis = await this.prisma.analysis.findUnique({
       where: { id: id },
     });
 
@@ -86,7 +97,12 @@ export class AnalysisService {
       where: {
         id: id,
       },
-      data: analysisUpdateDto,
+      data: {
+				name: analysisUpdateDto.name,
+				userId: analysisUpdateDto.userId,
+				category: analysisUpdateDto.category,
+				photo: file ? 'analyzes/' + file?.originalname : 'analyzes/no-image.jpg',
+			},
     });
   }
 }

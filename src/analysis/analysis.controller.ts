@@ -11,11 +11,15 @@ import {
   ValidationPipe,
   HttpCode,
 	Query,
+	UseInterceptors,
+	UploadedFile,
 } from '@nestjs/common';
 import { AnalysisService } from './analysis.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Analysis } from '@prisma/client';
 import { AnalysisDto, AnalysisQuery, AnalysisUpdateDto } from './dto/analysis.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express, diskStorage } from 'multer';
 
 @ApiTags('Analysis')
 @Controller()
@@ -30,9 +34,23 @@ export class AnalysisController {
 
   @Post('analysis')
   @HttpCode(200)
-	@UsePipes(new ValidationPipe())
-  async createAnalysis(@Body() analysisDto: AnalysisDto): Promise<Analysis> {
-    return this.analysisService.createAnalysis(analysisDto);
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads/analyzes',
+        filename: (req, file, cb) => {
+          cb(null, `${file.originalname}`);
+        },
+      }),
+    }),
+  )
+  @UsePipes(new ValidationPipe({ transform: true }))
+  createAnalysis(
+    @UploadedFile('file') file: Express.Multer.File,
+    @Body() analysisDto: AnalysisDto,
+  ): Promise<Analysis> {
+    return this.analysisService.createAnalysis(file, analysisDto);
   }
 
   @Delete('analysis/:id')
@@ -43,11 +61,23 @@ export class AnalysisController {
 
   @Put('analysis/:id')
   @HttpCode(200)
-  @UsePipes(new ValidationPipe())
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads/analyzes',
+        filename: (req, file, cb) => {
+          cb(null, `${file.originalname}`);
+        },
+      }),
+    }),
+  )
+  @UsePipes(new ValidationPipe({ transform: true }))
   async updateAnalysis(
     @Param('id', ParseIntPipe) id: number,
-    @Body() analysisUpdateDto: AnalysisUpdateDto,
+    @UploadedFile('file') file: Express.Multer.File,
+    @Body() analysisDto: AnalysisUpdateDto,
   ): Promise<Analysis> {
-    return this.analysisService.updateAnalysis(id, analysisUpdateDto);
+    return this.analysisService.updateAnalysis(id, file, analysisDto);
   }
 }
