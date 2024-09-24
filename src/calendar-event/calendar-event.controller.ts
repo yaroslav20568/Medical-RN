@@ -22,7 +22,7 @@ import { CalendarEventDto, CalendarEventQuery, CalendarEventUpdateDto } from './
 export class CalendarEventController {
   constructor(private readonly calendarEventService: CalendarEventService) {}
 
-  @Get('calendar-event')
+  @Get('calendar-events')
   @HttpCode(200)
   async getCalendarEvents(@Query() calendarEventQuery: CalendarEventQuery): Promise<CalendarEvent[]> {
     return this.calendarEventService.getCalendarEvents(calendarEventQuery);

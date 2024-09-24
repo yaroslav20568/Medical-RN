@@ -23,3 +23,9 @@ export enum TypesEvents {
 	TakingTests = 'Сдача анализов',
 	AnotherReminder = 'Другое напоминание',
 }
+
+export enum Analyzes {
+	ViralLoad = 'Вирусная нагрузка',
+  CD4 = 'CD4',
+	OtherAnalyses = 'Другие анализы',
+}
