@@ -165,7 +165,6 @@ model CalendarEvent {
   user      User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   typeEvent String
   dateEvent String @map("date_event")
-  timeEvent String @map("time_event")
 }
 
 model Analysis {

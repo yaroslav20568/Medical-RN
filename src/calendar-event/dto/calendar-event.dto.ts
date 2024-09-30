@@ -25,10 +25,6 @@ export class CalendarEventDto {
 	@IsString()
   @ApiProperty()
   dateEvent: string;
-
-	@IsString()
-  @ApiProperty()
-  timeEvent: string;
 }
 
 export class CalendarEventUpdateDto {
@@ -51,9 +47,4 @@ export class CalendarEventUpdateDto {
 	@IsOptional()
   @ApiProperty({ required: false })
   dateEvent: string;
-
-	@IsString()
-	@IsOptional()
-  @ApiProperty({ required: false })
-  timeEvent: string;
 }
