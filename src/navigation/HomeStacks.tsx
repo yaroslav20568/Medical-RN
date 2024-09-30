@@ -31,6 +31,7 @@ export type RootStackParams = {
 		question: IQuestion;
 	};
 	HelpAbroads: undefined;
+	Calendar: undefined;
 };
 
 const HomeStack = createNativeStackNavigator<RootStackParams>();

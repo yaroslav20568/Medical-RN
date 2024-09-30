@@ -166,4 +166,20 @@ interface IQuestionResult {
 	userId: number;
 }
 
-export type { IUser, IMenuItem, ISelectItem, IInstitution, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IImage, IRespChatData, IDialog, IMessage, IHotline, IQuestion, IQuestionWithResult };
+interface ICalendarEvent extends IItem {
+	id: number;
+	userId: number;
+	user: IUser;
+	typeEvent: string;
+	dateEvent: string;
+}
+
+interface IAnalysis extends IItem {
+	id: number;
+	userId: number;
+	user: IUser;
+  category: string;
+  photo: string;
+}
+
+export type { IUser, IMenuItem, ISelectItem, IInstitution, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IImage, IRespChatData, IDialog, IMessage, IHotline, IQuestion, IQuestionWithResult, ICalendarEvent, IAnalysis };
