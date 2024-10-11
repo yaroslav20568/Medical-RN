@@ -11,11 +11,12 @@ interface IProps {
 	tabItem: ITab;
 	tabNavigate: (name: string, index: number) => void;
 	index: number;
+	moveSelectTab: (index: number) => void;
 }
 
 export const AnimatedIcon = Animated.createAnimatedComponent(AntDesign);
 
-const CustomTab = ({ state, tabItem, tabNavigate, index }: IProps) => {
+const CustomTab = ({ state, tabItem, tabNavigate, index, moveSelectTab }: IProps) => {
 	const color = useSharedValue('#999');
 	const scale = useSharedValue(1);
 
@@ -23,9 +24,11 @@ const CustomTab = ({ state, tabItem, tabNavigate, index }: IProps) => {
 		if(state.index === index) {
 			color.value = withSpring('#fff');
 			scale.value = withTiming(1.3);
+			moveSelectTab(index);
 		} else {
 			color.value = withSpring('#999');
 			scale.value = withTiming(1);
+			
 		}
 	}, [state.index]);
 

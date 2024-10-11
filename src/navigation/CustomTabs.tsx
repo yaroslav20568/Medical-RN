@@ -19,11 +19,15 @@ interface IProps {
 const CustomTabs = ({ state, navigation, tabItems }: IProps) => {
 	const width = Dimensions.get('window').width;
 	const translateX = useSharedValue(0);
+
+	const moveSelectTab = (index: number): void => {
+		translateX.value = withSpring(index * width / tabItems.length);
+	}
 	
 	const tabNavigate = useCallback((name: string, index: number): void => {
 		if(state.index === 0) {
 			navigation.navigate(name);
-			translateX.value = withSpring(index * width / tabItems.length);
+			moveSelectTab(index);
 		}
 
 		if(name === 'Chat') {
@@ -48,6 +52,7 @@ const CustomTabs = ({ state, navigation, tabItems }: IProps) => {
 					tabItem={tabItem} 
 					tabNavigate={tabNavigate} 
 					index={index} 
+					moveSelectTab={moveSelectTab}
 					key={`tab_${index}`}
 				/>
 			)}
