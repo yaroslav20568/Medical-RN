@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StartPage, Privacy } from '../pages';
+import { StartPage, Privacy, NoInternet } from '../pages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { useNetInfo } from '@react-native-community/netinfo';
 import { observer } from 'mobx-react-lite';
 import { userStore, institutionsStore } from '../mobx';
 import { IRespAuthData, IUser } from '../types';
@@ -14,6 +15,8 @@ interface IUserData extends IRespAuthData {}
 const Stack = createNativeStackNavigator();
 
 const Stacks = observer(() => {
+	const { isConnected } = useNetInfo();
+
   const getUserData = async () => {
     const userData: IUserData | null = JSON.parse(
       (await AsyncStorage.getItem('@userData')) as string,
@@ -47,14 +50,14 @@ const Stacks = observer(() => {
       screenOptions={{
         headerShown: false,
       }}>
-      {!userStore.isAuth ? (
-        <>
-          <Stack.Screen name="Privacy" component={Privacy} options={{animation: 'slide_from_right'}} />
-          <Stack.Screen name="StartPage" component={StartPage} options={{animation: 'slide_from_right'}} />
-        </>
-      ) : (
-        <Stack.Screen name="Tabs" component={Tabs} />
-      )}
+			{!isConnected && isConnected !== null ? 
+				<Stack.Screen name="NoInternet" component={NoInternet} /> :
+				!userStore.isAuth ? 
+					<>
+						<Stack.Screen name="Privacy" component={Privacy} options={{animation: 'slide_from_right'}} />
+						<Stack.Screen name="StartPage" component={StartPage} options={{animation: 'slide_from_right'}} />
+					</> : 
+					<Stack.Screen name="Tabs" component={Tabs} />}
     </Stack.Navigator>
   );
 });

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { s } from 'react-native-wind';
-import { observer } from 'mobx-react-lite';
 import { Login, Register, Tabs } from '../../components';
 import { institutionsStore } from '../../mobx';
 
@@ -15,7 +14,7 @@ const tabsElems:Array<ITab> = [
 	{label: 'Залогиниться', name: 'Регистрация'}
 ];
 
-const StartPage = observer(() => {
+const StartPage = () => {
 	const [currTab, setCurrTab] = useState<string>('login');
 	const [infoText, setInfoText] = useState<string>('');
 	const [isDisabledBtn, setIsDisabledBtn] = useState<boolean>(false);
@@ -48,6 +47,6 @@ const StartPage = observer(() => {
 				/>}
 		</ScrollView>
 	)
-})
+}
 
 export default StartPage;

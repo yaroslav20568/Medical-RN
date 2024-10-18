@@ -20,3 +20,5 @@ export { default as Questions } from './private/Questions';
 export { default as Question } from './private/Question';
 
 export { default as HelpAbroads } from './private/HelpAbroads';
+
+export { default as NoInternet } from './public/NoInternet';
