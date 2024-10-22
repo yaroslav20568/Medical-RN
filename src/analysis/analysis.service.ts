@@ -54,6 +54,7 @@ export class AnalysisService {
 				userId: analysisDto.userId,
 				category: analysisDto.category,
 				photo: file ? 'analyzes/' + file?.originalname : 'analyzes/no-image.jpg',
+				date: analysisDto.date,
 			},
     });
   }
@@ -102,6 +103,7 @@ export class AnalysisService {
 				userId: analysisUpdateDto.userId,
 				category: analysisUpdateDto.category,
 				photo: file ? 'analyzes/' + file?.originalname : 'analyzes/no-image.jpg',
+				date: analysisUpdateDto.date,
 			},
     });
   }

@@ -27,6 +27,10 @@ export class AnalysisDto {
 
 	@ApiProperty({ type: 'string', format: 'binary', required: false })
   file: Express.multer.file;
+
+	@IsString()
+  @ApiProperty()
+  date: string;
 }
 
 export class AnalysisUpdateDto {
@@ -48,4 +52,8 @@ export class AnalysisUpdateDto {
 
 	@ApiProperty({ type: 'string', format: 'binary', required: false })
   file: Express.multer.file;
+
+	@IsString()
+  @ApiProperty()
+  date: string;
 }

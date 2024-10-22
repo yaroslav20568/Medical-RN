@@ -174,4 +174,5 @@ model Analysis {
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   category String
   photo    String
+  date     String
 }
