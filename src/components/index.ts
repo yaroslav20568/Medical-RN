@@ -35,3 +35,5 @@ export { default as QuestionList } from './Questions/QuestionList';
 export { default as QuestionResultList } from './Questions/QuestionResultList';
 
 export { default as CalendarContent } from './Calendar/CalendarContent';
+
+export { default as AnalyzesList } from './Analyzes/AnalyzesList';

@@ -17,7 +17,8 @@ export type RootStackParams = {
 	LibraryItem: {
 		item: ILibraryItem;
 	};
-	Account: undefined;
+	AccountInner: undefined;
+	Analyzes: undefined;
 	ChatInner: undefined;
 	ChatDialog: {
 		dialogId: number;

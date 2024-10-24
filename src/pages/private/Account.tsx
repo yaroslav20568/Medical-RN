@@ -13,7 +13,7 @@ import { siteUrl } from '../../constants';
 import { IUser } from '../../types';
 import socket from '../../socket/chat-socket';
 
-interface IProps extends NativeStackScreenProps<RootStackParams, 'Account'> {}
+interface IProps extends NativeStackScreenProps<RootStackParams, 'AccountInner'> {}
 
 const Account = observer(({ navigation }: IProps) => {
 	const [updateAccAnimatedValue, updateAccTranslateX, showUpdateAccModal, hideUpdateAccModal] = useGetModalParams();
@@ -80,6 +80,10 @@ const Account = observer(({ navigation }: IProps) => {
 		}, 1000);
 	}, []);
 
+	const navigateToAnalyzes = useCallback(() => {
+		navigation.navigate('Analyzes');
+	}, []);
+
 	return (
 		<>
 			<ScrollView
@@ -99,6 +103,7 @@ const Account = observer(({ navigation }: IProps) => {
 					showDeletePhotoModal={showDeletePhotoModal}
 					showLogOutModal={showLogOutModal}
 					imageUrl={userStore.userData?.imageUrl}
+					navigateToAnalyzes={navigateToAnalyzes}
 				/>
 				<UserProfile 
 					user={userStore.userData}

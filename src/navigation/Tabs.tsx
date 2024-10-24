@@ -1,9 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Calendar, Account } from '../pages';
+import { Calendar } from '../pages';
 import { CustomTabs } from '../navigation';
 import HomeStacks from './HomeStacks';
 import ChatStacks from './ChatStacks';
+import AccountStacks from './AccountStacks';
 import { ITab } from '../types';
 
 const Tab = createBottomTabNavigator();
@@ -30,7 +31,7 @@ const tabItems:Array<ITab> = [
 	{
 		name: 'Account',
 		label: 'Кабинет', 
-		component: Account,
+		component: AccountStacks,
 		icon: 'user'
 	}
 ];

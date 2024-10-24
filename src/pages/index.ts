@@ -1,5 +1,6 @@
 export { default as Privacy } from './public/Privacy';
 export { default as StartPage } from './public/StartPage';
+export { default as NoInternet } from './public/NoInternet';
 
 export { default as Home } from './private/Home';
 export { default as Calendar } from './private/Calendar';
@@ -21,4 +22,4 @@ export { default as Question } from './private/Question';
 
 export { default as HelpAbroads } from './private/HelpAbroads';
 
-export { default as NoInternet } from './public/NoInternet';
+export { default as Analyzes } from './private/Analyzes';

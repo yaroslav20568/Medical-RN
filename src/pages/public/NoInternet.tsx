@@ -1,7 +1,6 @@
 import React from 'react';
 import { Image, ScrollView } from 'react-native';
 import { s } from 'react-native-wind';
-import { HeaderLogo } from '../../components';
 
 const NoInternet = () => {
 	return (
