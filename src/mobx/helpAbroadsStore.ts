@@ -102,21 +102,6 @@ class HelpAbroadsStore {
 
 		return typesInstitution;
 	}
-
-	get getTypesUser() {
-		const typesUser: Array<ISelectItem> = [];
-		this.institutions.forEach(institution => {
-			institution.typesUsers.split(',').forEach(type => {
-				const bool = typesUser.some(typeUser => typeUser?.value == +type);
-
-				if(!bool) {
-					typesUser.push({label: institutionsStore.typesUsers[+type].name, value: institutionsStore.typesUsers[+type].id - 1, isChecked: false});
-				}
-			});
-		});
-
-		return typesUser;
-	}
 }
 
 export default new HelpAbroadsStore();

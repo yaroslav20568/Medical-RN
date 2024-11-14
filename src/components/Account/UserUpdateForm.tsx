@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, TouchableOpacity, Image, Platform } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, Image, Platform, GestureResponderEvent } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { s } from "react-native-wind";
 import axios from 'axios';
 import RNPickerSelect from 'react-native-picker-select';
-import CheckBox from '@react-native-community/checkbox';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Feather from 'react-native-vector-icons/Feather';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { observer } from 'mobx-react-lite';
 import { siteUrl } from '../../constants';
-import { IImage, ITypeUser, IUser, IUserFormValues } from '../../types';
+import { IImage, ITypeUser, IUser, IUserFormValues, IUserFormRegister } from '../../types';
 import { userStore } from '../../mobx';
 
 interface IProps {
@@ -35,27 +35,32 @@ const SignupSchema = Yup.object().shape({
 });
 
 const UserUpdateForm = observer(({ typesUsers, userId, hideModal }: IProps) => {
-	const [typesUsersArrArray, setTypesUsersArrArray] = useState<ITypeUser[]>(typesUsers);
-	const formValues: IUserFormValues = {email: '', password: '', gender: '', typesUsersArr: [], city: '', file: null, role: 'User'};
+	const [typesUsersArr, setTypesUsersArr] = useState<ITypeUser[]>(typesUsers);
+	const formValues: IUserFormValues = {email: '', password: '', gender: '', typesUsers: [], city: '', file: null, role: 'User'};
 	const [image, setImage] = useState<IImage | null>(null);
 	const [isDisabledBtn, setIsDisabledBtn] = useState<boolean>(false);
 
 	const chooseImage = async () => {
-		const currentImage = await launchImageLibrary({
-			mediaType: 'photo'
-		});
+		const options = {
+      mediaType: 'photo' as const
+    };
 
-		setImage({
-			name: currentImage.assets[0].fileName,
-			type: currentImage.assets[0].type,
-			uri: Platform.OS === "android" ? currentImage.assets[0].uri : currentImage.assets[0].uri.replace("file://", "")
-		});
+    launchImageLibrary(options, (currentImage) => {
+      if (currentImage.assets) {
+				setImage({
+					name: currentImage.assets[0].fileName,
+					type: currentImage.assets[0].type,
+					uri: Platform.OS === "android" ? currentImage.assets[0].uri : currentImage.assets[0].uri?.replace("file://", "")
+				});
+      }
+    });
 	}
 
-	const resetFormValues = (resetForm: () => void) => {
+	const resetFormValues = (resetForm: () => void, setFieldValue: (field: string, value: any) => void) => {
 		resetForm();
+		setFieldValue('typesUsers', []);
 		resetPhoto();
-		setTypesUsersArrArray(typesUsers);
+		setTypesUsersArr(typesUsers);
 	}
 
 	const resetPhoto = () => {
@@ -67,22 +72,18 @@ const UserUpdateForm = observer(({ typesUsers, userId, hideModal }: IProps) => {
 			<Formik
 				initialValues={formValues}
 				validationSchema={SignupSchema}
-				onSubmit={(values, { resetForm }) => {
-					const sortValues = values.typesUsersArr.slice().sort(function (a, b) {return a - b;})
-					values = {...values, typesUsersArr: sortValues, file: image};
-					const sendObject = {...values, typesUsers: values.typesUsersArr.join(',')} as Partial<IUserFormValues>;
-					delete sendObject.typesUsersArr;
-					if(sendObject.file === null) {
-						delete sendObject.file;
-					}
+				onSubmit={(values, { resetForm, setFieldValue }) => {
+					const sortTypesUsers = values.typesUsers.slice().sort(function (a, b) {return a - b;})
+					values = {...values, typesUsers: sortTypesUsers, file: image};
+					const formData: IUserFormRegister = {...values, typesUsers: values.typesUsers.join(',')};
 
 					setIsDisabledBtn(true);
 
-					const formData = new FormData();
+					const sendData = new FormData();
 
-					for (let key in sendObject) {
-						if(sendObject[key as keyof IUserFormValues]) {
-							formData.append(key, sendObject[key as keyof IUserFormValues]);
+					for (let key in formData) {
+						if(formData[key as keyof IUserFormValues]) {
+							sendData.append(key, formData[key as keyof IUserFormValues]);
 						}
 					}
 
@@ -93,13 +94,14 @@ const UserUpdateForm = observer(({ typesUsers, userId, hideModal }: IProps) => {
 							'Accept': 'multipart/form-data',
 							'Content-Type': 'multipart/form-data'
 						},
-						data: formData
+						data: sendData
 					})
 					.then((response) => {
 						if(response.status === 200) {
 							resetForm();
+							setFieldValue('typesUsers', []);
 							resetPhoto();
-							setTypesUsersArrArray(typesUsers);
+							setTypesUsersArr(typesUsers);
 							userStore.setUserData(response.data);
 							hideModal();
 						}
@@ -107,11 +109,11 @@ const UserUpdateForm = observer(({ typesUsers, userId, hideModal }: IProps) => {
 					.finally(() => setIsDisabledBtn(false))
 				}}
 			>
-				{({ handleChange, handleBlur, handleSubmit, values, touched, errors, resetForm }) => (
+				{({ handleChange, handleBlur, handleSubmit, values, touched, errors, resetForm, setFieldValue }) => (
 					<View>
 						<View style={s`flex-row justify-end`}>
 							<TouchableOpacity
-								onPress={() => resetFormValues(resetForm)}
+								onPress={() => resetFormValues(resetForm, setFieldValue)}
 								activeOpacity={.7}
 								style={s`mb-3`}
 							>
@@ -157,39 +159,40 @@ const UserUpdateForm = observer(({ typesUsers, userId, hideModal }: IProps) => {
 									{label: 'Женский', value: 'Женский'}
 								]}
 							/>
-							{errors.gender && touched.gender ? (
-								<Text style={s`text-red-900 text-base`}>{errors.gender}</Text>
-							) : ''}
 						</View>
 						<View style={s`mb-5`}>
-							<Text style={s`text-base mb-2`}>Тип пользователя:</Text>
-							{typesUsersArrArray.map((item, currIndex) => 
+							<Text style={s`text-base mb-2`}>тип пользователя:</Text>
+							{typesUsersArr.map((currItem, currIndex) => 
 								<View style={s`flex-row items-center mb-1`} key={`checkbox_${currIndex}`}>
-									<CheckBox
-										value={item.isChecked}
-										onValueChange={value =>
-											setTypesUsersArrArray(typesUsersArrArray.map((item, index) => {
-												if(currIndex === index) {
-													if(!item.isChecked && !values.typesUsersArr.includes(currIndex)) {
-														values.typesUsersArr = [...values.typesUsersArr, currIndex];
-													} else {
-														const findIndex = values.typesUsersArr.findIndex((item) => currIndex === item);
-														values.typesUsersArr = values.typesUsersArr.filter((item, i) => findIndex !== i);
+									<BouncyCheckbox
+										size={20}
+										fillColor='#a8a29e'
+										unFillColor='transparent'
+										textComponent={<Text style={s`text-base ml-3`}>{currItem.name}</Text>}
+										iconStyle={s`text-gray-400 rounded-none`}
+										innerIconStyle={s`border-2 rounded-none`}
+										isChecked={currItem.isChecked}
+										onPress={value => 
+											setTypesUsersArr((prevTypesUsersArr) => 
+												prevTypesUsersArr.map((item, index) => {
+													if(currIndex === index) {
+														if(!item.isChecked && !values.typesUsers.includes(currIndex)) {
+															values.typesUsers = [...values.typesUsers, currIndex];
+														} else {
+															const findIndex = values.typesUsers.findIndex((item) => currIndex === item);
+															values.typesUsers = values.typesUsers.filter((_, i) => findIndex !== i);
+														}
+	
+														return {...item, isChecked: value}
 													}
-
-													return {...item, isChecked: value}
-												}
-
-												return item;
-											}))
+	
+													return item;
+												})
+											)
 										}
 									/>
-									<Text style={s`text-base mr-3`}>{item.name}</Text>
 								</View>
 							)}
-							{errors.typesUsersArr && touched.gender ? (
-								<Text style={s`text-red-900 text-base`}>{errors.typesUsersArr}</Text>
-							) : ''}
 						</View>
 						<View style={s`mb-5`}>
 							<TextInput
@@ -231,7 +234,7 @@ const UserUpdateForm = observer(({ typesUsers, userId, hideModal }: IProps) => {
 						</View>
 						<TouchableOpacity 
 							style={s`${isDisabledBtn ? 'bg-violet-500' : 'bg-violet-700'} border-rose-700 py-3`}
-							onPress={handleSubmit}
+							onPress={handleSubmit as (e?: GestureResponderEvent) => void}
 							activeOpacity={.7}
 						>
 							<Text style={s`text-white text-center text-lg`}>Обновить данные</Text>

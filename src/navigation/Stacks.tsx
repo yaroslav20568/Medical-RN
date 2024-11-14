@@ -42,7 +42,7 @@ const Stacks = observer(() => {
 
   useEffect(() => {
     getUserData();
-		institutionsStore.getTypesUsers();
+		institutionsStore.loadTypesUsers();
   }, []);
 
   return (

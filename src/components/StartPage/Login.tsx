@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, TextInput, Text, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { s } from "react-native-wind";
@@ -108,7 +108,7 @@ const Login = observer(({ infoText, setInfoText, isDisabledBtn, setIsDisabledBtn
 						</View>}
 						<TouchableOpacity 
 							style={s`${isDisabledBtn ? 'bg-violet-500' : 'bg-violet-700'} border-rose-700 py-3`}
-							onPress={handleSubmit}
+							onPress={handleSubmit as (e?: GestureResponderEvent) => void}
 							activeOpacity={.7}
 							disabled={isDisabledBtn}
 						>

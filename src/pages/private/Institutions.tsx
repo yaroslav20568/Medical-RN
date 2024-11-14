@@ -16,13 +16,13 @@ const Institutions = observer(({ navigation }: IProps) => {
 	const [region, setRegion] = useState<string>('');
 	const [cityId, setCityId] = useState<number | ''>('');
 	const [typeInstitutionId, setTypeInstitutionId] = useState<number | ''>('');
-	const [typesUser, setTypesUser] = useState<Array<number>>([]);
+	const [typesUsersNum, setTypesUsersNum] = useState<Array<number>>([]);
 	const [modalActive, setModalActive] = useState<string>('search');
 	const [animatedValue, translateX, showModal, hideModal] = useGetModalParams();
 
 	useEffect(() => {
-		institutionsStore.loadInstitutions(inputValue, region, cityId, typeInstitutionId, typesUser);
-	}, [inputValue, region, cityId, typeInstitutionId, typesUser]);
+		institutionsStore.loadInstitutions(inputValue, region, cityId, typeInstitutionId, typesUsersNum);
+	}, [inputValue, region, cityId, typeInstitutionId, typesUsersNum]);
 
 	const loadMoreInstitutions = useCallback((): void => {
 		institutionsStore.loadMoreInstitutions();
@@ -35,7 +35,7 @@ const Institutions = observer(({ navigation }: IProps) => {
 			setRegion('');
 			setCityId('');
 			setTypeInstitutionId('');
-			setTypesUser([]);
+			setTypesUsersNum([]);
 		}
 	}, []);
 
@@ -108,9 +108,9 @@ const Institutions = observer(({ navigation }: IProps) => {
 							typesInstitution={institutionsStore.getTypesInstitution}
 							typeInstitutionId={typeInstitutionId}
 							setTypeInstitutionId={setTypeInstitutionId}
-							typesUserItems={institutionsStore.getTypesUser}
-							typesUser={typesUser}
-							setTypesUser={setTypesUser}
+							typesUsers={institutionsStore.typesUsers}
+							typesUsersNum={typesUsersNum}
+							setTypesUsersNum={setTypesUsersNum}
 						/>
 					</>}
 			</Modal>

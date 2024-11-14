@@ -66,6 +66,17 @@ class InstitutionsStore {
 		}
 	}
 
+	loadTypesUsers() {
+		this.isLoading = true;
+		axios<Array<ITypeUser>>(`${siteUrl}/api/types-users`)
+    .then(({ data }) => {
+			runInAction(() => {
+				this.typesUsers = data;
+				this.isLoading = false;
+			});
+		})
+	}
+
 	get getCities() {
 		const citiesInstitution: Array<ISelectItem> = [];
 		this.institutions.forEach(institution => {
@@ -90,32 +101,6 @@ class InstitutionsStore {
 		});
 
 		return typesInstitution;
-	}
-
-	get getTypesUser() {
-		const typesUser: Array<ISelectItem> = [];
-		this.institutions.forEach(institution => {
-			institution.typesUsers.split(',').forEach(type => {
-				const bool = typesUser.some(typeUser => typeUser?.value == +type);
-
-				if(!bool) {
-					typesUser.push({label: this.typesUsers[+type].name, value: this.typesUsers[+type].id - 1, isChecked: false});
-				}
-			});
-		});
-
-		return typesUser;
-	}
-
-	getTypesUsers() {
-		this.isLoading = true;
-		axios<Array<ITypeUser>>(`${siteUrl}/api/types-users`)
-    .then(({ data }) => {
-			runInAction(() => {
-				this.typesUsers = data;
-				this.isLoading = false;
-			});
-		})
 	}
 }
 

@@ -6,7 +6,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParams } from '../../navigation/HomeStacks';
 import { HeaderLogo, Map, InstitutionList, Loader, InstitutionsWidgetsPanel, InstitutionSearch, HeaderModal, Modal, InstitutionsFilter, GoBack } from '../../components';
-import { helpAbroadsStore } from '../../mobx';
+import { helpAbroadsStore, institutionsStore } from '../../mobx';
 import { useGetModalParams } from '../../hooks';
 
 interface IProps extends NativeStackScreenProps<RootStackParams, 'HelpAbroads'> {}
@@ -16,13 +16,13 @@ const HelpAbroads = observer(({ navigation }: IProps) => {
 	const [cityId, setCityId] = useState<number | ''>('');
 	const [countryId, setCountryId] = useState<number | ''>('');
 	const [typeInstitutionId, setTypeInstitutionId] = useState<number | ''>('');
-	const [typesUser, setTypesUser] = useState<Array<number>>([]);
+	const [typesUsersNum, setTypesUsersNum] = useState<Array<number>>([]);
 	const [modalActive, setModalActive] = useState<string>('search');
 	const [animatedValue, translateX, showModal, hideModal] = useGetModalParams();
 
 	useEffect(() => {
-		helpAbroadsStore.loadInstitutions(inputValue, cityId, countryId, typeInstitutionId, typesUser);
-	}, [inputValue, cityId, countryId, typeInstitutionId, typesUser]);
+		helpAbroadsStore.loadInstitutions(inputValue, cityId, countryId, typeInstitutionId, typesUsersNum);
+	}, [inputValue, cityId, countryId, typeInstitutionId, typesUsersNum]);
 
 	const loadMoreInstitutions = useCallback((): void => {
 		helpAbroadsStore.loadMoreInstitutions();
@@ -35,7 +35,7 @@ const HelpAbroads = observer(({ navigation }: IProps) => {
 			setCountryId('');
 			setCityId('');
 			setTypeInstitutionId('');
-			setTypesUser([]);
+			setTypesUsersNum([]);
 		}
 	}, []);
 
@@ -101,9 +101,9 @@ const HelpAbroads = observer(({ navigation }: IProps) => {
 							typesInstitution={helpAbroadsStore.getTypesInstitution}
 							typeInstitutionId={typeInstitutionId}
 							setTypeInstitutionId={setTypeInstitutionId}
-							typesUserItems={helpAbroadsStore.getTypesUser}
-							typesUser={typesUser}
-							setTypesUser={setTypesUser}
+							typesUsers={institutionsStore.typesUsers}
+							typesUsersNum={typesUsersNum}
+							setTypesUsersNum={setTypesUsersNum}
 						/>
 					</>}
 			</Modal>

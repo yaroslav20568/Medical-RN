@@ -100,15 +100,21 @@ interface ITab {
 	icon: string;
 }
 
-interface IUserFormValues {
+interface IUserForm {
 	email: string;
 	password: string;
 	gender: string;
-	typesUsersArr: Array<number>;
 	city: string;
-	typesUsers?: string;
 	file: object | null;
 	role: string;
+}
+
+interface IUserFormValues extends IUserForm {
+	typesUsers: Array<number>;
+}
+
+interface IUserFormRegister extends IUserForm {
+	typesUsers: string;
 }
 
 interface IImage {
@@ -181,4 +187,4 @@ interface IAnalysis extends IItem {
 	date: string;
 }
 
-export type { IUser, IMenuItem, ISelectItem, IInstitution, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IImage, IRespChatData, IDialog, IMessage, IHotline, IQuestion, IQuestionWithResult, ICalendarEvent, IAnalysis };
+export type { IUser, IMenuItem, ISelectItem, IInstitution, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IUserFormRegister, IImage, IRespChatData, IDialog, IMessage, IHotline, IQuestion, IQuestionWithResult, ICalendarEvent, IAnalysis };

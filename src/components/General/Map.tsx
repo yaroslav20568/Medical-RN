@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Dimensions, PermissionsAndroid, Alert } from 'react-native';
 import { s } from 'react-native-wind';
 import Mapbox from '@rnmapbox/maps';
@@ -10,11 +10,10 @@ interface IProps {
 	institutions: Array<IInstitution>;
 }
 
-Mapbox.setWellKnownTileServer(Mapbox.TileServers.Mapbox);
-Mapbox.setAccessToken('pk.eyJ1IjoicmVhY3QtbmF0aXZlMjA1NjgiLCJhIjoiY2xmNzd0bnoxMXRtMjN4cjBqMzV4a3lldCJ9.mypib9nlR80yCb3PAA5MaQ');
+Mapbox.setAccessToken('sk.eyJ1IjoicmVhY3QtbmF0aXZlMjA1NjgiLCJhIjoiY20yejExb3IzMDY3azJpc2FtYTlxeGtpeiJ9.WE6Wqe9kd7I__WswYQIk6g');
 
 const Map = observer(({ institutions }: IProps) => {
-	const [myCoords, setMyCoords] = React.useState([0, 0]);
+	const [myCoords, setMyCoords] = useState<Array<number>>([0, 0]);
 	const { width } = Dimensions.get('window');
 
 	useEffect(() => {
@@ -45,6 +44,7 @@ const Map = observer(({ institutions }: IProps) => {
 		<Mapbox.MapView 
 			logoEnabled={false}
 			attributionEnabled={false}
+			scaleBarEnabled={false}
 			style={[s`w-full mt-3`, {height: width / 1.5}]}
 		>
 			<Mapbox.Camera 
@@ -65,7 +65,7 @@ const Map = observer(({ institutions }: IProps) => {
 					coordinate={[+item.coordinates.split(',')[0], +item.coordinates.split(',')[1]]}
 					key={`marker_${index}`}
 				>
-					<View></View>
+					<></>
 				</Mapbox.PointAnnotation>
 			)}
 		</Mapbox.MapView>
