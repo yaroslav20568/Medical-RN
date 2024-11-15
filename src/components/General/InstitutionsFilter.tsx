@@ -5,18 +5,18 @@ import { s } from 'react-native-wind';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { ISelectItem, ITypeUser } from '../../types/index';
 
-type callbackSetTypesUser = (value: Array<number>) => Array<number>;
+type callbackSetTypesUser = (typesUsersNum: Array<number>) => Array<number>;
 
 interface IProps {
 	cities: Array<ISelectItem>;
 	cityId: number | '';
-	setCityId: (value: number) => void;
+	setCityId: (cityId: number) => void;
 	typesInstitution: Array<ISelectItem>;
 	typeInstitutionId: number | '';
-	setTypeInstitutionId: (value: number) => void;
+	setTypeInstitutionId: (typeInstitutionId: number) => void;
 	typesUsers: Array<ITypeUser>;
 	typesUsersNum: Array<number>;
-	setTypesUsersNum: (value: callbackSetTypesUser) => void;
+	setTypesUsersNum: (callback: callbackSetTypesUser) => void;
 }
 
 const InstitutionsFilter = ({ cities, cityId, setCityId, typesInstitution, typeInstitutionId, setTypeInstitutionId, typesUsers, typesUsersNum, setTypesUsersNum }: IProps) => {
@@ -44,7 +44,7 @@ const InstitutionsFilter = ({ cities, cityId, setCityId, typesInstitution, typeI
 			/>
 			<View style={s`px-3 mt-1`}>
 				<Text style={s`text-base px-1 mb-2`}>Тип пользователей:</Text>
-				{typesUsers.map((itemElem, index) => 
+				{typesUsers.map((typeUser, index) => 
 					<View 
 						style={s`flex-row items-center`}
 						key={`typeUser_${index}`}
@@ -53,15 +53,15 @@ const InstitutionsFilter = ({ cities, cityId, setCityId, typesInstitution, typeI
 							size={20}
 							fillColor='#a8a29e'
 							unFillColor='transparent'
-							textComponent={<Text style={s`text-base ml-3`}>{itemElem.name}</Text>}
+							textComponent={<Text style={s`text-base ml-3`}>{typeUser.name}</Text>}
 							iconStyle={s`text-gray-400 rounded-none`}
 							innerIconStyle={s`border-2 rounded-none`}
-							isChecked={typesUsersNum.includes(itemElem.id - 1)}
+							isChecked={typesUsersNum.includes(typeUser.id - 1)}
 							onPress={(_) => {
-								if(!typesUsersNum.includes(itemElem.id - 1)) {
-									setTypesUsersNum((prevTypesUser) => [...prevTypesUser, itemElem.id - 1]);
+								if(!typesUsersNum.includes(typeUser.id - 1)) {
+									setTypesUsersNum((prevTypesUser) => [...prevTypesUser, typeUser.id - 1]);
 								} else {
-									setTypesUsersNum((prevTypesUser) => prevTypesUser.filter((item) => item !== itemElem.id - 1));
+									setTypesUsersNum((prevTypesUser) => prevTypesUser.filter((prevTypeUser) => prevTypeUser !== typeUser.id - 1));
 								}
 							}}
 						/>

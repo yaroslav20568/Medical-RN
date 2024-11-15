@@ -14,14 +14,14 @@ const LibraryArticles = observer(({ libraryArticles, onHandleNavigation }: IProp
 	return (
 		<>
 			{libraryArticles.length ? 
-				libraryArticles.map((item, index) => 
+				libraryArticles.map((libraryArticle, index) => 
 					<TouchableOpacity 
 						style={s`flex-row items-center justify-between bg-white rounded-xl px-3 py-3 mb-4`}
-						onPress={() => onHandleNavigation(item.id, item.name)}
+						onPress={() => onHandleNavigation(libraryArticle.id, libraryArticle.name)}
 						activeOpacity={.7}
-						key={`libraryMenuItem_${index}`}
+						key={`libraryArticle_${index}`}
 					>
-						<Text style={s`text-base text-black`}>{item.name}</Text>
+						<Text style={s`text-base text-black`}>{libraryArticle.name}</Text>
 						<SimpleLineIcons name='arrow-right' size={20} color='#294CB4' />
 					</TouchableOpacity>
 				) : 

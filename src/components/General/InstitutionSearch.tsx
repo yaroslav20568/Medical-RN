@@ -4,7 +4,7 @@ import { s } from 'react-native-wind';
 
 interface IProps {
 	name: string;
-	setName: (value: string) => void;
+	setName: (name: string) => void;
 }
 
 const InstitutionSearch = ({ name, setName }: IProps) => {

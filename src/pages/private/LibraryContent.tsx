@@ -15,8 +15,8 @@ const LibraryContent = observer(({ route, navigation }: IProps) => {
 		libraryStore.loadItems(route.params.id);
 	}, []);
 
-	const onHandleNavigation = useCallback((item: ILibraryItem): void => {
-		navigation.navigate('LibraryItem', {item})
+	const onHandleNavigation = useCallback((libraryItem: ILibraryItem): void => {
+		navigation.navigate('LibraryItem', {libraryItem})
 	}, []);
 
 	return (
@@ -32,10 +32,10 @@ const LibraryContent = observer(({ route, navigation }: IProps) => {
 			/>
 			<View style={s`mt-3 px-3`}>
 				<Text style={s`text-2xl font-semibold text-black mb-4`}>Статьи раздела {route.params.name}: </Text>
-				{libraryStore.isLoadingArticles ?
+				{libraryStore.isLoadingItems ?
 					<Loader /> :
 					<LibraryItems
-						articles={libraryStore.items}
+						libraryItems={libraryStore.items}
 						onHandleNavigation={onHandleNavigation}
 					/>
 				}

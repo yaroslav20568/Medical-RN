@@ -41,15 +41,15 @@ const CalendarContent = ({ calendarEvents, markedDates }: IProps) => {
 				items={calendarEvents}
 				markingType={'multi-dot'}
 				markedDates={markedDates}
-				renderItem={(item) => 
+				renderItem={(calendarEvent) => 
 					<View 
-						style={s`bg-blue-400 rounded-lg ${Object.values(calendarEvents)[Object.values(calendarEvents).length - 1][0].name === item.name ? 'mb-4' : ''} mt-4 py-3 px-2`}
-						key={`calendarEvent_${item.id}`}
+						style={s`bg-blue-400 rounded-lg ${Object.values(calendarEvents)[Object.values(calendarEvents).length - 1][0].name === calendarEvent.name ? 'mb-4' : ''} mt-4 py-3 px-2`}
+						key={`calendarEvent_${calendarEvent.id}`}
 					>
-						<Text style={s`text-lg text-black`}>{item.typeEvent}</Text>
-						<Text style={s`text-base text-black`}>{item.name}</Text>
+						<Text style={s`text-lg text-black`}>{calendarEvent.typeEvent}</Text>
+						<Text style={s`text-base text-black`}>{calendarEvent.name}</Text>
 						<Text style={s`text-base text-black`}>
-							{String(new Date(item.dateEvent).toLocaleString('ru', {timeZone: 'Europe/Moscow'})).split(',')[1]}
+							{String(new Date(calendarEvent.dateEvent).toLocaleString('ru', {timeZone: 'Europe/Moscow'})).split(',')[1]}
 						</Text>
 					</View>
 				}

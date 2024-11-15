@@ -18,7 +18,7 @@ const Hotlines = observer(({ hotlines, loadMoreHotlines, isLoadingMore }: IProps
 			{hotlines.length ? 
 				<FlatList
 					data={hotlines}
-					renderItem={({ item, index }) => 
+					renderItem={({item, index}) => 
 						<Hotline 
 							{...item} 
 							index={index} 

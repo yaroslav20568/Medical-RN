@@ -12,9 +12,9 @@ import { IRespAuthData, IRespAuthError } from '../../types';
 
 interface IProps {
 	infoText: string;
-	setInfoText: (value: string) => void;
+	setInfoText: (text: string) => void;
 	isDisabledBtn: boolean;
-	setIsDisabledBtn: (value: boolean) => void;
+	setIsDisabledBtn: (text: boolean) => void;
 }
 
 interface IFormValues {

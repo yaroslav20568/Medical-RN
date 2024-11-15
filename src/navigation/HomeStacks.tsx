@@ -15,7 +15,7 @@ export type RootStackParams = {
 		name: string;
 	};
 	LibraryItem: {
-		item: ILibraryItem;
+		libraryItem: ILibraryItem;
 	};
 	AccountInner: undefined;
 	Analyzes: undefined;

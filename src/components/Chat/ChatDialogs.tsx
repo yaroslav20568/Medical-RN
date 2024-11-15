@@ -44,7 +44,7 @@ const ChatDialog = ({ dialog, userId, navigation }: IChatDialogProps) => {
 		socket.emit('join-room', dialog.userId);
 		navigation.navigate('ChatDialog', {dialogId: dialog.id, userId: dialog.userId, messages: dialog.messages});
 
-		if(dialog.messages.filter(item => item.userId !== userId && !item.isRead).length) {
+		if(dialog.messages.filter(message => message.userId !== userId && !message.isRead).length) {
 			socket.emit('set-is-read-messages', findPartnerId(userId, dialog.messages));
 		}
 	}
@@ -71,12 +71,12 @@ const ChatDialog = ({ dialog, userId, navigation }: IChatDialogProps) => {
 					<View style={s`items-end`}>
 						<Text style={s`mb-2`}>{messageTimeDifference(lastMessage.time)}</Text>
 						{lastMessage.userId === userId ?
-							dialog.messages.filter(item => item.userId === userId && !item.isRead).length ? 
+							dialog.messages.filter(message => message.userId === userId && !message.isRead).length ? 
 								<View style={s`w-3 h-3 bg-gray-400 rounded-full`}></View> : ''
 							:
-							dialog.messages.filter(item => item.userId !== userId && !item.isRead).length ? 
+							dialog.messages.filter(message => message.userId !== userId && !message.isRead).length ? 
 								<View style={s`w-6 h-6 items-center justify-center bg-blue-500 rounded-full`}>
-									<Text style={s`text-white`}>{dialog.messages.filter(item => item.userId !== userId && !item.isRead).length}</Text>
+									<Text style={s`text-white`}>{dialog.messages.filter(message => message.userId !== userId && !message.isRead).length}</Text>
 								</View> : ''}
 					</View>
 				</TouchableOpacity>}

@@ -11,6 +11,15 @@ import { useGetModalParams } from '../../hooks';
 
 interface IProps extends NativeStackScreenProps<RootStackParams, 'Institutions'> {}
 
+const regions = [
+	{label: 'Минская', value: 'Минская'},
+	{label: 'Витебская', value: 'Витебская'},
+	{label: 'Гродненская', value: 'Гродненская'},
+	{label: 'Брестская', value: 'Брестская'},
+	{label: 'Гомельская', value: 'Гомельская'},
+	{label: 'Могилёвская', value: 'Могилёвская'}
+];
+
 const Institutions = observer(({ navigation }: IProps) => {
 	const [name, setName] = useState<string>('');
 	const [region, setRegion] = useState<string>('');
@@ -100,14 +109,7 @@ const Institutions = observer(({ navigation }: IProps) => {
 					}}
 					value={region}
 					onValueChange={setRegion}
-					items={[
-						{label: 'Минская', value: 'Минская'},
-						{label: 'Витебская', value: 'Витебская'},
-						{label: 'Гродненская', value: 'Гродненская'},
-						{label: 'Брестская', value: 'Брестская'},
-						{label: 'Гомельская', value: 'Гомельская'},
-						{label: 'Могилёвская', value: 'Могилёвская'}
-					]}
+					items={regions}
 				/>
 				<InstitutionsFilter 
 					cities={institutionsStore.getCities} 

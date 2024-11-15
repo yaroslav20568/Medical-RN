@@ -9,7 +9,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Feather from 'react-native-vector-icons/Feather';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { observer } from 'mobx-react-lite';
-import { siteUrl } from '../../constants';
+import { genders, siteUrl } from '../../constants';
 import { IImage, ITypeUser, IUser, IUserFormValues, IUserFormRegister } from '../../types';
 import { userStore } from '../../mobx';
 
@@ -154,39 +154,36 @@ const UserUpdateForm = observer(({ typesUsers, userId, hideModal }: IProps) => {
 								}}
 								value={values.gender}
 								onValueChange={handleChange('gender')}
-								items={[
-									{label: 'Мужской', value: 'Мужской'},
-									{label: 'Женский', value: 'Женский'}
-								]}
+								items={genders}
 							/>
 						</View>
 						<View style={s`mb-5`}>
 							<Text style={s`text-base mb-2`}>тип пользователя:</Text>
-							{typesUsersArr.map((currItem, currIndex) => 
+							{typesUsersArr.map((typeUser, currIndex) => 
 								<View style={s`flex-row items-center mb-1`} key={`checkbox_${currIndex}`}>
 									<BouncyCheckbox
 										size={20}
 										fillColor='#a8a29e'
 										unFillColor='transparent'
-										textComponent={<Text style={s`text-base ml-3`}>{currItem.name}</Text>}
+										textComponent={<Text style={s`text-base ml-3`}>{typeUser.name}</Text>}
 										iconStyle={s`text-gray-400 rounded-none`}
 										innerIconStyle={s`border-2 rounded-none`}
-										isChecked={currItem.isChecked}
+										isChecked={typeUser.isChecked}
 										onPress={value => 
 											setTypesUsersArr((prevTypesUsersArr) => 
-												prevTypesUsersArr.map((item, index) => {
+												prevTypesUsersArr.map((prevTypeUser, index) => {
 													if(currIndex === index) {
-														if(!item.isChecked && !values.typesUsers.includes(currIndex)) {
+														if(!prevTypeUser.isChecked && !values.typesUsers.includes(currIndex)) {
 															values.typesUsers = [...values.typesUsers, currIndex];
 														} else {
-															const findIndex = values.typesUsers.findIndex((item) => currIndex === item);
+															const findIndex = values.typesUsers.findIndex((num) => currIndex === num);
 															values.typesUsers = values.typesUsers.filter((_, i) => findIndex !== i);
 														}
 	
-														return {...item, isChecked: value}
+														return {...prevTypeUser, isChecked: value}
 													}
 	
-													return item;
+													return prevTypeUser;
 												})
 											)
 										}

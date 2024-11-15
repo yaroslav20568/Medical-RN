@@ -34,7 +34,7 @@ const CustomTabs = ({ state, navigation, tabItems }: IProps) => {
 			if(userStore.userData?.role === 'User') {
 				socket.emit('join-room', userStore.userData.id);
 
-				if(chatStore.messages.filter(item => item.userId !== userStore.userData?.id && !item.isRead).length) {
+				if(chatStore.messages.filter(message => message.userId !== userStore.userData?.id && !message.isRead).length) {
 					socket.emit('set-is-read-messages', findPartnerId(userStore.userData.id, chatStore.messages));
 				}
 			}

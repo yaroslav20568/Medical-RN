@@ -7,4 +7,9 @@ enum TypesEvents {
 	AnotherReminder = 'Другое напоминание',
 }
 
-export { siteUrl, TypesEvents };
+const genders = [
+	{label: 'Мужской', value: 'Мужской'},
+	{label: 'Женский', value: 'Женский'}
+];
+
+export { siteUrl, TypesEvents, genders };

@@ -10,20 +10,20 @@ interface ITab {
 interface IProps {
 	tabsElems: Array<ITab>;
 	currTab: string;
-	setCurrTab: (value: string) => void;
+	setCurrTab: (currTab: string) => void;
 }
 
 const Tabs = ({ tabsElems, currTab, setCurrTab }: IProps) => {
 	return (
 		<View style={s`flex-row justify-center mb-8`}>
-			{tabsElems.map((item, index) => 
+			{tabsElems.map((tabElem, index) => 
 				<TouchableOpacity 
-					style={s`px-2 ${currTab === item.label ? 'bg-black rounded-lg': ''}`}
-					onPress={() => setCurrTab(item.label)}
-					key={`tab_${index}`}
+					style={s`px-2 ${currTab === tabElem.label ? 'bg-black rounded-lg': ''}`}
+					onPress={() => setCurrTab(tabElem.label)}
+					key={`tabElem_${index}`}
 					activeOpacity={.7}
 				>
-					<Text style={s`text-2xl p-1 ${currTab === item.label ? 'text-white': ''}`}>{item.name}</Text>
+					<Text style={s`text-2xl p-1 ${currTab === tabElem.label ? 'text-white': ''}`}>{tabElem.name}</Text>
 				</TouchableOpacity>
 			)}
 		</View>

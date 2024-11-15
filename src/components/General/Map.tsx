@@ -59,10 +59,10 @@ const Map = observer(({ institutions }: IProps) => {
 					<View style={s`w-2 h-2 absolute rounded-full bg-white`}></View>
 				</View>
 			</Mapbox.PointAnnotation>
-			{institutions.map((item, index) => 
+			{institutions.map((institution, index) => 
 				<Mapbox.PointAnnotation 
 					id='MyLocation'
-					coordinate={[+item.coordinates.split(',')[0], +item.coordinates.split(',')[1]]}
+					coordinate={[+institution.coordinates.split(',')[0], +institution.coordinates.split(',')[1]]}
 					key={`marker_${index}`}
 				>
 					<></>

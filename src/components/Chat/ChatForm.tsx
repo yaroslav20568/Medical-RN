@@ -4,7 +4,7 @@ import { s } from 'react-native-wind';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface IProps {
-	onPress: (value: string, setMessage: (value: string) => void) => void;
+	onPress: (message: string, setMessage: (message: string) => void) => void;
 }
 
 const ChatForm = ({ onPress }: IProps) => {

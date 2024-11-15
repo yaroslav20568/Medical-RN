@@ -63,22 +63,22 @@ const Question = ({ route, navigation }: IProps) => {
 			<View style={s`mt-3 px-3`}>
 				<Text style={s`text-xl font-semibold text-black mb-4`}>{question.name}</Text>
 				<RadioForm>
-					{radioArray.map((item, index) => (
+					{radioArray.map((radio, index) => (
 						<RadioButton 
 							labelHorizontal={true} 
 							key={index} 
 							style={s`mb-2`}
 						>
 							<RadioButtonInput
-								obj={item}
+								obj={radio}
 								index={index}
-								isSelected={item.value === activeRadio}
+								isSelected={radio.value === activeRadio}
 								onPress={(value) => setActiveRadio(value)}
 								buttonSize={18}
 								buttonOuterSize={30}
 							/>
 							<RadioButtonLabel
-								obj={item}
+								obj={radio}
 								index={index}
 								labelHorizontal={true}
 								onPress={(value) => setActiveRadio(value)}
