@@ -20,6 +20,7 @@ import { Analysis } from '@prisma/client';
 import { AnalysisDto, AnalysisQuery, AnalysisUpdateDto } from './dto/analysis.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express, diskStorage } from 'multer';
+import { IAnalysis } from './types';
 
 @ApiTags('Analysis')
 @Controller()
@@ -28,7 +29,7 @@ export class AnalysisController {
 
   @Get('analyzes')
   @HttpCode(200)
-  async getAnalyzes(@Query() analysisQuery: AnalysisQuery): Promise<Analysis[]> {
+  async getAnalyzes(@Query() analysisQuery: AnalysisQuery): Promise<IAnalysis> {
     return this.analysisService.getAnalyzes(analysisQuery);
   }
 

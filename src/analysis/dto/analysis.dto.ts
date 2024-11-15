@@ -5,9 +5,13 @@ import { Express } from 'multer';
 import { Analyzes } from 'src/constants';
 
 export class AnalysisQuery {
-  @IsInt()
+	@IsInt()
   @IsOptional()
   @ApiProperty({ required: false })
+  skip: number;
+
+  @IsInt()
+  @ApiProperty({ required: true })
   userId: number;
 }
 

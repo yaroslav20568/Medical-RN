@@ -4,13 +4,19 @@ import { Express } from 'multer';
 import { unlinkSync } from 'node:fs';
 import { PrismaService } from 'src/prisma.service';
 import { AnalysisDto, AnalysisQuery, AnalysisUpdateDto } from './dto/analysis.dto';
+import { IAnalysis } from './types';
 
 @Injectable()
 export class AnalysisService {
   constructor(private prisma: PrismaService) {}
 
-  async getAnalyzes(analysisQuery: AnalysisQuery): Promise<Analysis[]> {
-    return this.prisma.analysis.findMany({
+  async getAnalyzes(analysisQuery: AnalysisQuery): Promise<IAnalysis> {
+		const count = 10;
+    const totalPages = Math.ceil(
+      (await this.prisma.analysis.findMany()).length / count,
+    );
+
+    const findAnalyzes = this.prisma.analysis.findMany({
       orderBy: [
         {
           id: 'asc',
@@ -19,10 +25,25 @@ export class AnalysisService {
 			include: {
         user: true,
       },
+			skip: analysisQuery.skip ? +analysisQuery.skip : 0,
+      take: count,
 			where: {
 				userId: analysisQuery.userId ? +analysisQuery.userId : undefined,
 			}
     });
+
+		if(!analysisQuery.userId) {
+			throw new HttpException(
+        'A param userId required',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+		}
+
+		return {
+      skip: analysisQuery.skip ? +analysisQuery.skip : 0,
+      totalSkip: (totalPages - 1) * count,
+      items: await findAnalyzes,
+    };
   }
 
   async createAnalysis(file: Express.Multer.File, analysisDto: AnalysisDto): Promise<Analysis> {
