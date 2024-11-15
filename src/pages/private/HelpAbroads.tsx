@@ -12,31 +12,32 @@ import { useGetModalParams } from '../../hooks';
 interface IProps extends NativeStackScreenProps<RootStackParams, 'HelpAbroads'> {}
 
 const HelpAbroads = observer(({ navigation }: IProps) => {
-	const [inputValue, setInputValue] = useState<string>('');
+	const [name, setName] = useState<string>('');
 	const [cityId, setCityId] = useState<number | ''>('');
 	const [countryId, setCountryId] = useState<number | ''>('');
 	const [typeInstitutionId, setTypeInstitutionId] = useState<number | ''>('');
 	const [typesUsersNum, setTypesUsersNum] = useState<Array<number>>([]);
 	const [modalActive, setModalActive] = useState<string>('search');
-	const [animatedValue, translateX, showModal, hideModal] = useGetModalParams();
+	const [searchAnimatedValue, searchTranslateX, showSearchModal, hideSearchModal] = useGetModalParams();
+	const [filterAnimatedValue, filterTranslateX, showFilterModal, hideFilterModal] = useGetModalParams();
 
 	useEffect(() => {
-		helpAbroadsStore.loadInstitutions(inputValue, cityId, countryId, typeInstitutionId, typesUsersNum);
-	}, [inputValue, cityId, countryId, typeInstitutionId, typesUsersNum]);
+		helpAbroadsStore.loadInstitutions(name, cityId, countryId, typeInstitutionId, typesUsersNum);
+	}, [name, cityId, countryId, typeInstitutionId, typesUsersNum]);
 
 	const loadMoreInstitutions = useCallback((): void => {
 		helpAbroadsStore.loadMoreInstitutions();
 	}, []);
 
+	const clearSearchParams = useCallback((): void => {
+		setName('');
+	}, []);
+
 	const clearFilterParams = useCallback((): void => {
-		if(modalActive === 'search') {
-			setInputValue('');
-		} else {
-			setCountryId('');
-			setCityId('');
-			setTypeInstitutionId('');
-			setTypesUsersNum([]);
-		}
+		setCountryId('');
+		setCityId('');
+		setTypeInstitutionId('');
+		setTypesUsersNum([]);
 	}, []);
 
 	return (
@@ -56,8 +57,8 @@ const HelpAbroads = observer(({ navigation }: IProps) => {
 				/>
 				<InstitutionsWidgetsPanel
 					title='Учреждения'
-					showModal={showModal}
-					setModalActive={setModalActive}
+					showSearchModal={showSearchModal}
+					showFilterModal={showFilterModal}
 				/>
 				{helpAbroadsStore.isLoading ? 
 					<Loader /> : 
@@ -70,42 +71,49 @@ const HelpAbroads = observer(({ navigation }: IProps) => {
 				}
 			</ScrollView>
 			<Modal 
-				translateX={translateX}
-				animatedValue={animatedValue}
+				translateX={searchTranslateX}
+				animatedValue={searchAnimatedValue}
 			>
 				<HeaderModal 
 					title='Поиск' 
-					hideModal={hideModal} 
-					clearFilterParams={clearFilterParams}
+					hideModal={hideSearchModal} 
+					clearParams={clearSearchParams}
 				/>
-				{modalActive === 'search' ?
-					<InstitutionSearch 
-						inputValue={inputValue}
-						setInputValue={setInputValue}
-					/> :
-					<>
-						<RNPickerSelect
-							placeholder = {{
-								label: 'Страна',
-								value: '',
-								color: '#9EA0A4',
-							}}
-							value={countryId}
-							onValueChange={setCountryId}
-							items={helpAbroadsStore.getСountries}
-						/>
-						<InstitutionsFilter 
-							cities={helpAbroadsStore.getCities} 
-							cityId={cityId}
-							setCityId={setCityId}
-							typesInstitution={helpAbroadsStore.getTypesInstitution}
-							typeInstitutionId={typeInstitutionId}
-							setTypeInstitutionId={setTypeInstitutionId}
-							typesUsers={institutionsStore.typesUsers}
-							typesUsersNum={typesUsersNum}
-							setTypesUsersNum={setTypesUsersNum}
-						/>
-					</>}
+				<InstitutionSearch 
+					name={name}
+					setName={setName}
+				/>
+			</Modal>
+			<Modal 
+				translateX={filterTranslateX}
+				animatedValue={filterAnimatedValue}
+			>
+				<HeaderModal 
+					title='Поиск' 
+					hideModal={hideFilterModal} 
+					clearParams={clearFilterParams}
+				/>
+				<RNPickerSelect
+					placeholder = {{
+						label: 'Страна',
+						value: '',
+						color: '#9EA0A4',
+					}}
+					value={countryId}
+					onValueChange={setCountryId}
+					items={helpAbroadsStore.getСountries}
+				/>
+				<InstitutionsFilter 
+					cities={helpAbroadsStore.getCities} 
+					cityId={cityId}
+					setCityId={setCityId}
+					typesInstitution={helpAbroadsStore.getTypesInstitution}
+					typeInstitutionId={typeInstitutionId}
+					setTypeInstitutionId={setTypeInstitutionId}
+					typesUsers={institutionsStore.typesUsers}
+					typesUsersNum={typesUsersNum}
+					setTypesUsersNum={setTypesUsersNum}
+				/>
 			</Modal>
 		</>
 	)

@@ -98,7 +98,7 @@ const Account = observer(({ navigation }: IProps) => {
 				/>
 				<AccountWidgetsPanel 
 					title='Пользователь'
-					showModal={showUpdateAccModal}
+					showUpdateAccModal={showUpdateAccModal}
 					showDeleteAccModal={showDeleteAccModal}
 					showDeletePhotoModal={showDeletePhotoModal}
 					showLogOutModal={showLogOutModal}

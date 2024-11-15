@@ -36,9 +36,9 @@ class HelpAbroadsStore {
 		})
 	}
 
-	loadInstitutions(searchValue: string, cityId: number | '', countryId: number | '', typeInstitutionId: number | '', typesUser: Array<number>) {
+	loadInstitutions(name: string, cityId: number | '', countryId: number | '', typeInstitutionId: number | '', typesUser: Array<number>) {
 		this.isLoading = true;
-		axios<IRespData>(`${siteUrl}/api/help-abroads?name=${searchValue}&cityId=${cityId}&countryId=${countryId}&typeId=${typeInstitutionId}&typesUsers=${sortArray(typesUser).join(',')}`)
+		axios<IRespData>(`${siteUrl}/api/help-abroads?name=${name}&cityId=${cityId}&countryId=${countryId}&typeId=${typeInstitutionId}&typesUsers=${sortArray(typesUser).join(',')}`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.skip = data.skip;

@@ -9,7 +9,7 @@ import Animated, { FadeInLeft, FadeInRight } from 'react-native-reanimated';
 
 interface IProps {
 	title: string;
-	showModal: () => void;
+	showUpdateAccModal: () => void;
 	showDeleteAccModal: () => void;
 	showDeletePhotoModal: () => void;
 	showLogOutModal: () => void;
@@ -17,7 +17,7 @@ interface IProps {
 	navigateToAnalyzes: () => void;
 }
 
-const AccountWidgetsPanel = ({ title, showModal, showDeleteAccModal, showDeletePhotoModal, showLogOutModal, imageUrl, navigateToAnalyzes }: IProps) => {
+const AccountWidgetsPanel = ({ title, showUpdateAccModal, showDeleteAccModal, showDeletePhotoModal, showLogOutModal, imageUrl, navigateToAnalyzes }: IProps) => {
 	return (
 		<View style={s`my-3 px-3 justify-between`}>
 			<Animated.Text 
@@ -47,7 +47,7 @@ const AccountWidgetsPanel = ({ title, showModal, showDeleteAccModal, showDeleteP
 						<MaterialCommunityIcons name='file-image-remove' size={23} color='#fff' />
 					</TouchableOpacity>}
 				<TouchableOpacity 
-					onPress={showModal}
+					onPress={showUpdateAccModal}
 					style={[s`w-10 h-10 items-center justify-center rounded-full mr-3`, {backgroundColor: '#294CB4'}]}
 					activeOpacity={.7}
 				>

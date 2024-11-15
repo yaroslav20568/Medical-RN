@@ -6,21 +6,11 @@ import Animated, { FadeInUp } from 'react-native-reanimated';
 
 interface IProps {
 	title: string;
-	showModal: () => void;
-	setModalActive: (value: string) => void;
+	showSearchModal: () => void;
+	showFilterModal: () => void;
 }
 
-const InstitutionsWidgetsPanel = ({ title, showModal, setModalActive }: IProps) => {
-	const onShowSearch = () => {
-		setModalActive('search');
-		showModal();
-	}
-
-	const onShowFilter = () => {
-		setModalActive('filter');
-		showModal();
-	}
-
+const InstitutionsWidgetsPanel = ({ title, showSearchModal, showFilterModal }: IProps) => {
 	return (
 		<Animated.View 
 			style={s`py-3 px-3 flex-row items-center justify-between`} 
@@ -29,14 +19,14 @@ const InstitutionsWidgetsPanel = ({ title, showModal, setModalActive }: IProps) 
 			<Text style={s`text-2xl font-semibold text-black`}>{title}</Text>
 			<View style={s`flex-row`}>
 				<TouchableOpacity 
-					onPress={onShowSearch}
+					onPress={showSearchModal}
 					style={[s`w-10 h-10 items-center justify-center rounded-full mr-6`,{backgroundColor: '#294CB4'}]}
 					activeOpacity={.7}
 				>
 					<AntDesign name='search1' size={23} color='#fff' />
 				</TouchableOpacity>
 				<TouchableOpacity 
-					onPress={onShowFilter}
+					onPress={showFilterModal}
 					style={[s`w-10 h-10 items-center justify-center rounded-full`,{backgroundColor: '#294CB4'}]}
 					activeOpacity={.7}
 				>
