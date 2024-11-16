@@ -8,10 +8,10 @@ interface IProps {
 	animatedValue: Animated.Value;
 }
 
-const Modal = ({ children, translateX, animatedValue }: IProps) => {
+const PhotoModal = ({ children, translateX, animatedValue }: IProps) => {
 	return (
 		<Animated.View style={[s`justify-center absolute z-10 w-full h-full px-5 py-10`, {backgroundColor: 'rgba(0, 0, 0, .6)', opacity: animatedValue, transform: [{translateX: translateX}]}]}>
-			<View style={s`bg-white rounded-xl`}>
+			<View style={s`bg-white rounded-xl overflow-hidden`}>
 				<ScrollView
 					showsVerticalScrollIndicator={false}
 				>
@@ -22,4 +22,4 @@ const Modal = ({ children, translateX, animatedValue }: IProps) => {
 	)
 }
 
-export default Modal;
+export default PhotoModal;

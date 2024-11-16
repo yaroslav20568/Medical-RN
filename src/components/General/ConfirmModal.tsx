@@ -13,7 +13,7 @@ interface IProps {
 
 const ConfirmModal = ({ translateX, animatedValue, hideModal, onPress, message }: IProps) => {
 	return (
-		<Animated.View style={[s`absolute z-10 w-full h-full px-5 py-10`, {backgroundColor: 'rgba(0, 0, 0, .6)', opacity: animatedValue, transform: [{translateX: translateX}]}]}>
+		<Animated.View style={[s`justify-center absolute z-10 w-full h-full px-5 py-10`, {backgroundColor: 'rgba(0, 0, 0, .6)', opacity: animatedValue, transform: [{translateX: translateX}]}]}>
 			<View style={s`bg-white rounded-xl px-3 py-5`}>
 				<ScrollView
 					showsVerticalScrollIndicator={false}

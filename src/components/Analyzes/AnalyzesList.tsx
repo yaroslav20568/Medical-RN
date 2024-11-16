@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, Image, Dimensions } from 'react-native';
+import { View, Text, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { s } from 'react-native-wind';
 import { IAnalysis } from '../../types';
 import { Loader } from '../../components';
@@ -9,9 +9,11 @@ interface IProps {
 	analyzes: Array<IAnalysis>;
 	loadMoreAnalyzes: () => void;
 	isLoadingMore: boolean;
+	showImageModal: () => void;
+	setImageUrl: (imageUrl: string) => void;
 }
 
-const AnalyzesList = ({ analyzes, loadMoreAnalyzes, isLoadingMore }: IProps) => {
+const AnalyzesList = ({ analyzes, loadMoreAnalyzes, isLoadingMore, showImageModal, setImageUrl }: IProps) => {
 	return (
 		<View>
 			{analyzes.length ? 
@@ -21,6 +23,8 @@ const AnalyzesList = ({ analyzes, loadMoreAnalyzes, isLoadingMore }: IProps) => 
 						<Analysis 
 							key={`analysis_${item.id}`} 
 							analysis={item}
+							showImageModal={showImageModal}
+							setImageUrl={setImageUrl}
 						/>
 					}
 					onEndReachedThreshold={0}
@@ -35,17 +39,27 @@ const AnalyzesList = ({ analyzes, loadMoreAnalyzes, isLoadingMore }: IProps) => 
 
 interface IAnalysisProps {
 	analysis: IAnalysis;
+	showImageModal: () => void;
+	setImageUrl: (imageUrl: string) => void;
 }
 
-const Analysis = ({ analysis }: IAnalysisProps) => {
+const Analysis = ({ analysis, showImageModal, setImageUrl }: IAnalysisProps) => {
 	const { name, category, photo, date } = analysis;
 	
 	return (
-		<View style={s`bg-white rounded-2xl overflow-hidden mb-4`}>
-			<Image
-				source={{uri: `${siteUrl}/${photo}`}}
-				style={[s`rounded-2xl`, {aspectRatio: 1.5}]}
-			/>
+		<View style={s`bg-white rounded-2xl mb-4`}>
+			<TouchableOpacity
+				onPress={() => {
+					showImageModal();
+					setImageUrl(photo);
+				}}
+				activeOpacity={.7}
+			>
+				<Image
+					source={{uri: `${siteUrl}/${photo}`}}
+					style={[s`rounded-2xl`, {aspectRatio: 1.5}]}
+				/>
+			</TouchableOpacity>
 			<View style={s`px-3 py-1`}>
 				<Text style={s`text-lg font-medium text-black`}>Название: {name}</Text>
 				<Text style={s`text-base font-medium text-black`}>Категория: {category}</Text>

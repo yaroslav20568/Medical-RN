@@ -37,3 +37,6 @@ export { default as QuestionResultList } from './Questions/QuestionResultList';
 export { default as CalendarContent } from './Calendar/CalendarContent';
 
 export { default as AnalyzesList } from './Analyzes/AnalyzesList';
+
+export { default as PhotoModal } from './General/PhotoModal';
+export { default as ZoomImage } from './General/ZoomImage';
