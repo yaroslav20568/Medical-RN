@@ -40,9 +40,11 @@ export class HelpAbroadService {
         name: { contains: helpAbroadQuery.name, mode: 'insensitive' },
         cityId: helpAbroadQuery.cityId ? +helpAbroadQuery.cityId : undefined,
         typeId: helpAbroadQuery.typeId ? +helpAbroadQuery.typeId : undefined,
-        typesUsers: helpAbroadQuery.typesUsers
-          ? { contains: helpAbroadQuery.typesUsers }
-          : undefined,
+        AND: helpAbroadQuery.typesUsers.split(',').map((typeUser) => ({
+					typesUsers: helpAbroadQuery.typesUsers
+						? { contains: typeUser }
+						: undefined,
+				})),
       },
     });
 

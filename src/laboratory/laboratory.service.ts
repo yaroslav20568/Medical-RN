@@ -41,9 +41,11 @@ export class LaboratoryService {
         region: laboratoryQuery.region ? laboratoryQuery.region : undefined,
         cityId: laboratoryQuery.cityId ? +laboratoryQuery.cityId : undefined,
         typeId: laboratoryQuery.typeId ? +laboratoryQuery.typeId : undefined,
-        typesUsers: laboratoryQuery.typesUsers
-          ? { contains: laboratoryQuery.typesUsers }
-          : undefined,
+        AND: laboratoryQuery.typesUsers.split(',').map((typeUser) => ({
+					typesUsers: laboratoryQuery.typesUsers
+						? { contains: typeUser }
+						: undefined,
+				})),
       },
     });
 
