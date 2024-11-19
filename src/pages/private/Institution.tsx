@@ -11,7 +11,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { observer } from 'mobx-react-lite';
 import { GoBack, HeaderLogo } from '../../components';
 import { siteUrl } from '../../constants';
-import { removeProtocolInUrl } from '../../helpers';
+import { removeProtocolInUrl, checkProtocolInUrl } from '../../helpers';
 import { institutionsStore } from '../../mobx';
 
 interface IProps extends NativeStackScreenProps<RootStackParams, 'Institution'> {}
@@ -64,7 +64,12 @@ const Institution = observer(({ route, navigation }: IProps) => {
 								color='#294CB4' 
 								style={s`mr-2`}
 							/>
-							<Text style={s`text-base text-black pr-8`}>{phone}</Text>
+							<Text 
+								style={s`text-base text-black underline pr-8`}
+								onPress={() => Linking.openURL(`tel:${phone}`)}
+							>
+								{phone}
+							</Text>
 						</View>
 						<View style={s`flex-row mb-3`}>
 							<MaterialCommunityIcons 
@@ -73,7 +78,12 @@ const Institution = observer(({ route, navigation }: IProps) => {
 								color='#294CB4' 
 								style={s`mr-2`}
 							/>
-							<Text style={s`text-base text-black pr-8`}>{email}</Text>
+							<Text 
+								style={s`text-base text-black underline pr-8`}
+								onPress={() => Linking.openURL(`mailto:${email}`)}
+							>
+								{email}
+							</Text>
 						</View>
 						<View style={s`flex-row mb-3`}>
 							<Entypo 
@@ -93,7 +103,7 @@ const Institution = observer(({ route, navigation }: IProps) => {
 							/>
 							<Text 
 								style={s`text-base text-black underline pr-8`} 
-								onPress={() => Linking.openURL(linkWebsite)}
+								onPress={() => Linking.openURL(checkProtocolInUrl(linkWebsite))}
 							>
 								{removeProtocolInUrl(linkWebsite)}
 							</Text>
