@@ -54,7 +54,8 @@ class InstitutionsStore {
 	loadMoreInstitutions() {
 		if(this.skip < this.totalSkip) {
 			this.isLoadingMore = true;
-			axios<IRespData>(`${siteUrl}/api/laboratories?skip=${this.skip + 10}`)
+			this.skip = this.skip + 10;
+			axios<IRespData>(`${siteUrl}/api/laboratories?skip=${this.skip}`)
 			.then(({ data }) => {
 				runInAction(() => {
 					this.skip = data.skip;

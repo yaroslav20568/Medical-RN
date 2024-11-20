@@ -52,7 +52,8 @@ class HelpAbroadsStore {
 	loadMoreInstitutions() {
 		if(this.skip < this.totalSkip) {
 			this.isLoadingMore = true;
-			axios<IRespData>(`${siteUrl}/api/help-abroads?skip=${this.skip + 10}`)
+			this.skip = this.skip + 10;
+			axios<IRespData>(`${siteUrl}/api/help-abroads?skip=${this.skip}`)
 			.then(({ data }) => {
 				runInAction(() => {
 					this.skip = data.skip;

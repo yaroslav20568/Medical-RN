@@ -50,7 +50,8 @@ class QuickHelpStore {
 	loadMoreHotlines() {
 		if(this.skip < this.totalSkip) {
 			this.isLoadingMore = true;
-			axios<IRespData>(`${siteUrl}/api/hotlines?skip=${this.skip + 2}`)
+			this.skip = this.skip + 5;
+			axios<IRespData>(`${siteUrl}/api/hotlines?skip=${this.skip}`)
 			.then(({ data }) => {
 				runInAction(() => {
 					this.skip = data.skip;
