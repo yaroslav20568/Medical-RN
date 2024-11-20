@@ -18,9 +18,7 @@ export class HelpAbroadService {
     helpAbroadQuery: HelpAbroadQuery,
   ): Promise<IHelpAbroad> {
 		const count = 10;
-    const totalPages = Math.ceil(
-      (await this.prisma.helpAbroad.findMany()).length / count,
-    );
+    let totalPages;
 
     const findHelpAbroads = this.prisma.helpAbroad.findMany({
       orderBy: [
@@ -47,6 +45,16 @@ export class HelpAbroadService {
 					undefined,
       },
     });
+
+		if(!helpAbroadQuery.name && !helpAbroadQuery.cityId && !helpAbroadQuery.typeId && !helpAbroadQuery.typesUsers) {
+			totalPages = Math.ceil(
+				(await this.prisma.helpAbroad.findMany()).length / count,
+			);
+		} else {
+			totalPages = Math.ceil(
+				(await findHelpAbroads).length / count,
+			);
+		}
 
     return {
       skip: helpAbroadQuery.skip ? +helpAbroadQuery.skip : 0,

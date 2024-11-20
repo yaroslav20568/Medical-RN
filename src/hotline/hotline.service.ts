@@ -9,7 +9,7 @@ export class HotlineService {
   constructor(private prisma: PrismaService) {}
 
   async getHotlines(hotlineQuery: HotlineQuery): Promise<IHotline> {
-		const count = 2;
+		const count = 5;
 		const totalPages = Math.ceil(
       (await this.prisma.hotline.findMany()).length / count,
     );

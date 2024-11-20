@@ -11,7 +11,7 @@ export class AnalysisService {
   constructor(private prisma: PrismaService) {}
 
   async getAnalyzes(analysisQuery: AnalysisQuery): Promise<IAnalysis> {
-		const count = 10;
+		const count = 5;
     const totalPages = Math.ceil(
       (await this.prisma.analysis.findMany()).length / count,
     );

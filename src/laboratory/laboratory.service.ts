@@ -18,9 +18,7 @@ export class LaboratoryService {
     laboratoryQuery: LaboratoryQuery,
   ): Promise<ILaboratory> {
 		const count = 10;
-    const totalPages = Math.ceil(
-      (await this.prisma.laboratory.findMany()).length / count,
-    );
+		let totalPages;
 
     const findLaboratories = this.prisma.laboratory.findMany({
       orderBy: [
@@ -48,6 +46,16 @@ export class LaboratoryService {
 					undefined,
       },
     });
+
+		if(!laboratoryQuery.name && !laboratoryQuery.region && !laboratoryQuery.cityId && !laboratoryQuery.typeId && !laboratoryQuery.typesUsers) {
+			totalPages = Math.ceil(
+				(await this.prisma.laboratory.findMany()).length / count,
+			);
+		} else {
+			totalPages = Math.ceil(
+				(await findLaboratories).length / count,
+			);
+		}
 
     return {
       skip: laboratoryQuery.skip ? +laboratoryQuery.skip : 0,
