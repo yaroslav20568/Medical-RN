@@ -36,6 +36,7 @@ export class HelpAbroadService {
       take: count,
       where: {
         name: { contains: helpAbroadQuery.name, mode: 'insensitive' },
+				city: { countryId: helpAbroadQuery.countryId ? +helpAbroadQuery.countryId : undefined },
         cityId: helpAbroadQuery.cityId ? +helpAbroadQuery.cityId : undefined,
         typeId: helpAbroadQuery.typeId ? +helpAbroadQuery.typeId : undefined,
         AND: helpAbroadQuery.typesUsers ? 
@@ -46,7 +47,7 @@ export class HelpAbroadService {
       },
     });
 
-		if(!helpAbroadQuery.name && !helpAbroadQuery.cityId && !helpAbroadQuery.typeId && !helpAbroadQuery.typesUsers) {
+		if(!helpAbroadQuery.name && !helpAbroadQuery.countryId  && !helpAbroadQuery.cityId && !helpAbroadQuery.typeId && !helpAbroadQuery.typesUsers) {
 			totalPages = Math.ceil(
 				(await this.prisma.helpAbroad.findMany()).length / count,
 			);

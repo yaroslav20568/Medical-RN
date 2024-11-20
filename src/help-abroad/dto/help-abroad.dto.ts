@@ -14,6 +14,11 @@ export class HelpAbroadQuery {
   @ApiProperty({ required: false })
   name: string;
 
+	@IsInt()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  countryId: number;
+
   @IsInt()
   @IsOptional()
   @ApiProperty({ required: false })
