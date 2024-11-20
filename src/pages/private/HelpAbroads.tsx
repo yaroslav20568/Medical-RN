@@ -17,13 +17,12 @@ const HelpAbroads = observer(({ navigation }: IProps) => {
 	const [countryId, setCountryId] = useState<number | ''>('');
 	const [typeInstitutionId, setTypeInstitutionId] = useState<number | ''>('');
 	const [typesUsersNum, setTypesUsersNum] = useState<Array<number>>([]);
-	const [modalActive, setModalActive] = useState<string>('search');
 	const [searchAnimatedValue, searchTranslateX, showSearchModal, hideSearchModal] = useGetModalParams();
 	const [filterAnimatedValue, filterTranslateX, showFilterModal, hideFilterModal] = useGetModalParams();
 
 	useEffect(() => {
-		helpAbroadsStore.loadInstitutions(name, cityId, countryId, typeInstitutionId, typesUsersNum);
-	}, [name, cityId, countryId, typeInstitutionId, typesUsersNum]);
+		helpAbroadsStore.loadInstitutions(name, countryId, cityId, typeInstitutionId, typesUsersNum);
+	}, [name, countryId, cityId, typeInstitutionId, typesUsersNum]);
 
 	const loadMoreInstitutions = useCallback((): void => {
 		helpAbroadsStore.loadMoreInstitutions();
