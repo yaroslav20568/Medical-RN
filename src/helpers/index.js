@@ -1,4 +1,4 @@
-export { default as traversingTreeArray } from './traversingTreeArray';
+export { default as traversingTreeArticles } from './traversingTreeArticles';
 export { default as removeProtocolInUrl } from './removeProtocolInUrl';
 export { default as sortArray } from './sortArray';
 export { default as messageTimeDifference } from './messageTimeDifference';

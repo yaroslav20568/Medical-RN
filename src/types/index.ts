@@ -54,6 +54,8 @@ type navigationType = NavigationProp<ParamListBase>;
 
 interface ILibraryArticle extends IItem {
 	parent: number;
+	childrens?: Array<ILibraryArticle>;
+	deep?: number;
 }
 
 interface ILibraryItem {

@@ -2,7 +2,7 @@ import { makeObservable, observable, action, runInAction } from "mobx";
 import axios from "axios";
 import { ILibraryArticle, ILibraryItem } from '../types';
 import { siteUrl } from "../constants";
-import { traversingTreeArray } from "../helpers";
+import { traversingTreeArticles } from "../helpers";
 
 class LibraryStore {
 	isLoadingArticles: boolean;
@@ -30,7 +30,7 @@ class LibraryStore {
 		axios<Array<ILibraryArticle>>(`${siteUrl}/api/library-articles`)
     .then(({ data }) => {
 			runInAction(() => {
-				this.articles = traversingTreeArray(data);
+				this.articles = traversingTreeArticles(data);
 				this.isLoadingArticles = false;
 			});
 		})

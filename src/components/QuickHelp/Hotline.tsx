@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Linking, Text, View } from 'react-native';
 import { s } from 'react-native-wind';
 import { IHotline } from '../../types';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -30,7 +30,12 @@ const Hotline = ({ type, name, phone, services, addInfo, typesUsers, index }: IP
 					color='#294CB4' 
 					style={s`mr-2`}
 				/>
-				<Text style={s`text-base text-black pr-8`}>{phone}</Text>
+				<Text 
+					style={s`text-base text-black pr-8`}
+					onPress={() => Linking.openURL(`tel:${phone}`)}
+				>
+					{phone}
+				</Text>
 			</View>
 			<View style={s`flex-row ml-0.5 mb-3`}>
 				<MaterialIcons 
