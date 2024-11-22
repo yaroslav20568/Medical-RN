@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text } from 'react-native';
+import { ScrollView } from 'react-native-virtualized-view';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { s } from 'react-native-wind';
 import { RootStackParams } from '../../navigation/HomeStacks';
@@ -12,7 +13,11 @@ interface IProps extends NativeStackScreenProps<RootStackParams, 'LibraryContent
 
 const LibraryContent = observer(({ route, navigation }: IProps) => {
 	useEffect(() => {
-		libraryStore.loadItems(route.params.id);
+		libraryStore.loadItems(route.params.libraryArticleId);
+	}, []);
+	
+	const loadMoreItems = useCallback((): void => {
+		libraryStore.loadMoreItems(route.params.libraryArticleId);
 	}, []);
 
 	const onHandleNavigation = useCallback((libraryItem: ILibraryItem): void => {
@@ -37,6 +42,8 @@ const LibraryContent = observer(({ route, navigation }: IProps) => {
 					<LibraryItems
 						libraryItems={libraryStore.items}
 						onHandleNavigation={onHandleNavigation}
+						loadMoreItems={loadMoreItems}
+						isLoadingItemsMore={libraryStore.isLoadingItemsMore}
 					/>
 				}
 			</View>

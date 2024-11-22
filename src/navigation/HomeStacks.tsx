@@ -11,7 +11,7 @@ export type RootStackParams = {
 	};
 	Library: undefined;
 	LibraryContent: {
-		id: number;
+		libraryArticleId: number;
 		name: string;
 	};
 	LibraryItem: {

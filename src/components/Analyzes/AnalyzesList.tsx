@@ -15,7 +15,7 @@ interface IProps {
 
 const AnalyzesList = ({ analyzes, loadMoreAnalyzes, isLoadingMore, showImageModal, setImageUrl }: IProps) => {
 	return (
-		<View>
+		<>
 			{analyzes.length ? 
 				<FlatList
 					data={analyzes}
@@ -33,7 +33,7 @@ const AnalyzesList = ({ analyzes, loadMoreAnalyzes, isLoadingMore, showImageModa
 				<Text style={[s`text-lg font-semibold`]}>Анализы не найдены</Text>
 			}
 			{isLoadingMore && <View style={s`absolute w-full bottom-2`}><Loader /></View>}
-		</View>
+		</>
 	)
 }
 
