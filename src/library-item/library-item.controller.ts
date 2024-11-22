@@ -16,6 +16,7 @@ import { LibraryItemService } from './library-item.service';
 import { ApiTags } from '@nestjs/swagger';
 import { LibraryItemDto, LibraryItemQuery, LibraryItemUpdateDto } from './dto/library-item.dto';
 import { LibraryItem } from '@prisma/client';
+import { ILibraryItem } from './types';
 
 @ApiTags('Library-item')
 @Controller()
@@ -24,7 +25,7 @@ export class LibraryItemController {
 
   @Get('library-items')
   @HttpCode(200)
-  getLibraryItems(@Query() libraryItemQuery: LibraryItemQuery): Promise<LibraryItem[]> {
+  getLibraryItems(@Query() libraryItemQuery: LibraryItemQuery): Promise<ILibraryItem> {
     return this.libraryItemService.getLibraryItems(libraryItemQuery);
   }
 

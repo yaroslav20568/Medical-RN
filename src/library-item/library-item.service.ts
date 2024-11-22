@@ -2,14 +2,20 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { LibraryArticle, LibraryItem } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { LibraryItemDto, LibraryItemQuery, LibraryItemUpdateDto } from './dto/library-item.dto';
+import { ILibraryItem } from './types';
 
 @Injectable()
 export class LibraryItemService {
   constructor(private prisma: PrismaService) {}
 
-  async getLibraryItems(libraryItemQuery: LibraryItemQuery): Promise<LibraryItem[]> {
-    return this.prisma.libraryItem.findMany({
-			where: { libraryArticleId: +libraryItemQuery.libraryArticleId },
+  async getLibraryItems(libraryItemQuery: LibraryItemQuery): Promise<ILibraryItem> {
+    const count = 5;
+    const totalPages = Math.ceil(
+      (await this.prisma.libraryItem.findMany()).length / count,
+    );
+
+		const findLibraryItems = this.prisma.libraryItem.findMany({
+      where: { libraryArticleId: +libraryItemQuery.libraryArticleId },
       include: {
         libraryArticle: true,
       },
@@ -18,7 +24,22 @@ export class LibraryItemService {
           id: 'asc',
         },
       ],
+			skip: libraryItemQuery.skip ? +libraryItemQuery.skip : 0,
+      take: count,
     });
+		
+		if(!libraryItemQuery.libraryArticleId) {
+			throw new HttpException(
+        'A param libraryArticleId required',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+		}
+
+		return {
+      skip: libraryItemQuery.skip ? +libraryItemQuery.skip : 0,
+      totalSkip: (totalPages - 1) * count,
+      items: await findLibraryItems,
+    };
   }
 
   async createLibraryItem(libraryItemDto: LibraryItemDto): Promise<LibraryItem> {

@@ -5,6 +5,10 @@ export class LibraryItemQuery {
   @IsInt()
   @IsOptional()
   @ApiProperty({ required: false })
+  skip: number;
+
+	@IsInt()
+  @ApiProperty({ required: true })
   libraryArticleId: number;
 }
 
