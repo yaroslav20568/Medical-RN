@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Dimensions } from 'react-native';
+import { Image, useWindowDimensions } from 'react-native';
 import { s } from "react-native-wind";
 
 interface IProps {
@@ -7,10 +7,10 @@ interface IProps {
 }
 
 const HeaderLogo = ({ logo }: IProps) => {
-	const window = Dimensions.get('window');
+	const { width } = useWindowDimensions();
 	const logParams = Image.resolveAssetSource(logo);
 	const k = logParams.width / logParams.height;
-	const logoHeight = window.width / k;
+	const logoHeight = width / k;
 
 	return (
 		<Image

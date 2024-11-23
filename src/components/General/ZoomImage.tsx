@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
 import { s } from 'react-native-wind';
@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const ZoomImage = ({ imageUrl }: IProps) => {
-	const { width, height } = Dimensions.get('screen');
+	const { width, height } = useWindowDimensions();
 
   const scale = useSharedValue(1);
   const startScale = useSharedValue(0);

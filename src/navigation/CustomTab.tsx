@@ -28,7 +28,6 @@ const CustomTab = ({ state, tabItem, tabNavigate, index, moveSelectTab }: IProps
 		} else {
 			color.value = withSpring('#999');
 			scale.value = withTiming(1);
-			
 		}
 	}, [state.index]);
 

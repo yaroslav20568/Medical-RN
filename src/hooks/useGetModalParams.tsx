@@ -1,10 +1,10 @@
 import { useCallback, useRef } from "react";
-import { Animated, Dimensions } from "react-native";
+import { Animated, useWindowDimensions } from "react-native";
 
 type typeModalParams = [Animated.Value, Animated.AnimatedInterpolation<string | number>, () => void, () => void];
 
 const useGetModalParams = (): typeModalParams => {
-	const { width } = Dimensions.get('window');
+	const { width } = useWindowDimensions();
 
 	const animatedValue = useRef(new Animated.Value(0)).current;
 

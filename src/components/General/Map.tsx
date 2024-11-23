@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Dimensions, PermissionsAndroid } from 'react-native';
+import { useWindowDimensions, PermissionsAndroid } from 'react-native';
 import { s } from 'react-native-wind';
 import Mapbox from '@rnmapbox/maps';
 import { Position } from '@rnmapbox/maps/lib/typescript/src/types/Position';
@@ -34,7 +34,7 @@ const Map = observer(({ institutions }: IProps) => {
 	const [routes, setRoutes] = useState<Array<Position>>([]);
 	const [distanceAndDurationArr, setDistanceAndDurationArr] = useState<Array<IDistanceAndDuration>>([]);
 
-	const { width } = Dimensions.get('window');
+	const { width } = useWindowDimensions();
 
 	useEffect(() => {
 		PermissionsAndroid.requestMultiple([

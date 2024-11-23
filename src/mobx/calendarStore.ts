@@ -4,7 +4,6 @@ import { ICalendarEvent } from '../types';
 import { siteUrl } from "../constants";
 import { AgendaSchedule } from "react-native-calendars";
 import { MarkedDates } from "react-native-calendars/src/types";
-import { DOT } from "react-native-calendars/src/calendar/day/marking";
 import { returnDotColor } from "../helpers";
 
 class CalendarStore {
@@ -56,7 +55,7 @@ class CalendarStore {
 					dots: [{key: calendarEvent.typeEvent, color: color}]
 				};
 			} else {
-				let dots: Array<DOT> = markedDatesObj[date].dots || [];
+				let dots = markedDatesObj[date].dots || [];
 				markedDatesObj[date] = {
 					dots: [...dots, {key: calendarEvent.typeEvent, color: color}]
 				};

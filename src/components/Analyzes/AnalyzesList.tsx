@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import { s } from 'react-native-wind';
 import { IAnalysis } from '../../types';
 import { Loader } from '../../components';

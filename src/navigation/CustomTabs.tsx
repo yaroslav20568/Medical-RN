@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Dimensions } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 import { NavigationHelpers, ParamListBase, TabNavigationState } from '@react-navigation/native';
 import { BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs';
 import { s } from 'react-native-wind';
@@ -17,7 +17,7 @@ interface IProps {
 }
 
 const CustomTabs = ({ state, navigation, tabItems }: IProps) => {
-	const width = Dimensions.get('window').width;
+	const { width } = useWindowDimensions();
 	const translateX = useSharedValue(0);
 
 	const moveSelectTab = (index: number): void => {
