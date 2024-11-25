@@ -15,6 +15,10 @@ const ZoomImage = ({ imageUrl }: IProps) => {
   const scale = useSharedValue<number>(1);
   const startScale = useSharedValue<number>(0);
 
+	const imgAnimatedStyles = useAnimatedStyle(() => ({
+    transform: [{scale: scale.value}],
+  }));
+
 	function clamp(val: number, min: number, max: number) {
 		return Math.min(Math.max(val, min), max);
 	}
@@ -34,10 +38,6 @@ const ZoomImage = ({ imageUrl }: IProps) => {
 			scale.value = 1;
 		})
     .runOnJS(true);
-
-  const imgAnimatedStyles = useAnimatedStyle(() => ({
-    transform: [{scale: scale.value}],
-  }));
 
   return (
     <GestureHandlerRootView>

@@ -3,7 +3,7 @@ import { View, useWindowDimensions } from 'react-native';
 import { NavigationHelpers, ParamListBase, TabNavigationState } from '@react-navigation/native';
 import { BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs';
 import { s } from 'react-native-wind';
-import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { ITab } from '../types';
 import { CustomTab } from '../navigation';
 import socket from '../socket/chat-socket';
@@ -18,16 +18,14 @@ interface IProps {
 
 const CustomTabs = ({ state, navigation, tabItems }: IProps) => {
 	const { width } = useWindowDimensions();
-	const translateX = useSharedValue<number>(0);
 
-	const moveSelectTab = (index: number): void => {
-		translateX.value = withSpring(index * width / tabItems.length);
-	}
+	const animatedStyles = useAnimatedStyle(() => ({
+		transform: [{translateX: withSpring(state.index * width / tabItems.length)}]
+	}));
 	
 	const tabNavigate = useCallback((name: string, index: number): void => {
 		if(state.index === 0) {
 			navigation.navigate(name);
-			moveSelectTab(index);
 		}
 
 		if(name === 'Chat') {
@@ -45,14 +43,13 @@ const CustomTabs = ({ state, navigation, tabItems }: IProps) => {
 
 	return (
 		<View style={s`flex-row bg-warmGray-200`}>
-			<Animated.View style={[s`absolute top-0 h-full`, {width: width / tabItems.length, transform: [{ translateX }], backgroundColor: '#294CB4'}]}></Animated.View>
+			<Animated.View style={[s`absolute top-0 h-full`, {width: width / tabItems.length, backgroundColor: '#294CB4'}, animatedStyles]}></Animated.View>
 			{tabItems.map((tabItem, index) => 
 				<CustomTab 
 					state={state} 
 					tabItem={tabItem} 
 					tabNavigate={tabNavigate} 
 					index={index} 
-					moveSelectTab={moveSelectTab}
 					key={`tab_${index}`}
 				/>
 			)}
