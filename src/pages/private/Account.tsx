@@ -16,10 +16,10 @@ import socket from '../../socket/chat-socket';
 interface IProps extends NativeStackScreenProps<RootStackParams, 'AccountInner'> {}
 
 const Account = observer(({ navigation }: IProps) => {
-	const [updateAccAnimatedValue, updateAccTranslateX, showUpdateAccModal, hideUpdateAccModal] = useGetModalParams();
-	const [deleteAccAnimatedValue, deleteAccTranslateX, showDeleteAccModal, hideDeleteAccModal] = useGetModalParams();
-	const [deletePhotoAnimatedValue, deletePhotoTranslateX, showDeletePhotoModal, hideDeletePhotoModal] = useGetModalParams();
-	const [logOutAnimatedValue, logOutTranslateX, showLogOutModal, hideLogOutModal] = useGetModalParams();
+	const [updateAccAnimatedStyles, showUpdateAccModal, hideUpdateAccModal] = useGetModalParams();
+	const [deleteAccAnimatedStyles, showDeleteAccModal, hideDeleteAccModal] = useGetModalParams();
+	const [deletePhotoAnimatedStyles, showDeletePhotoModal, hideDeletePhotoModal] = useGetModalParams();
+	const [logOutAnimatedStyles, showLogOutModal, hideLogOutModal] = useGetModalParams();
 
 	const deleteUser = useCallback((): void => {
 		hideDeleteAccModal();
@@ -111,8 +111,7 @@ const Account = observer(({ navigation }: IProps) => {
 				/>
 			</ScrollView>
 			<Modal
-				translateX={updateAccTranslateX}
-				animatedValue={updateAccAnimatedValue}
+				animatedStyles={updateAccAnimatedStyles}
 			>
 				<HeaderModal 
 					title='Обновление данных' 
@@ -125,22 +124,19 @@ const Account = observer(({ navigation }: IProps) => {
 				/>
 			</Modal>
 			<ConfirmModal
-				translateX={deleteAccTranslateX}
-				animatedValue={deleteAccAnimatedValue}
+				animatedStyles={deleteAccAnimatedStyles}
 				hideModal={hideDeleteAccModal}
 				onPress={deleteUser}
 				message='Вы действительно хотите удалить аккаунт?'
 			/>
 			<ConfirmModal
-				translateX={deletePhotoTranslateX}
-				animatedValue={deletePhotoAnimatedValue}
+				animatedStyles={deletePhotoAnimatedStyles}
 				hideModal={hideDeletePhotoModal}
 				onPress={deletePhoto}
 				message='Вы действительно хотите удалить фото?'
 			/>
 			<ConfirmModal
-				translateX={logOutTranslateX}
-				animatedValue={logOutAnimatedValue}
+				animatedStyles={logOutAnimatedStyles}
 				hideModal={hideLogOutModal}
 				onPress={logOut}
 				message='Вы действительно хотите выйти с аккаунта?'

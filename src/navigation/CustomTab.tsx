@@ -17,8 +17,8 @@ interface IProps {
 export const AnimatedIcon = Animated.createAnimatedComponent(AntDesign);
 
 const CustomTab = ({ state, tabItem, tabNavigate, index, moveSelectTab }: IProps) => {
-	const color = useSharedValue('#999');
-	const scale = useSharedValue(1);
+	const color = useSharedValue<string>('#999');
+	const scale = useSharedValue<number>(1);
 
 	useEffect(() => {
 		if(state.index === index) {

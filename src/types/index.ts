@@ -189,4 +189,11 @@ interface IAnalysis extends IItem {
 	date: string;
 }
 
-export type { IUser, IMenuItem, ISelectItem, IInstitution, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IUserFormRegister, IImage, IRespChatData, IDialog, IMessage, IHotline, IQuestion, IQuestionWithResult, ICalendarEvent, IAnalysis };
+interface IModalStyles {
+	opacity: number;
+	transform: {
+		translateX: number;
+	}[];
+}
+
+export type { IUser, IMenuItem, ISelectItem, IInstitution, navigationType, ILibraryArticle, ILibraryItem, IRespAuthData, IRespAuthError, IItem, ITypeUser, ITab, IUserFormValues, IUserFormRegister, IImage, IRespChatData, IDialog, IMessage, IHotline, IQuestion, IQuestionWithResult, ICalendarEvent, IAnalysis, IModalStyles };

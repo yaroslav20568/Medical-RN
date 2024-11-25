@@ -1,19 +1,20 @@
 import React from 'react';
-import { View, Text, Animated, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import Animated from 'react-native-reanimated';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { s } from 'react-native-wind';
+import { IModalStyles } from '../../types';
 
 interface IProps {
-	translateX: Animated.AnimatedInterpolation<string | number>;
-	animatedValue: Animated.Value;
+	animatedStyles: IModalStyles;
 	hideModal: () => void;
 	onPress: () => void;
 	message: string;
 }
 
-const ConfirmModal = ({ translateX, animatedValue, hideModal, onPress, message }: IProps) => {
+const ConfirmModal = ({ animatedStyles, hideModal, onPress, message }: IProps) => {
 	return (
-		<Animated.View style={[s`justify-center absolute z-10 w-full h-full px-5 py-10`, {backgroundColor: 'rgba(0, 0, 0, .6)', opacity: animatedValue, transform: [{translateX: translateX}]}]}>
+		<Animated.View style={[s`justify-center absolute z-10 w-full h-full px-5 py-10`, {backgroundColor: 'rgba(0, 0, 0, .6)'}, animatedStyles]}>
 			<View style={s`bg-white rounded-xl px-3 py-5`}>
 				<ScrollView
 					showsVerticalScrollIndicator={false}

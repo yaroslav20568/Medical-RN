@@ -1,35 +1,29 @@
-import { useCallback, useRef } from "react";
-import { Animated, useWindowDimensions } from "react-native";
+import { useCallback } from "react";
+import { useWindowDimensions } from "react-native";
+import { useSharedValue, useAnimatedStyle, withTiming, interpolate, Extrapolation } from "react-native-reanimated";
+import { IModalStyles } from "../types";
 
-type typeModalParams = [Animated.Value, Animated.AnimatedInterpolation<string | number>, () => void, () => void];
+type typeModalParams = [IModalStyles, () => void, () => void];
 
 const useGetModalParams = (): typeModalParams => {
 	const { width } = useWindowDimensions();
 
-	const animatedValue = useRef(new Animated.Value(0)).current;
+	const animatedValue = useSharedValue<number>(0);
 
-	const translateX = animatedValue.interpolate({
-		inputRange: [0, 1],
-		outputRange: [-width, 0]
-	})
+	const animatedStyles = useAnimatedStyle<IModalStyles>(() => ({
+		opacity: animatedValue.value,
+		transform: [{translateX: interpolate(animatedValue.value, [0, 1], [-width, 0], Extrapolation.CLAMP)}]
+	}));
 
 	const showModal = useCallback((): void => {
-		Animated.timing(animatedValue, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
+		animatedValue.value = withTiming(1, {duration: 500});
 	}, []);
 
 	const hideModal = useCallback((): void => {
-		Animated.timing(animatedValue, {
-      toValue: 0,
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
+		animatedValue.value = withTiming(0, {duration: 500});
 	}, []);
 
-	return [animatedValue, translateX, showModal, hideModal];
+	return [animatedStyles, showModal, hideModal];
 }
 
 export default useGetModalParams;

@@ -18,7 +18,7 @@ interface IProps {
 
 const CustomTabs = ({ state, navigation, tabItems }: IProps) => {
 	const { width } = useWindowDimensions();
-	const translateX = useSharedValue(0);
+	const translateX = useSharedValue<number>(0);
 
 	const moveSelectTab = (index: number): void => {
 		translateX.value = withSpring(index * width / tabItems.length);

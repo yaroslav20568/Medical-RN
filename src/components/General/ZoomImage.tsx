@@ -12,8 +12,8 @@ interface IProps {
 const ZoomImage = ({ imageUrl }: IProps) => {
 	const { width, height } = useWindowDimensions();
 
-  const scale = useSharedValue(1);
-  const startScale = useSharedValue(0);
+  const scale = useSharedValue<number>(1);
+  const startScale = useSharedValue<number>(0);
 
 	function clamp(val: number, min: number, max: number) {
 		return Math.min(Math.max(val, min), max);
@@ -35,7 +35,7 @@ const ZoomImage = ({ imageUrl }: IProps) => {
 		})
     .runOnJS(true);
 
-  const boxAnimatedStyles = useAnimatedStyle(() => ({
+  const imgAnimatedStyles = useAnimatedStyle(() => ({
     transform: [{scale: scale.value}],
   }));
 
@@ -44,7 +44,7 @@ const ZoomImage = ({ imageUrl }: IProps) => {
       <GestureDetector gesture={pinch}>
 				<Animated.Image
 					source={{uri: `${siteUrl}/${imageUrl}`}}
-					style={[s`w-full`, boxAnimatedStyles, {aspectRatio: 1}]}
+					style={[s`w-full`, imgAnimatedStyles, {aspectRatio: 1}]}
 				/>
       </GestureDetector>
     </GestureHandlerRootView>

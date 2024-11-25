@@ -13,7 +13,7 @@ interface IProps extends NativeStackScreenProps<RootStackParams, 'Analyzes'> {}
 
 const Analyzes = observer(({ navigation }: IProps) => {
 	const [imageUrl, setImageUrl] = useState<string>('');
-	const [imageAnimatedValue, imageTranslateX, showImageModal, hideImageModal] = useGetModalParams();
+	const [imageAnimatedStyles, showImageModal, hideImageModal] = useGetModalParams();
 
 	useEffect(() => {
 		userStore.loadAnalyzes(userStore.userData?.id);
@@ -50,8 +50,7 @@ const Analyzes = observer(({ navigation }: IProps) => {
 				</View>
 			</ScrollView>
 			<PhotoModal
-				translateX={imageTranslateX}
-				animatedValue={imageAnimatedValue}
+				animatedStyles={imageAnimatedStyles}
 			>
 				<HeaderModal 
 					title='Фото' 

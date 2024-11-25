@@ -26,8 +26,8 @@ const Institutions = observer(({ navigation }: IProps) => {
 	const [cityId, setCityId] = useState<number | ''>('');
 	const [typeInstitutionId, setTypeInstitutionId] = useState<number | ''>('');
 	const [typesUsersNum, setTypesUsersNum] = useState<Array<number>>([]);
-	const [searchAnimatedValue, searchTranslateX, showSearchModal, hideSearchModal] = useGetModalParams();
-	const [filterAnimatedValue, filterTranslateX, showFilterModal, hideFilterModal] = useGetModalParams();
+	const [searchAnimatedStyles, showSearchModal, hideSearchModal] = useGetModalParams();
+	const [filterAnimatedStyles, showFilterModal, hideFilterModal] = useGetModalParams();
 
 	useEffect(() => {
 		institutionsStore.loadInstitutions(name, region, cityId, typeInstitutionId, typesUsersNum);
@@ -79,8 +79,7 @@ const Institutions = observer(({ navigation }: IProps) => {
 				}
 			</ScrollView>
 			<Modal 
-				translateX={searchTranslateX}
-				animatedValue={searchAnimatedValue}
+				animatedStyles={searchAnimatedStyles}
 			>
 				<HeaderModal 
 					title='Поиск' 
@@ -93,8 +92,7 @@ const Institutions = observer(({ navigation }: IProps) => {
 				/>
 			</Modal>
 			<Modal 
-				translateX={filterTranslateX}
-				animatedValue={filterAnimatedValue}
+				animatedStyles={filterAnimatedStyles}
 			>
 				<HeaderModal 
 					title='Поиск' 

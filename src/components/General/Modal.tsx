@@ -1,16 +1,17 @@
 import React from 'react';
-import { View, ScrollView, Animated } from 'react-native';
+import { View, ScrollView } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { s } from 'react-native-wind';
+import { IModalStyles } from '../../types';
 
 interface IProps {
 	children: React.ReactNode;
-	translateX: Animated.AnimatedInterpolation<string | number>;
-	animatedValue: Animated.Value;
+	animatedStyles: IModalStyles;
 }
 
-const Modal = ({ children, translateX, animatedValue }: IProps) => {
+const Modal = ({ children, animatedStyles }: IProps) => {
 	return (
-		<Animated.View style={[s`justify-center absolute z-10 w-full h-full px-5 py-10`, {backgroundColor: 'rgba(0, 0, 0, .6)', opacity: animatedValue, transform: [{translateX: translateX}]}]}>
+		<Animated.View style={[s`justify-center absolute z-10 w-full h-full px-5 py-10`, {backgroundColor: 'rgba(0, 0, 0, .6)'}, animatedStyles]}>
 			<View style={s`bg-white rounded-xl`}>
 				<ScrollView
 					showsVerticalScrollIndicator={false}
