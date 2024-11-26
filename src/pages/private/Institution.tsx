@@ -3,7 +3,7 @@ import { ScrollView, View, Text, Linking } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParams } from '../../navigation/HomeStacks';
 import { s } from 'react-native-wind';
-import Animated, { FadeInUp, FadeInDown } from 'react-native-reanimated';
+import Animated, { FadeInUp, FadeInDown, FlipInEasyX } from 'react-native-reanimated';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -41,10 +41,10 @@ const Institution = observer(({ route, navigation }: IProps) => {
 					<Animated.Image 
 						source={{uri: `${siteUrl}/${photo}`}}
 						style={s`w-full h-60 rounded-xl mb-3`}
-						sharedTransitionTag={`tag_${id}`}
+						entering={FlipInEasyX.delay(600).duration(1000)}
 					/>
 				</View>
-				<Animated.View entering={FadeInDown.delay(600).duration(1000)}>
+				<Animated.View entering={FadeInDown.delay(900).duration(1000)}>
 					<View>
 						<View style={s`flex-row mb-3`}>
 							<Ionicons 

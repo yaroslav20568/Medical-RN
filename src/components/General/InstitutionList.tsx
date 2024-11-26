@@ -53,7 +53,6 @@ const InstitutionItem = ({ institution, navigation }: IInstitutionItemProps) => 
 			<Animated.Image
 				source={{uri: `${siteUrl}/${photo}`}}
 				style={[s`rounded-2xl`, {width: '40%', height: 130}]}
-				sharedTransitionTag={`tag_${institution.id}`}
 			/>
 			<Text style={[{width: '60%'}, s`text-base font-medium text-black px-2`]}>{name}</Text>
 		</TouchableOpacity>

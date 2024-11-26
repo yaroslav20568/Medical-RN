@@ -29,7 +29,7 @@ class HelpAbroadsStore {
 			isLoading: observable,
 			skip: observable,
 			totalSkip: observable,
-			institutions: observable,
+			institutions: observable.shallow,
 			loadInstitutions: action,
 			loadMoreInstitutions: action,
 			isLoadingMore: observable
