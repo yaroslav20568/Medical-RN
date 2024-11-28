@@ -41,15 +41,15 @@ class UserStore {
 		})
 	}
 
-	setIsAuth(flag: boolean) {
+	setIsAuth(flag: boolean): void {
 		this.isAuth = flag;
 	}
 
-	setUserData(userData: IUser | null) {
+	setUserData(userData: IUser | null): void {
 		this.userData = userData;
 	}
 
-	loadAnalyzes(userId: number | undefined) {
+	loadAnalyzes(userId: number | undefined): void {
 		this.isLoading = true;
 		axios<IRespData>(`${siteUrl}/api/analyzes?userId=${userId}`)
     .then(({ data }) => {
@@ -62,7 +62,7 @@ class UserStore {
 		})
 	}
 
-	loadMoreAnalyzes(userId: number | undefined) {
+	loadMoreAnalyzes(userId: number | undefined): void {
 		if(this.skip < this.totalSkip) {
 			this.isLoadingMore = true;
 			this.skip = this.skip + 5;

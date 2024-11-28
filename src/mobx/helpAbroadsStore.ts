@@ -1,9 +1,8 @@
-import { makeObservable, observable, action, runInAction } from "mobx";
+import { makeObservable, observable, action, runInAction, computed } from "mobx";
 import axios from "axios";
 import { ISelectItem, IInstitution } from '../types';
 import { siteUrl } from "../constants";
 import { sortArray } from "../helpers";
-import { institutionsStore } from "./index";
 
 interface IRespData {
 	skip: number;
@@ -32,11 +31,14 @@ class HelpAbroadsStore {
 			institutions: observable.shallow,
 			loadInstitutions: action,
 			loadMoreInstitutions: action,
-			isLoadingMore: observable
+			isLoadingMore: observable,
+			getCities: computed,
+			getСountries: computed,
+			getTypesInstitution: computed
 		})
 	}
 
-	loadInstitutions(name: string, countryId: number | '', cityId: number | '', typeInstitutionId: number | '', typesUser: Array<number>) {
+	loadInstitutions(name: string, countryId: number | '', cityId: number | '', typeInstitutionId: number | '', typesUser: Array<number>): void {
 		this.isLoading = true;
 		axios<IRespData>(`${siteUrl}/api/help-abroads?name=${name}&countryId=${countryId}&cityId=${cityId}&typeId=${typeInstitutionId}&typesUsers=${sortArray(typesUser).join(',')}`)
     .then(({ data }) => {
@@ -49,7 +51,7 @@ class HelpAbroadsStore {
 		})
 	}
 
-	loadMoreInstitutions() {
+	loadMoreInstitutions(): void {
 		if(this.skip < this.totalSkip) {
 			this.isLoadingMore = true;
 			this.skip = this.skip + 10;
@@ -65,7 +67,7 @@ class HelpAbroadsStore {
 		}
 	}
 
-	get getCities() {
+	get getCities(): Array<ISelectItem> {
 		const citiesInstitution: Array<ISelectItem> = [];
 		this.institutions.forEach(institution => {
 			const bool = citiesInstitution.some(cityInstitution => cityInstitution?.value == institution.city?.id);
@@ -78,7 +80,7 @@ class HelpAbroadsStore {
 		return citiesInstitution;
 	}
 
-	get getСountries() {
+	get getСountries(): Array<ISelectItem> {
 		const countriesInstitution: Array<ISelectItem> = [];
 		this.institutions.forEach(institution => {
 			const bool = countriesInstitution.some(cityInstitution => cityInstitution?.value == institution.city?.country.id);
@@ -91,7 +93,7 @@ class HelpAbroadsStore {
 		return countriesInstitution;
 	}
 
-	get getTypesInstitution() {
+	get getTypesInstitution(): Array<ISelectItem> {
 		const typesInstitution: Array<ISelectItem> = [];
 		this.institutions.forEach(institution => {
 			const bool = typesInstitution.some(typeInstitution => typeInstitution?.value == institution.type?.id);

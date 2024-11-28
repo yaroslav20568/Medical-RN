@@ -21,7 +21,7 @@ class QuestionsStore {
 		})
 	}
 
-	loadQuestions(userId: number | undefined) {
+	loadQuestions(userId: number | undefined): void {
 		this.isLoading = true;
 		axios<Array<IQuestion>>(`${siteUrl}/api/questions?userId=${userId}`)
     .then(({ data }) => {
@@ -32,7 +32,7 @@ class QuestionsStore {
 		})
 	}
 
-	loadQuestionsWithResults() {
+	loadQuestionsWithResults(): void {
 		this.isLoading = true;
 		axios<Array<IQuestionWithResult>>(`${siteUrl}/api/questions-with-results`)
     .then(({ data }) => {

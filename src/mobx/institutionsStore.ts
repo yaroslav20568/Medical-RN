@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, runInAction } from "mobx";
+import { makeObservable, observable, action, runInAction, computed } from "mobx";
 import axios from "axios";
 import { ISelectItem, IInstitution, ITypeUser } from '../types';
 import { siteUrl } from "../constants";
@@ -34,11 +34,13 @@ class InstitutionsStore {
 			loadInstitutions: action,
 			loadMoreInstitutions: action,
 			isLoadingMore: observable,
-			typesUsers: observable
+			typesUsers: observable,
+			getCities: computed,
+			getTypesInstitution: computed
 		})
 	}
 
-	loadInstitutions(name: string, region: string, cityId: number | '', typeInstitutionId: number | '', typesUser: Array<number>) {
+	loadInstitutions(name: string, region: string, cityId: number | '', typeInstitutionId: number | '', typesUser: Array<number>): void {
 		this.isLoading = true;
 		axios<IRespData>(`${siteUrl}/api/laboratories?name=${name}&region=${region}&cityId=${cityId}&typeId=${typeInstitutionId}&typesUsers=${sortArray(typesUser).join(',')}`)
     .then(({ data }) => {
@@ -51,7 +53,7 @@ class InstitutionsStore {
 		})
 	}
 
-	loadMoreInstitutions() {
+	loadMoreInstitutions(): void {
 		if(this.skip < this.totalSkip) {
 			this.isLoadingMore = true;
 			this.skip = this.skip + 10;
@@ -67,7 +69,7 @@ class InstitutionsStore {
 		}
 	}
 
-	loadTypesUsers() {
+	loadTypesUsers(): void {
 		this.isLoading = true;
 		axios<Array<ITypeUser>>(`${siteUrl}/api/types-users`)
     .then(({ data }) => {
@@ -78,7 +80,7 @@ class InstitutionsStore {
 		})
 	}
 
-	get getCities() {
+	get getCities(): Array<ISelectItem> {
 		const citiesInstitution: Array<ISelectItem> = [];
 		this.institutions.forEach(institution => {
 			const bool = citiesInstitution.some(cityInstitution => cityInstitution?.value == institution.city?.id);
@@ -91,7 +93,7 @@ class InstitutionsStore {
 		return citiesInstitution;
 	}
 
-	get getTypesInstitution() {
+	get getTypesInstitution(): Array<ISelectItem> {
 		const typesInstitution: Array<ISelectItem> = [];
 		this.institutions.forEach(institution => {
 			const bool = typesInstitution.some(typeInstitution => typeInstitution?.value == institution.type?.id);

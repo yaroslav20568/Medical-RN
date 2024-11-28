@@ -34,7 +34,7 @@ class QuickHelpStore {
 		})
 	}
 
-	loadHotlines() {
+	loadHotlines(): void {
 		this.isLoading = true;
 		axios<IRespData>(`${siteUrl}/api/hotlines`)
     .then(({ data }) => {
@@ -47,7 +47,7 @@ class QuickHelpStore {
 		})
 	}
 
-	loadMoreHotlines() {
+	loadMoreHotlines(): void {
 		if(this.skip < this.totalSkip) {
 			this.isLoadingMore = true;
 			this.skip = this.skip + 5;

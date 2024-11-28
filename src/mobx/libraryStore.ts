@@ -40,7 +40,7 @@ class LibraryStore {
 		})
 	}
 
-	loadArticles() {
+	loadArticles(): void {
 		this.isLoadingArticles = true;
 		axios<Array<ILibraryArticle>>(`${siteUrl}/api/library-articles`)
     .then(({ data }) => {
@@ -51,7 +51,7 @@ class LibraryStore {
 		})
 	}
 
-	loadItems(libraryArticleId: number) {
+	loadItems(libraryArticleId: number): void {
 		this.isLoadingItems = true;
 		axios<IRespData>(`${siteUrl}/api/library-items/?libraryArticleId=${libraryArticleId}`)
 		.then(({ data }) => {
@@ -64,7 +64,7 @@ class LibraryStore {
 		})
 	}
 
-	loadMoreItems(libraryArticleId: number) {
+	loadMoreItems(libraryArticleId: number): void {
 		if(this.skip < this.totalSkip) {
 			this.isLoadingItemsMore = true;
 			this.skip = this.skip + 5;

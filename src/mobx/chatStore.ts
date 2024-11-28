@@ -17,15 +17,15 @@ class ChatStore {
 		})
 	}
 
-	setMessages(messages: Array<IMessage>) {
+	setMessages(messages: Array<IMessage>): void {
 		this.messages = messages;
 	}
 
-	addNewMessage(message: IMessage) {
+	addNewMessage(message: IMessage): void {
 		this.messages = [...this.messages, message]
 	}
 
-	setDialogs(dialogs: Array<IDialog>) {
+	setDialogs(dialogs: Array<IDialog>): void {
 		this.dialogs = dialogs;
 	}
 }

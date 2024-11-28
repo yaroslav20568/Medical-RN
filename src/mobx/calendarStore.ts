@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, runInAction } from "mobx";
+import { makeObservable, observable, action, runInAction, computed } from "mobx";
 import axios from "axios";
 import { ICalendarEvent } from '../types';
 import { siteUrl } from "../constants";
@@ -16,11 +16,13 @@ class CalendarStore {
 		makeObservable(this, {
 			isLoading: observable,
 			calendarEvents: observable,
-			loadCalendarEvents: action
+			loadCalendarEvents: action,
+			getCalendarEventsObj: computed,
+			getMarkedDates: computed
 		})
 	}
 
-	loadCalendarEvents(userId: number | undefined) {
+	loadCalendarEvents(userId: number | undefined): void {
 		this.isLoading = true;
 		axios<Array<ICalendarEvent>>(`${siteUrl}/api/calendar-events?userId=${userId}`)
     .then(({ data }) => {
@@ -31,7 +33,7 @@ class CalendarStore {
 		})
 	}
 
-	get getCalendarEventsObj() {
+	get getCalendarEventsObj(): AgendaSchedule {
 		const calendarEventsObj: AgendaSchedule = {};
 		this.calendarEvents.forEach(calendarEvent => {
 			const date = calendarEvent.dateEvent.slice(0, 10);
@@ -45,7 +47,7 @@ class CalendarStore {
 		return calendarEventsObj;
 	}
 
-	get getMarkedDates() {
+	get getMarkedDates(): MarkedDates {
 		const markedDatesObj: MarkedDates = {};
 		this.calendarEvents.forEach(calendarEvent => {
 			const date = calendarEvent.dateEvent.slice(0, 10);
