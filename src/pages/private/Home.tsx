@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { s } from "react-native-wind";
+import LocationEnabler from 'react-native-location-enabler';
 import { HeaderLogo, MenuList } from '../../components';
 import socket from '../../socket/chat-socket';
 import { chatStore, userStore } from '../../mobx';
@@ -11,7 +12,23 @@ import { RootStackParams } from '../../navigation/HomeStacks';
 interface IProps extends NativeStackScreenProps<RootStackParams, 'HomeInner'> {}
 
 const Home = ({ navigation }: IProps) => {
+	const {
+		PRIORITIES: { HIGH_ACCURACY },
+		useLocationSettings,
+	} = LocationEnabler;
+
+	const [_, requestResolution] = useLocationSettings(
+		{
+			priority: HIGH_ACCURACY,
+			alwaysShow: true,
+			needBle: true,
+		},
+		false
+	);
+
 	useEffect(() => {
+		requestResolution();
+
 		const returnMessagesUser = (messages: Array<IMessage>) => {
 			chatStore.setMessages(messages);
 		}
