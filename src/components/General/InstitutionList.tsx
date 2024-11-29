@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, useWindowDimensions } from 'react-native';
 import { s } from 'react-native-wind';
 import Animated from 'react-native-reanimated';
 import { IInstitution, navigationType } from '../../types';
@@ -43,6 +43,7 @@ interface IInstitutionItemProps {
 
 const InstitutionItem = ({ institution, navigation }: IInstitutionItemProps) => {
 	const { name, photo } = institution;
+	const { width, height } = useWindowDimensions();
 	
 	return (
 		<TouchableOpacity 
@@ -52,9 +53,9 @@ const InstitutionItem = ({ institution, navigation }: IInstitutionItemProps) => 
 		>
 			<Animated.Image
 				source={{uri: `${siteUrl}/${photo}`}}
-				style={[s`rounded-2xl`, {width: '40%', height: 130}]}
+				style={[s`rounded-2xl`, {width: width < height ? '40%' : '22%', aspectRatio: 1.2}]}
 			/>
-			<Text style={[{width: '60%'}, s`text-base font-medium text-black px-2`]}>{name}</Text>
+			<Text style={[{width: width < height ? '60%' : '78%'}, s`text-base font-medium text-black px-2`]}>{name}</Text>
 		</TouchableOpacity>
 	);
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { s } from 'react-native-wind';
 import RenderHtml from 'react-native-render-html';
@@ -9,6 +9,8 @@ import { GoBack, HeaderLogo } from '../../components';
 interface IProps extends NativeStackScreenProps<RootStackParams, 'LibraryItem'> {}
 
 const LibraryItem = ({ route, navigation }: IProps) => {
+	const { width } = useWindowDimensions();
+
 	return (
 		<ScrollView
 			showsVerticalScrollIndicator={false}
@@ -23,7 +25,7 @@ const LibraryItem = ({ route, navigation }: IProps) => {
 			<View style={s`mt-3 px-3`}>
 				<Text style={s`text-xl font-semibold text-black mb-4`}>{route.params.libraryItem.title}</Text>
 				<RenderHtml
-					contentWidth={300}
+					contentWidth={width - 2 * 12}
 					source={{html: route.params.libraryItem.text}}
 				/>
 			</View>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, Linking } from 'react-native';
+import { ScrollView, View, Text, Linking, useWindowDimensions } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParams } from '../../navigation/HomeStacks';
 import { s } from 'react-native-wind';
@@ -17,7 +17,8 @@ import { institutionsStore } from '../../mobx';
 interface IProps extends NativeStackScreenProps<RootStackParams, 'Institution'> {}
 
 const Institution = observer(({ route, navigation }: IProps) => {
-	const { id, name, city, region, photo, address, phone, email, socialNetwork, linkWebsite, description, addInfo, workingHours, type, typesUsers } = route.params.institution;
+	const { name, city, region, photo, address, phone, email, socialNetwork, linkWebsite, description, addInfo, workingHours, type, typesUsers } = route.params.institution;
+	const { width, height } = useWindowDimensions();
 
 	return (
 		<ScrollView
@@ -40,7 +41,7 @@ const Institution = observer(({ route, navigation }: IProps) => {
 					</Animated.Text>
 					<Animated.Image 
 						source={{uri: `${siteUrl}/${photo}`}}
-						style={s`w-full h-60 rounded-xl mb-3`}
+						style={[s`${width > height ? 'w-1/2' : 'w-full'} rounded-xl mb-3`, {aspectRatio: 1.6}]}
 						entering={FlipInEasyX.delay(600).duration(1000)}
 					/>
 				</View>

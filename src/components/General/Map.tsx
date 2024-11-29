@@ -34,7 +34,7 @@ const Map = observer(({ institutions }: IProps) => {
 	const [routes, setRoutes] = useState<Array<Position>>([]);
 	const [distanceAndDurationArr, setDistanceAndDurationArr] = useState<Array<IDistanceAndDuration>>([]);
 
-	const { width } = useWindowDimensions();
+	const { width, height } = useWindowDimensions();
 
 	useEffect(() => {
 		PermissionsAndroid.requestMultiple([
@@ -88,7 +88,7 @@ const Map = observer(({ institutions }: IProps) => {
 			logoEnabled={false}
 			attributionEnabled={false}
 			scaleBarEnabled={false}
-			style={[s`w-full mt-3`, {height: width / 1.5}]}
+			style={[s`w-full mt-3`, {height: width < height ? width / 1.5 : height - 100}]}
 		>
 			<Mapbox.Camera 
 				zoomLevel={5}

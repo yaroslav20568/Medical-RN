@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import { s } from 'react-native-wind';
 import { ILibraryItem } from '../../types';
@@ -43,6 +43,8 @@ interface ILibraryItemProps {
 }
 
 const LibraryItem = ({ libraryItem, onHandleNavigation, index }: ILibraryItemProps) => {
+	const { width } = useWindowDimensions();
+
 	return (
 		<TouchableOpacity 
 			style={s`mb-4`}
@@ -51,7 +53,7 @@ const LibraryItem = ({ libraryItem, onHandleNavigation, index }: ILibraryItemPro
 		>
 			<Text style={s`mb-3 text-xl text-black`}>{index + 1}. {libraryItem.title}</Text>
 			<RenderHtml
-				contentWidth={300}
+				contentWidth={width - 2 * 12}
 				source={{html: '<img' + libraryItem.text.match(/<img(.+?)\>/)![1] + '/>'}}
 			/>
 		</TouchableOpacity>

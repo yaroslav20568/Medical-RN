@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { s } from 'react-native-wind';
 import { IAnalysis } from '../../types';
 import { Loader } from '../../components';
@@ -45,22 +45,26 @@ interface IAnalysisProps {
 
 const Analysis = ({ analysis, showImageModal, setImageUrl }: IAnalysisProps) => {
 	const { name, category, photo, date } = analysis;
+	const { width, height } = useWindowDimensions();
+
+	const showModal = () => {
+		showImageModal();
+		setImageUrl(photo);
+	};
 	
 	return (
-		<View style={s`bg-white rounded-2xl mb-4`}>
+		<View style={s`bg-white rounded-2xl mb-4 ${width > height ? 'flex-row' : ''}`}>
 			<TouchableOpacity
-				onPress={() => {
-					showImageModal();
-					setImageUrl(photo);
-				}}
+				onPress={showModal}
+				style={s`${width > height ? 'w-1/2' : ''}`}
 				activeOpacity={.7}
 			>
 				<Image
 					source={{uri: `${siteUrl}/${photo}`}}
-					style={[s`rounded-2xl`, {aspectRatio: 1.5}]}
+					style={[s`w-full rounded-2xl`, {aspectRatio: 1.5}]}
 				/>
 			</TouchableOpacity>
-			<View style={s`px-3 py-1`}>
+			<View style={s`px-3 py-1 ${width > height ? 'w-1/2 justify-center' : ''}`}>
 				<Text style={s`text-lg font-medium text-black`}>Название: {name}</Text>
 				<Text style={s`text-base font-medium text-black`}>Категория: {category}</Text>
 				<Text style={s`text-base font-medium text-black`}>Сделано: {new Date(date).toLocaleString('ru', {timeZone: 'Europe/Moscow'})}</Text>

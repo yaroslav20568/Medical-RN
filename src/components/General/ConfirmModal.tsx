@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, useWindowDimensions } from 'react-native';
 import Animated from 'react-native-reanimated';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { s } from 'react-native-wind';
@@ -13,9 +13,11 @@ interface IProps {
 }
 
 const ConfirmModal = ({ animatedStyles, hideModal, onPress, message }: IProps) => {
+	const { width, height } = useWindowDimensions();
+
 	return (
-		<Animated.View style={[s`justify-center absolute z-10 w-full h-full px-5 py-10`, {backgroundColor: 'rgba(0, 0, 0, .6)'}, animatedStyles]}>
-			<View style={s`bg-white rounded-xl px-3 py-5`}>
+		<Animated.View style={[s`justify-center absolute z-10 w-full h-full p-5 ${width > height ? 'items-center' : ''}`, {backgroundColor: 'rgba(0, 0, 0, .6)'}, animatedStyles]}>
+			<View style={s`bg-white rounded-xl px-3 py-5 ${width > height ? 'w-2/4' : ''}`}>
 				<ScrollView
 					showsVerticalScrollIndicator={false}
 				>

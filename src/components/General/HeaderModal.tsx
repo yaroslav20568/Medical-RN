@@ -17,14 +17,14 @@ const HeaderModal = ({ title, hideModal, clearParams }: IProps) => {
 			<View style={s`flex-row`}>
 				{clearParams && 
 					<TouchableOpacity
-						onPress={() => clearParams()}
+						onPress={clearParams}
 						activeOpacity={.7}
 						style={s`mr-3`}
 					>
 						<Feather name='delete' size={30} />
 					</TouchableOpacity>}
 				<TouchableOpacity
-					onPress={() => hideModal()}
+					onPress={hideModal}
 					activeOpacity={.7}
 				>
 					<AntDesign name='closecircleo' size={30} />

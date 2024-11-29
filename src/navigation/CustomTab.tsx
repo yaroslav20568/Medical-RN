@@ -13,7 +13,7 @@ interface IProps {
 	index: number;
 }
 
-export const AnimatedIcon = Animated.createAnimatedComponent(AntDesign);
+const AnimatedIcon = Animated.createAnimatedComponent(AntDesign);
 
 const CustomTab = ({ state, tabItem, tabNavigate, index }: IProps) => {
 	const color = useSharedValue<string>('#999');

@@ -34,7 +34,7 @@ class LibraryStore {
 			isLoadingItems: observable,
 			skip: observable,
 			totalSkip: observable,
-			items: observable,
+			items: observable.shallow,
 			isLoadingItemsMore: observable,
 			loadItems: action
 		})

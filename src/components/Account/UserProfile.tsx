@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, useWindowDimensions } from 'react-native';
 import { s } from 'react-native-wind';
 import { observer } from 'mobx-react-lite';
 import { siteUrl } from '../../constants';
@@ -11,12 +11,13 @@ interface IProps {
 }
 
 const UserProfile = observer(({ user, typesUsers }: IProps) => {
+	const { width, height } = useWindowDimensions();
+
 	return (
 		<View style={s`px-3`}>
 			<Image
 				source={{uri: `${siteUrl}/${user?.imageUrl}`}}
-				style={[s`w-full mb-3`, {height: 325}]}
-				resizeMode={`${user?.imageUrl.includes('no-image') ? 'contain' : 'cover'}`}
+				style={[s`${width > height ? 'w-1/2' : 'w-full'} mb-3`, {aspectRatio: 1.2}]}
 			/>
 			<Text style={s`text-base text-black pr-8 mb-3`}>E-mail: {user?.email}</Text>
 			<Text style={s`text-base text-black pr-8 mb-3`}>Город: {user?.city}</Text>
