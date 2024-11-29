@@ -10,12 +10,9 @@ export class LibraryItemService {
 
   async getLibraryItems(libraryItemQuery: LibraryItemQuery): Promise<ILibraryItem> {
     const count = 5;
-    const totalPages = Math.ceil(
-      (await this.prisma.libraryItem.findMany()).length / count,
-    );
+    let totalPages;
 
 		const findLibraryItems = this.prisma.libraryItem.findMany({
-      where: { libraryArticleId: +libraryItemQuery.libraryArticleId },
       include: {
         libraryArticle: true,
       },
@@ -26,6 +23,9 @@ export class LibraryItemService {
       ],
 			skip: libraryItemQuery.skip ? +libraryItemQuery.skip : 0,
       take: count,
+			where: {
+				libraryArticleId: libraryItemQuery.libraryArticleId ? +libraryItemQuery.libraryArticleId : undefined,
+			}
     });
 		
 		if(!libraryItemQuery.libraryArticleId) {
@@ -34,6 +34,10 @@ export class LibraryItemService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
 		}
+
+		totalPages = Math.ceil(
+      (await findLibraryItems).length / count,
+    );
 
 		return {
       skip: libraryItemQuery.skip ? +libraryItemQuery.skip : 0,

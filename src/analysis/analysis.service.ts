@@ -12,9 +12,7 @@ export class AnalysisService {
 
   async getAnalyzes(analysisQuery: AnalysisQuery): Promise<IAnalysis> {
 		const count = 5;
-    const totalPages = Math.ceil(
-      (await this.prisma.analysis.findMany()).length / count,
-    );
+    let totalPages;
 
     const findAnalyzes = this.prisma.analysis.findMany({
       orderBy: [
@@ -38,6 +36,10 @@ export class AnalysisService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
 		}
+
+		totalPages = Math.ceil(
+      (await findAnalyzes).length / count,
+    );
 
 		return {
       skip: analysisQuery.skip ? +analysisQuery.skip : 0,
