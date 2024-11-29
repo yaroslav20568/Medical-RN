@@ -74,8 +74,8 @@ const Question = ({ route, navigation }: IProps) => {
 								index={index}
 								isSelected={radio.value === activeRadio}
 								onPress={(value) => setActiveRadio(value)}
-								buttonSize={18}
-								buttonOuterSize={30}
+								buttonSize={8}
+								buttonOuterSize={20}
 							/>
 							<RadioButtonLabel
 								obj={radio}

@@ -51,7 +51,7 @@ const ChatDialog = ({ dialog, userId, navigation }: IChatDialogProps) => {
 
 	return (
 		<>
-			{dialog.adminId === userId || dialog.adminId === 0 && 
+			{dialog.adminId === userId || dialog.adminId === 0 ? 
 				<TouchableOpacity 
 					style={s`flex-row items-center justify-between border-black border-b-2 border-gray-400 py-2`}
 					onPress={navigateToChatDialog}
@@ -79,7 +79,7 @@ const ChatDialog = ({ dialog, userId, navigation }: IChatDialogProps) => {
 									<Text style={s`text-white`}>{dialog.messages.filter(message => message.userId !== userId && !message.isRead).length}</Text>
 								</View> : ''}
 					</View>
-				</TouchableOpacity>}
+				</TouchableOpacity> : ''}
 		</>
 	)
 }

@@ -15,7 +15,7 @@ const Calendar = observer(({ navigation }: IProps) => {
 	}, []);
 
 	return (
-		<View style={s`flex-auto`}>
+		<View style={s`flex-auto pb-3`}>
 			<HeaderLogo 
 				logo={require('../../assets/images/vstrecha-logo.png')} 
 			/>

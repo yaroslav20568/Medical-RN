@@ -88,7 +88,7 @@ const Map = observer(({ institutions }: IProps) => {
 			logoEnabled={false}
 			attributionEnabled={false}
 			scaleBarEnabled={false}
-			style={[s`w-full mt-3`, {height: width < height ? width / 1.5 : height - 100}]}
+			style={[s`w-full mt-3`, {height: width > height ? height - 100 : width / 1.5}]}
 		>
 			<Mapbox.Camera 
 				zoomLevel={5}

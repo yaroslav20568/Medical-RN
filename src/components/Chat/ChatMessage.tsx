@@ -14,16 +14,16 @@ const ChatMessage = ({ message, userId }: IProps) => {
 		<View style={s`flex-row items-center justify-between mb-4`}>
 			{message.user.id === userId ? 
 				<>
-					<View style={s`w-5/6`}>
+					<View style={{width: '85%'}}>
 						<Text style={s`text-xs mb-1 ml-3`}>{new Date(message.time).toLocaleString('ru', {timeZone: 'Europe/Moscow'})}</Text>
 						<View style={s`bg-blue-500 rounded-2xl py-4 px-3`}>
 							<Text style={s`text-white`}>{message.text}</Text>
 						</View>
 					</View>
-					<View style={s`w-12`}>
+					<View style={{width: '12%'}}>
 						<Image
 							source={{uri: `${siteUrl}/${message.user.imageUrl}`}}
-							style={s`h-12 rounded-full`}
+							style={[s`rounded-full`, {aspectRatio: 1}]}
 							resizeMode='cover'
 						/>
 					</View>

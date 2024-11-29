@@ -14,7 +14,7 @@ class QuestionsStore {
 		this.questionsWithResults = [];
 		makeObservable(this, {
 			isLoading: observable,
-			questions: observable,
+			questions: observable.shallow,
 			questionsWithResults: observable,
 			loadQuestions: action,
 			loadQuestionsWithResults: action

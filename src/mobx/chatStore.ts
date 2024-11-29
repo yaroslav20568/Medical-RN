@@ -10,7 +10,7 @@ class ChatStore {
 		this.dialogs = []
 		makeObservable(this, {
 			messages: observable,
-			dialogs: observable,
+			dialogs: observable.shallow,
 			setMessages: action,
 			addNewMessage: action,
 			setDialogs: action

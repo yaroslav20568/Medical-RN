@@ -25,7 +25,7 @@ const ConfirmModal = ({ animatedStyles, hideModal, onPress, message }: IProps) =
 						<Text style={s`text-xl font-medium`}>Подтвердите действие</Text>
 						<View style={s`flex-row`}>
 							<TouchableOpacity
-								onPress={() => hideModal()}
+								onPress={hideModal}
 								activeOpacity={.7}
 							>
 								<AntDesign name='closecircleo' size={30} />

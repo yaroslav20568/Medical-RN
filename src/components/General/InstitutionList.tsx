@@ -53,9 +53,9 @@ const InstitutionItem = ({ institution, navigation }: IInstitutionItemProps) => 
 		>
 			<Animated.Image
 				source={{uri: `${siteUrl}/${photo}`}}
-				style={[s`rounded-2xl`, {width: width < height ? '40%' : '22%', aspectRatio: 1.2}]}
+				style={[s`rounded-2xl`, {width: width > height ? '22%' : '40%', aspectRatio: 1.2}]}
 			/>
-			<Text style={[{width: width < height ? '60%' : '78%'}, s`text-base font-medium text-black px-2`]}>{name}</Text>
+			<Text style={[{width: width > height ? '78%' : '60%'}, s`text-base font-medium text-black px-2`]}>{name}</Text>
 		</TouchableOpacity>
 	);
 }
