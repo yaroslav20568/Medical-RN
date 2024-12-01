@@ -34,10 +34,14 @@ const CustomTab = ({ state, tabItem, tabNavigate, index }: IProps) => {
 		}
 	}, [state.index]);
 
+	const onTabNavigate = (): void => {
+		tabNavigate(tabItem.name, index);
+	};
+
 	return (
 		<Pressable 
 			style={[s`flex-1 items-center`]} 
-			onPress={() => tabNavigate(tabItem.name, index)}
+			onPress={onTabNavigate}
 		>
 			<AnimatedIcon 
 				name={tabItem.icon} 

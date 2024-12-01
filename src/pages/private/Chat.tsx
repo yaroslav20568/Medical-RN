@@ -15,7 +15,7 @@ const Chat = observer(({ navigation }: IProps) => {
 	const scrollViewRef = useRef<ScrollView>(null);
 
 	useEffect(() => {
-		const returnMessage = (message: IMessage) => {
+		const returnMessage = (message: IMessage): void => {
 			chatStore.addNewMessage(message);
 		};
 
@@ -26,8 +26,7 @@ const Chat = observer(({ navigation }: IProps) => {
 		}
 	}, []);
 
-	const sendMessage = (message: string, setMessage: (message: string) => void) => {
-		setMessage('');
+	const sendMessage = (message: string): void => {
 		socket.emit('send-message', {
 			time: new Date(),
 			text: message,
@@ -36,11 +35,15 @@ const Chat = observer(({ navigation }: IProps) => {
 		});
 	}
 
-	const leaveRoomUser = () => {
+	const leaveRoomUser = (): void => {
 		if(userStore.userData?.role === 'User') {
 			socket.emit('leave-room', userStore.userData?.id);
 		}
 	}
+
+	const scrollToDown = (): void => {
+		scrollViewRef.current?.scrollToEnd();
+	};
 
 	return (
 		<>
@@ -48,7 +51,7 @@ const Chat = observer(({ navigation }: IProps) => {
 				showsVerticalScrollIndicator={false}
 				contentContainerStyle={s`pb-3`}
 				ref={scrollViewRef}
-				onContentSizeChange={() => scrollViewRef.current?.scrollToEnd()}
+				onContentSizeChange={scrollToDown}
 			>
 				<HeaderLogo 
 					logo={require('../../assets/images/vstrecha-logo.png')} 

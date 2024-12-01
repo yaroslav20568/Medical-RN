@@ -44,12 +44,16 @@ interface IInstitutionItemProps {
 const InstitutionItem = ({ institution, navigation }: IInstitutionItemProps) => {
 	const { name, photo } = institution;
 	const { width, height } = useWindowDimensions();
+
+	const onNavigate = (): void => {
+		navigation.navigate('Institution', {institution});
+	}
 	
 	return (
 		<TouchableOpacity 
 			style={s`flex-row items-center bg-white rounded-2xl overflow-hidden mb-4`}
 			activeOpacity={.7}
-			onPress={() => navigation.navigate('Institution', {institution})}
+			onPress={onNavigate}
 		>
 			<Animated.Image
 				source={{uri: `${siteUrl}/${photo}`}}

@@ -19,7 +19,7 @@ const Question = ({ route, navigation }: IProps) => {
 
 	const radioArray = question.answers.map(answer => ({label: answer.name, value: answer.id}));
 
-	const answerQuestion = () => {
+	const answerQuestion = (): void => {
 		setIsDisabledBtn(true);
 
 		const sendObj = {
@@ -49,6 +49,10 @@ const Question = ({ route, navigation }: IProps) => {
 		})
 	};
 
+	const setStateValue = (value: number) => {
+		setActiveRadio(value);
+	};
+
 	return (
 		<ScrollView
 			showsVerticalScrollIndicator={false}
@@ -73,7 +77,7 @@ const Question = ({ route, navigation }: IProps) => {
 								obj={radio}
 								index={index}
 								isSelected={radio.value === activeRadio}
-								onPress={(value) => setActiveRadio(value)}
+								onPress={setStateValue}
 								buttonSize={8}
 								buttonOuterSize={20}
 							/>
@@ -81,7 +85,7 @@ const Question = ({ route, navigation }: IProps) => {
 								obj={radio}
 								index={index}
 								labelHorizontal={true}
-								onPress={(value) => setActiveRadio(value)}
+								onPress={setStateValue}
 								labelStyle={s`text-base text-black`}
 							/>
 						</RadioButton>

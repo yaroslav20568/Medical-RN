@@ -11,6 +11,10 @@ interface IProps {
 const Privacy = ({ navigation }: IProps) => {
 	const [isChecked, setIsChecked] = useState<boolean>(false);
 
+	const onNavigate = (): void => {
+		navigation.navigate('StartPage');
+	};
+
 	return (
 		<ScrollView 
 			showsVerticalScrollIndicator={false}
@@ -34,7 +38,7 @@ const Privacy = ({ navigation }: IProps) => {
 			<View style={s`items-center`}>
 				<TouchableOpacity
 					style={s`w-full ${isChecked ? 'bg-orange-400' : 'bg-gray-400'} rounded-lg py-2`}
-					onPress={() => navigation.navigate('StartPage')}
+					onPress={onNavigate}
 					activeOpacity={.7}
 					disabled={!isChecked}
 				>

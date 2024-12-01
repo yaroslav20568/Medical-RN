@@ -20,6 +20,18 @@ const Institution = observer(({ route, navigation }: IProps) => {
 	const { name, city, region, photo, address, phone, email, socialNetwork, linkWebsite, description, addInfo, workingHours, type, typesUsers } = route.params.institution;
 	const { width, height } = useWindowDimensions();
 
+	const onLinkPhone = (): void => {
+		Linking.openURL(`tel:${phone}`);
+	};
+
+	const onLinkEmail = (): void => {
+		Linking.openURL(`mailto:${email}`);
+	};
+
+	const onLinkWebsite = (): void => {
+		Linking.openURL(checkProtocolInUrl(linkWebsite));
+	};
+
 	return (
 		<ScrollView
 			showsVerticalScrollIndicator={false}
@@ -67,7 +79,7 @@ const Institution = observer(({ route, navigation }: IProps) => {
 							/>
 							<Text 
 								style={s`text-base text-black underline pr-8`}
-								onPress={() => Linking.openURL(`tel:${phone}`)}
+								onPress={onLinkPhone}
 							>
 								{phone}
 							</Text>
@@ -81,7 +93,7 @@ const Institution = observer(({ route, navigation }: IProps) => {
 							/>
 							<Text 
 								style={s`text-base text-black underline pr-8`}
-								onPress={() => Linking.openURL(`mailto:${email}`)}
+								onPress={onLinkEmail}
 							>
 								{email}
 							</Text>
@@ -104,7 +116,7 @@ const Institution = observer(({ route, navigation }: IProps) => {
 							/>
 							<Text 
 								style={s`text-base text-black underline pr-8`} 
-								onPress={() => Linking.openURL(checkProtocolInUrl(linkWebsite))}
+								onPress={onLinkWebsite}
 							>
 								{removeProtocolInUrl(linkWebsite)}
 							</Text>

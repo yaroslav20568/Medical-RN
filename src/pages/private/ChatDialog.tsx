@@ -19,8 +19,7 @@ const ChatDialog = observer(({ route, navigation }: IProps) => {
 		chatStore.setMessages(messages);
 	}, [messages]);
 
-	const sendMessage = (message: string, setMessage: (message: string) => void) => {
-		setMessage('');
+	const sendMessage = (message: string): void => {
 		socket.emit('send-message', {
 			time: new Date(),
 			text: message,
@@ -30,9 +29,13 @@ const ChatDialog = observer(({ route, navigation }: IProps) => {
 		});
 	}
 
-	const leaveRoomAdmin = () => {
+	const leaveRoomAdmin = (): void => {
 		socket.emit('leave-room', userId);
 	}
+
+	const scrollToDown = (): void => {
+		scrollViewRef.current?.scrollToEnd();
+	};
 
 	return (
 		<>
@@ -40,7 +43,7 @@ const ChatDialog = observer(({ route, navigation }: IProps) => {
 				showsVerticalScrollIndicator={false}
 				contentContainerStyle={s`pb-3`}
 				ref={scrollViewRef}
-				onContentSizeChange={() => scrollViewRef.current?.scrollToEnd()}
+				onContentSizeChange={scrollToDown}
 			>
 				<HeaderLogo 
 					logo={require('../../assets/images/vstrecha-logo.png')} 
