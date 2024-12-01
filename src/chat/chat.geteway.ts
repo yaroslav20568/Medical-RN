@@ -65,7 +65,7 @@ export class ChatGateway {
 			const peoplesInRoom = Array.from((await client.in(`room-${messageData.userId}`).allSockets())).length;
 			const isRead = peoplesInRoom === 2 ? true : false;
 
-			this.server.emit('return-message', {...messageData, dialogId, isRead});
+			this.server.to(`room-${messageData.userId}`).emit('return-message', {...messageData, dialogId, isRead});
 
 			await this.messageService.createMessage({
 				time: messageData.time,
@@ -81,7 +81,7 @@ export class ChatGateway {
 			const peoplesInRoom = Array.from((await client.in(`room-${userId}`).allSockets())).length;
 			const isRead = peoplesInRoom === 2 ? true : false;
 
-			this.server.emit('return-message', {...messageData, isRead});
+			this.server.to(`room-${userId}`).emit('return-message', {...messageData, isRead});
 
 			await this.messageService.createMessage({
 				time: messageData.time,
