@@ -14,7 +14,7 @@ if linkage != nil
 	use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'ShoppingList' do
+target 'Vstrecha' do
   config = use_native_modules!
 
   use_react_native!(
@@ -23,7 +23,7 @@ target 'ShoppingList' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'ShoppingListTests' do
+  target 'VstrechaTests' do
     inherit! :complete
     # Pods for testing
   end
