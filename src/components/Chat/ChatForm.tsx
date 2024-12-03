@@ -30,7 +30,7 @@ const ChatForm = ({ onPress }: IProps) => {
 				/>
 				<TouchableOpacity
 					onPress={onSendMessage}
-					style={[s`absolute right-3 top-1 w-10 h-10 bg-blue-600 items-center justify-center rounded-full`]}
+					style={[s`absolute right-3 top-0.5 w-10 h-10 bg-blue-600 items-center justify-center rounded-full`]}
 					activeOpacity={.7}
 					disabled={message ? false : true}
 				>

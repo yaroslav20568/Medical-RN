@@ -63,7 +63,7 @@ const ChatDialog = ({ dialog, userId, navigation }: IChatDialogProps) => {
 							style={s`w-16 h-16 rounded-full mr-3`}
 							resizeMode='cover'
 						/>
-						<View style={{width: '70%'}}>
+						<View style={{width: '65%'}}>
 							<Text style={s`text-black text-base mb-1`}>{dialog.user.email}</Text>
 							<Text numberOfLines={1} ellipsizeMode='tail'>{lastMessage.text}</Text>
 						</View>

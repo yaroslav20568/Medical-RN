@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNetInfo } from '@react-native-community/netinfo';
 import { observer } from 'mobx-react-lite';
+import SplashScreen from 'react-native-splash-screen';
 import { userStore, institutionsStore } from '../mobx';
 import { IRespAuthData, IUser } from '../types';
 import { Tabs } from '../navigation';
@@ -41,6 +42,7 @@ const Stacks = observer(() => {
   };
 
   useEffect(() => {
+		SplashScreen.hide();
     getUserData();
 		institutionsStore.loadTypesUsers();
   }, []);
