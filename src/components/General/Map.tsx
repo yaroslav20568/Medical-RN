@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { useWindowDimensions, Platform, View } from 'react-native';
 import { s } from 'react-native-wind';
 import Mapbox from '@rnmapbox/maps';
 import { Position } from '@rnmapbox/maps/lib/typescript/src/types/Position';
 import { observer } from 'mobx-react-lite';
 import axios from 'axios';
+import { PERMISSIONS, requestMultiple } from 'react-native-permissions';
+import Geolocation from '@react-native-community/geolocation';
 import { getPreciseDistance } from 'geolib';
 import { IInstitution } from '../../types';
 import { mapBoxDirectionsUrl, mapBoxApiKey } from '../../constants';
@@ -28,8 +30,35 @@ Mapbox.setAccessToken(mapBoxApiKey);
 const Map = observer(({ institutions }: IProps) => {
 	const [myCoords, setMyCoords] = useState<Array<number>>([0, 0]);
 	const [routes, setRoutes] = useState<Array<Position>>([]);
+	const isShowUserIndicator = JSON.stringify(myCoords) !== JSON.stringify([0, 0]);
 
 	const { width, height } = useWindowDimensions();
+
+	useEffect(() => {
+		if(Platform.OS === 'android') {
+			requestMultiple([PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION, PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION]).then((statuses) => {
+				const status = statuses[PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION] && statuses[PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION];
+				console.log(status);
+			});
+		} else {
+			requestMultiple([PERMISSIONS.IOS.LOCATION_WHEN_IN_USE]).then((statuses) => {
+				const status = statuses[PERMISSIONS.IOS.LOCATION_WHEN_IN_USE];
+				console.log(status);
+			});
+		}
+
+		let watchId = Geolocation.watchPosition(
+			(location) => {
+				setMyCoords([location.coords.longitude, location.coords.latitude]);
+			},
+			(error) => console.log(error),
+			{enableHighAccuracy: true, timeout: 20000, maximumAge: 0, distanceFilter: 1}
+		);
+
+		return () => {
+			Geolocation.clearWatch(watchId);
+		}
+	}, []);
 
 	const getFetchShortDirection = async () => {
 		let shortDistanceInstitution = institutions[0];
@@ -68,15 +97,22 @@ const Map = observer(({ institutions }: IProps) => {
 			attributionEnabled={false}
 			scaleBarEnabled={false}
 			style={[s`w-full mt-3`, {height: width > height ? height - 100 : width / 1.5}]}
+			requestDisallowInterceptTouchEvent={true}
+			localizeLabels={{locale: 'ru'}}
+			surfaceView={false}
 		>
 			<Mapbox.Camera 
 				zoomLevel={5}
 				centerCoordinate={myCoords}
 			/>
-			<Mapbox.UserLocation 
-				showsUserHeadingIndicator={true}
-				onUpdate={(location) => setMyCoords([location.coords.longitude, location.coords.latitude])}
-			/>
+			{isShowUserIndicator && 
+				<Mapbox.PointAnnotation 
+					id='MyCoords' 
+					coordinate={myCoords}
+				>
+					<View style={s`w-6 h-6 absolute rounded-full bg-blue-500 border-4 border-white`}></View>
+				</Mapbox.PointAnnotation>
+			}
 			{routes.length ? 
 				<Mapbox.ShapeSource
 					id={'routeSource'}

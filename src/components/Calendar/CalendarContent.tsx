@@ -18,25 +18,27 @@ LocaleConfig.defaultLocale = 'ru';
 interface IProps {
 	calendarEvents: AgendaSchedule;
 	markedDates: MarkedDates;
+	isPortrait: Boolean;
 }
 
-const CalendarContent = ({ calendarEvents, markedDates }: IProps) => {
+const CalendarContent = ({ calendarEvents, markedDates, isPortrait }: IProps) => {
 	return (
 		<>
-			<View style={s`mb-3`}>
-				<Text style={[s`text-lg font-semibold mb-1`]}>Типы событий</Text>
-				<View style={s`flex-row flex-wrap`}>
-					{Object.entries(TypesEvents).map(([key, value]) => 
-						<View 
-							style={s`flex-row items-center w-2/4`}
-							key={`typesEvents_${key}`}
-						>
-							<View style={[s`w-4 h-4 rounded-full`, {backgroundColor: returnDotColor(value)}]}></View>
-							<Text style={s`text-base text-black`}> — {value}</Text>
-						</View>
-					)}
-				</View>
-			</View>
+			{isPortrait && 
+				<View style={s`mb-3`}>
+					<Text style={[s`text-lg font-semibold mb-1`]}>Типы событий</Text>
+					<View>
+						{Object.entries(TypesEvents).map(([key, value]) => 
+							<View 
+								style={s`flex-row items-center w-2/4`}
+								key={`typesEvents_${key}`}
+							>
+								<View style={[s`w-4 h-4 rounded-full`, {backgroundColor: returnDotColor(value)}]}></View>
+								<Text style={s`text-base text-black`}> — {value}</Text>
+							</View>
+						)}
+					</View>
+				</View>}
 			<Agenda 
 				items={calendarEvents}
 				markingType={'multi-dot'}
