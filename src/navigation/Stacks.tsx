@@ -53,13 +53,13 @@ const Stacks = observer(() => {
         headerShown: false,
       }}>
 			{!isConnected && isConnected !== null ? 
-				<Stack.Screen name="NoInternet" component={NoInternet} /> :
+				<Stack.Screen name="NoInternet" component={NoInternet} options={{animation: 'slide_from_right'}} /> :
 				!userStore.isAuth ? 
 					<>
 						<Stack.Screen name="Privacy" component={Privacy} options={{animation: 'slide_from_right'}} />
 						<Stack.Screen name="StartPage" component={StartPage} options={{animation: 'slide_from_right'}} />
 					</> : 
-					<Stack.Screen name="Tabs" component={Tabs} />}
+					<Stack.Screen name="Tabs" component={Tabs} options={{animation: 'slide_from_right'}} />}
     </Stack.Navigator>
   );
 });

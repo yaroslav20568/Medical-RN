@@ -40,7 +40,8 @@ const Map = observer(({ institutions }: IProps) => {
 				const status = statuses[PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION] && statuses[PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION];
 				console.log(status);
 			});
-		} else {
+		}
+		if(Platform.OS === 'ios') {
 			requestMultiple([PERMISSIONS.IOS.LOCATION_WHEN_IN_USE]).then((statuses) => {
 				const status = statuses[PERMISSIONS.IOS.LOCATION_WHEN_IN_USE];
 				console.log(status);
