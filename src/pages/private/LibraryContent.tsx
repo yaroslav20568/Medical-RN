@@ -37,7 +37,7 @@ const LibraryContent = observer(({ route, navigation }: IProps) => {
 			/>
 			<View style={s`mt-3 px-3`}>
 				<Text style={s`text-2xl font-semibold text-black mb-4`}>Статьи раздела {route.params.name}: </Text>
-				{libraryStore.isLoadingItems ?
+				{!libraryStore.isLoadedItems ?
 					<Loader /> :
 					<LibraryItems
 						libraryItems={libraryStore.items}

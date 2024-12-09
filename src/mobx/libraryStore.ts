@@ -11,27 +11,27 @@ interface IRespData {
 }
 
 class LibraryStore {
-	isLoadingArticles: boolean;
+	isLoadedArticles: boolean;
 	articles: Array<ILibraryArticle>;
-	isLoadingItems: boolean;
+	isLoadedItems: boolean;
 	skip: number;
 	totalSkip: number;
 	items: Array<ILibraryItem>;
 	isLoadingItemsMore: boolean;
 
 	constructor() {
-		this.isLoadingArticles = false;
+		this.isLoadedArticles = false;
 		this.articles = [];
-		this.isLoadingItems = false;
+		this.isLoadedItems = false;
 		this.skip = 0;
 		this.totalSkip = 0;
 		this.items = [];
 		this.isLoadingItemsMore = false;
 		makeObservable(this, {
-			isLoadingArticles: observable,
+			isLoadedArticles: observable,
 			articles: observable,
 			loadArticles: action,
-			isLoadingItems: observable,
+			isLoadedItems: observable,
 			skip: observable,
 			totalSkip: observable,
 			items: observable.shallow,
@@ -41,25 +41,25 @@ class LibraryStore {
 	}
 
 	loadArticles(): void {
-		this.isLoadingArticles = true;
+		this.isLoadedArticles = false;
 		axios<Array<ILibraryArticle>>(`${siteUrl}/api/library-articles`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.articles = traversingTreeArticles(data);
-				this.isLoadingArticles = false;
+				this.isLoadedArticles = true;
 			});
 		})
 	}
 
 	loadItems(libraryArticleId: number): void {
-		this.isLoadingItems = true;
+		this.isLoadedItems = false;
 		axios<IRespData>(`${siteUrl}/api/library-items/?libraryArticleId=${libraryArticleId}`)
 		.then(({ data }) => {
 			runInAction(() => {
 				this.skip = data.skip;
 				this.totalSkip = data.totalSkip;
 				this.items = data.items;
-				this.isLoadingItems = false;
+				this.isLoadedItems = true;
 			});
 		})
 	}

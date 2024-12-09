@@ -59,7 +59,7 @@ const HelpAbroads = observer(({ navigation }: IProps) => {
 					showSearchModal={showSearchModal}
 					showFilterModal={showFilterModal}
 				/>
-				{helpAbroadsStore.isLoading ? 
+				{!helpAbroadsStore.isLoaded ? 
 					<Loader /> : 
 					<InstitutionList
 						institutions={helpAbroadsStore.institutions}

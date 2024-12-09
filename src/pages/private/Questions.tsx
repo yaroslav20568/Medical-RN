@@ -35,8 +35,12 @@ const Questions = observer(({ navigation }: IProps) => {
 				navigation={navigation} 
 			/>
 			<View style={s`mt-3 px-3`}>
-				<Text style={s`text-2xl font-semibold text-black mb-4`}>Вопросы: </Text>
-				{questionsStore.isLoading ?
+				<Text style={s`text-2xl font-semibold text-black mb-4`}>
+					{userStore.userData?.role === 'User' ? 
+						'Вопросы: ' : 
+						'Результаты вопросов: '}
+				</Text>
+				{!questionsStore.isLoaded ?
 					<Loader /> :
 					userStore.userData?.role === 'User' ?
 						<QuestionList 

@@ -68,7 +68,7 @@ const Institutions = observer(({ navigation }: IProps) => {
 					showSearchModal={showSearchModal}
 					showFilterModal={showFilterModal}
 				/>
-				{institutionsStore.isLoading ? 
+				{!institutionsStore.isLoaded ? 
 					<Loader /> : 
 					<InstitutionList
 						institutions={institutionsStore.institutions}

@@ -32,7 +32,7 @@ const QuickHelp = observer(({ navigation }: IProps) => {
 			/>
 			<View style={s`mt-3 px-3`}>
 				<Text style={s`text-2xl font-semibold text-black mb-4`}>Горячие линии: </Text>
-				{quickHelpStore.isLoading ?
+				{!quickHelpStore.isLoaded ?
 					<Loader /> :
 					<Hotlines 
 						hotlines={quickHelpStore.hotlines}

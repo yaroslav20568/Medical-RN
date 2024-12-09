@@ -11,7 +11,7 @@ interface IRespData {
 }
 
 class InstitutionsStore {
-	isLoading: boolean;
+	isLoaded: boolean;
 	skip: number;
 	totalSkip: number;
 	institutions: Array<IInstitution>;
@@ -19,7 +19,7 @@ class InstitutionsStore {
 	typesUsers: Array<ITypeUser>;
 
 	constructor() {
-		this.isLoading = false;
+		this.isLoaded = false;
 		this.skip = 0;
 		this.totalSkip = 0;
 		this.institutions = [];
@@ -27,7 +27,7 @@ class InstitutionsStore {
 		this.typesUsers = [];
 
 		makeObservable(this, {
-			isLoading: observable,
+			isLoaded: observable,
 			skip: observable,
 			totalSkip: observable,
 			institutions: observable.shallow,
@@ -41,14 +41,14 @@ class InstitutionsStore {
 	}
 
 	loadInstitutions(name: string, region: string, cityId: number | '', typeInstitutionId: number | '', typesUser: Array<number>): void {
-		this.isLoading = true;
+		this.isLoaded = false;
 		axios<IRespData>(`${siteUrl}/api/laboratories?name=${name}&region=${region}&cityId=${cityId}&typeId=${typeInstitutionId}&typesUsers=${sortArray(typesUser).join(',')}`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.skip = data.skip;
 				this.totalSkip = data.totalSkip;
 				this.institutions = data.items;
-				this.isLoading = false;
+				this.isLoaded = true;
 			});
 		})
 	}
@@ -70,12 +70,10 @@ class InstitutionsStore {
 	}
 
 	loadTypesUsers(): void {
-		this.isLoading = true;
 		axios<Array<ITypeUser>>(`${siteUrl}/api/types-users`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.typesUsers = data;
-				this.isLoading = false;
 			});
 		})
 	}

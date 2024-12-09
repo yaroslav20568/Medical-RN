@@ -11,21 +11,21 @@ interface IRespData {
 }
 
 class HelpAbroadsStore {
-	isLoading: boolean;
+	isLoaded: boolean;
 	skip: number;
 	totalSkip: number;
 	institutions: Array<IInstitution>;
 	isLoadingMore: boolean;
 
 	constructor() {
-		this.isLoading = false;
+		this.isLoaded = false;
 		this.skip = 0;
 		this.totalSkip = 0;
 		this.institutions = [];
 		this.isLoadingMore = false;
 
 		makeObservable(this, {
-			isLoading: observable,
+			isLoaded: observable,
 			skip: observable,
 			totalSkip: observable,
 			institutions: observable.shallow,
@@ -39,14 +39,14 @@ class HelpAbroadsStore {
 	}
 
 	loadInstitutions(name: string, countryId: number | '', cityId: number | '', typeInstitutionId: number | '', typesUser: Array<number>): void {
-		this.isLoading = true;
+		this.isLoaded = false;
 		axios<IRespData>(`${siteUrl}/api/help-abroads?name=${name}&countryId=${countryId}&cityId=${cityId}&typeId=${typeInstitutionId}&typesUsers=${sortArray(typesUser).join(',')}`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.skip = data.skip;
 				this.totalSkip = data.totalSkip;
 				this.institutions = data.items;
-				this.isLoading = false;
+				this.isLoaded = true;
 			});
 		})
 	}

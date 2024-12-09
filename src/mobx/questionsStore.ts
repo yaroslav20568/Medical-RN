@@ -4,16 +4,16 @@ import { IQuestion, IQuestionWithResult } from "../types";
 import { siteUrl } from "../constants";
 
 class QuestionsStore {
-	isLoading: boolean;
+	isLoaded: boolean;
 	questions: Array<IQuestion>;
 	questionsWithResults: Array<IQuestionWithResult>;
 
 	constructor() {
-		this.isLoading = false;
+		this.isLoaded = false;
 		this.questions = [];
 		this.questionsWithResults = [];
 		makeObservable(this, {
-			isLoading: observable,
+			isLoaded: observable,
 			questions: observable.shallow,
 			questionsWithResults: observable,
 			loadQuestions: action,
@@ -22,23 +22,23 @@ class QuestionsStore {
 	}
 
 	loadQuestions(userId: number | undefined): void {
-		this.isLoading = true;
+		this.isLoaded = false;
 		axios<Array<IQuestion>>(`${siteUrl}/api/questions?userId=${userId}`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.questions = data;
-				this.isLoading = false;
+				this.isLoaded = true;
 			});
 		})
 	}
 
 	loadQuestionsWithResults(): void {
-		this.isLoading = true;
+		this.isLoaded = false;
 		axios<Array<IQuestionWithResult>>(`${siteUrl}/api/questions-with-results`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.questionsWithResults = data;
-				this.isLoading = false;
+				this.isLoaded = true;
 			});
 		})
 	}

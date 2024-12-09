@@ -10,21 +10,21 @@ interface IRespData {
 }
 
 class QuickHelpStore {
-	isLoading: boolean;
+	isLoaded: boolean;
 	skip: number;
 	totalSkip: number;
 	hotlines: Array<IHotline>;
 	isLoadingMore: boolean;
 
 	constructor() {
-		this.isLoading = false;
+		this.isLoaded = false;
 		this.skip = 0;
 		this.totalSkip = 0;
 		this.hotlines = [];
 		this.isLoadingMore = false;
 
 		makeObservable(this, {
-			isLoading: observable,
+			isLoaded: observable,
 			skip: observable,
 			totalSkip: observable,
 			hotlines: observable,
@@ -35,14 +35,14 @@ class QuickHelpStore {
 	}
 
 	loadHotlines(): void {
-		this.isLoading = true;
+		this.isLoaded = false;
 		axios<IRespData>(`${siteUrl}/api/hotlines`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.skip = data.skip;
 				this.totalSkip = data.totalSkip;
 				this.hotlines = data.items;
-				this.isLoading = false;
+				this.isLoaded = true;
 			});
 		})
 	}

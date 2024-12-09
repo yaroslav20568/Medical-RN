@@ -32,7 +32,7 @@ const Library = observer(({ navigation }: IProps) => {
 			/>
 			<View style={s`mt-3 px-3`}>
 				<Text style={s`text-2xl font-semibold text-black mb-4`}>Разделы библиотеки: </Text>
-				{libraryStore.isLoadingArticles ?
+				{!libraryStore.isLoadedArticles ?
 					<Loader /> :
 					<LibraryArticles 
 						libraryArticles={libraryStore.articles}

@@ -37,7 +37,7 @@ const Analyzes = observer(({ navigation }: IProps) => {
 				/>
 				<View style={s`mt-3 px-3`}>
 					<Text style={s`text-2xl font-semibold text-black mb-4`}>Ваши анализы: </Text>
-					{userStore.isLoading ?
+					{!userStore.isLoaded ?
 						<Loader /> :
 						<AnalyzesList
 							analyzes={userStore.analyzes}

@@ -12,7 +12,7 @@ interface IRespData {
 class UserStore {
 	isAuth: boolean;
 	userData: IUser | null;
-	isLoading: boolean;
+	isLoaded: boolean;
 	skip: number;
 	totalSkip: number;
 	analyzes: Array<IAnalysis>;
@@ -21,7 +21,7 @@ class UserStore {
 	constructor() {
 		this.isAuth = false;
 		this.userData = null;
-		this.isLoading = false;
+		this.isLoaded = false;
 		this.skip = 0;
 		this.totalSkip = 0;
 		this.analyzes = [];
@@ -29,7 +29,7 @@ class UserStore {
 		makeObservable(this, {
 			isAuth: observable,
 			userData: observable,
-			isLoading: observable,
+			isLoaded: observable,
 			skip: observable,
 			totalSkip: observable,
 			analyzes: observable,
@@ -50,14 +50,14 @@ class UserStore {
 	}
 
 	loadAnalyzes(userId: number | undefined): void {
-		this.isLoading = true;
+		this.isLoaded = false;
 		axios<IRespData>(`${siteUrl}/api/analyzes?userId=${userId}`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.skip = data.skip;
 				this.totalSkip = data.totalSkip;
 				this.analyzes = data.items;
-				this.isLoading = false;
+				this.isLoaded = true;
 			});
 		})
 	}

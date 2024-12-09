@@ -7,14 +7,11 @@ import { MarkedDates } from "react-native-calendars/src/types";
 import { returnDotColor } from "../helpers";
 
 class CalendarStore {
-	isLoading: boolean;
 	calendarEvents: Array<ICalendarEvent>;
 
 	constructor() {
-		this.isLoading = false;
 		this.calendarEvents = [];
 		makeObservable(this, {
-			isLoading: observable,
 			calendarEvents: observable,
 			loadCalendarEvents: action,
 			getCalendarEventsObj: computed,
@@ -23,12 +20,10 @@ class CalendarStore {
 	}
 
 	loadCalendarEvents(userId: number | undefined): void {
-		this.isLoading = true;
 		axios<Array<ICalendarEvent>>(`${siteUrl}/api/calendar-events?userId=${userId}`)
     .then(({ data }) => {
 			runInAction(() => {
 				this.calendarEvents = data;
-				this.isLoading = false;
 			});
 		})
 	}
