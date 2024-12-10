@@ -12,43 +12,43 @@
 	<tr>
 		<td>
 			<h3>Splash</h3>
-			<img src="https://s7.gifyu.com/images/SJloG.gif">
+			<img src="gif-results/start/splash-screen.gif">
 		</td>
 		<td>
 			<h3>Register</h3>
-			<img src="https://s7.gifyu.com/images/SJnHj.gif">
+			<img src="gif-results/start/register.gif">
 		</td>
 		<td>
 			<h3>Login</h3>
-			<img src="https://s13.gifyu.com/images/SJnHV.gif">
+			<img src="gif-results/start/login.gif">
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<h3>Institutions list</h3>
-			<img src="https://s7.gifyu.com/images/SJc1R.gif">
+			<img src="gif-results/institutions/institutions-list.gif">
 		</td>
 		<td>
 			<h3>Institutions load more</h3>
-			<img src="https://s13.gifyu.com/images/SJc15.gif">
+			<img src="gif-results/institutions/institutions-load-more.gif">
 		</td>
 		<td>
 			<h3>Institutions search</h3>
-			<img src="https://s13.gifyu.com/images/SJcB2.gif">
+			<img src="gif-results/institutions/institutions-search.gif">
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<h3>Institutions filter</h3>
-			<img src="https://s7.gifyu.com/images/SJcBC.gif">
+			<img src="gif-results/institutions/institutions-filter.gif">
 		</td>
 		<td>
 			<h3>Institution info</h3>
-			<img src="https://s13.gifyu.com/images/SJcOY.gif">
+			<img src="gif-results/institutions/institution-info.gif">
 		</td>
 		<td>
 			<h3>Hotlines</h3>
-			<img src="https://s13.gifyu.com/images/SJcyI.gif">
+			<img src="gif-results/hotlines/hotlines.gif">
 		</td>
 	</tr>
 </table>
