@@ -51,4 +51,32 @@
 			<img src="gif-results/hotlines/hotlines.gif">
 		</td>
 	</tr>
+	<tr>
+		<td>
+			<h3>Account info</h3>
+			<img src="gif-results/account/account-info.gif">
+		</td>
+		<td>
+			<h3>Account analyzes</h3>
+			<img src="gif-results/account/account-analyzes.gif">
+		</td>
+		<td>
+			<h3>Account logout</h3>
+			<img src="gif-results/account/account-logout.gif">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<h3>Account delete photo</h3>
+			<img src="gif-results/account/account-delete-photo.gif">
+		</td>
+		<td>
+			<h3>Account update</h3>
+			<img src="gif-results/account/account-update.gif">
+		</td>
+		<td>
+			<h3>Account delete</h3>
+			<img src="gif-results/account/account-delete.gif">
+		</td>
+	</tr>
 </table>

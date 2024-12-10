@@ -45,6 +45,7 @@ const ZoomImage = ({ imageUrl }: IProps) => {
 				<Animated.Image
 					source={{uri: `${siteUrl}/${imageUrl}`}}
 					style={[s`w-full`, imgAnimatedStyles, {aspectRatio: 1}]}
+					resizeMode='contain'
 				/>
       </GestureDetector>
     </GestureHandlerRootView>
