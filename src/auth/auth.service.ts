@@ -19,7 +19,7 @@ export class AuthService {
 
     if (findUser) {
       throw new HttpException(
-        'A user with this email has already been created',
+        'Пользователь с данным email уже существует',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -48,13 +48,13 @@ export class AuthService {
 
     if (!findUser) {
       throw new HttpException(
-        'No user with this email',
+        'Нет пользователя с данным email',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
     if (!(await bcrypt.compare(loginDto.password, findUser.password))) {
       throw new HttpException(
-        'No valid password for this user',
+        'Неверный пороль для данного user',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

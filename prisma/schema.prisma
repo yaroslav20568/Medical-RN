@@ -160,7 +160,7 @@ model HelpAbroad {
 
 model CalendarEvent {
   id        Int    @id @default(autoincrement())
-  name      String @unique
+  name      String
   userId    Int    @map("user_id")
   user      User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   typeEvent String
@@ -169,7 +169,7 @@ model CalendarEvent {
 
 model Analysis {
   id       Int    @id @default(autoincrement())
-  name     String @unique
+  name     String
   userId   Int    @map("user_id")
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   category String

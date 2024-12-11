@@ -58,6 +58,7 @@ export class AnalysisUpdateDto {
   file: Express.multer.file;
 
 	@IsString()
-  @ApiProperty()
+	@IsOptional()
+  @ApiProperty({ required: false })
   date: string;
 }
