@@ -26,7 +26,7 @@ const QuestionResultList = ({ questionsWithResults }: IProps) => {
 						<Text style={s`text-base text-black`}>Всего проголосовало - {questionWithResult.questionResults.length}</Text>
 					</View>
 				) : 
-				<Text style={[s`text-lg font-semibold`]}>Вопросы не найдены</Text>}
+				<Text style={[s`text-lg font-semibold`]}>Результаты вопросов не найдены</Text>}
 		</>
 	)
 }

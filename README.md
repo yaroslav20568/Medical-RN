@@ -79,4 +79,32 @@
 			<img src="gif-results/account/account-delete.gif">
 		</td>
 	</tr>
+	<tr>
+		<td>
+			<h3>Library</h3>
+			<img src="gif-results/library/library.gif">
+		</td>
+		<td>
+			<h3>Help-abroads content</h3>
+			<img src="gif-results/help-abroads/help-abroads.gif">
+		</td>
+		<td>
+			<h3>Quetions answer</h3>
+			<img src="gif-results/questions/quetions-answer.gif">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<h3>Quetions results</h3>
+			<img src="gif-results/questions/quetions-results.gif">
+		</td>
+		<td>
+			<h3>Chat</h3>
+			<img src="gif-results/chat/chat.gif">
+		</td>
+		<td>
+			<h3>Calendar</h3>
+			<img src="gif-results/calendar/calendar.gif">
+		</td>
+	</tr>
 </table>

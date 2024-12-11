@@ -5,6 +5,7 @@ import { s } from "react-native-wind";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { IMenuItem } from '../../types';
+import { userStore } from '../../mobx';
 
 interface IProps {
 	navigation: NavigationProp<ParamListBase>;
@@ -16,7 +17,7 @@ const MenuItems = [
 	{name: 'Account', label: 'Личный кабинет', icon: 'user-o'},
 	{name: 'Library', label: 'Библиотека', icon: 'book'},
 	{name: 'HelpAbroads', label: 'Помощь за границей', icon: 'flag-o'},
-	{name: 'Questions', label: 'Вопросы', icon: 'list-alt'}
+	{name: 'Questions', label: userStore.userData?.role === 'User' ? 'Вопросы' : 'Результаты вопросов', icon: 'list-alt'}
 ];
 
 const MenuList = ({ navigation }: IProps) => {
